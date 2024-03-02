@@ -4,11 +4,11 @@ import { createMarketplace, updateMarketplace, getMarketplace, getMarketplaces, 
 
 const router = express.Router();
 
-router.post('/marketplace', protect, createMarketplace);
-router.get('/marketplaces', getMarketplaces);
-router.get('/marketplace/:id', getMarketplace);
-router.put('/marketplace/:id', protect, updateMarketplace);
-router.delete('/marketplace/:id', protect, deleteMarketplace);
-router.put('/marketplace/buy/:id', protect, buyMarketplace);
+router.post('/as', protect, createMarketplace);
+router.get('/', getMarketplaces);
+router.get('/:id', getMarketplace);
+router.put('/:id', protect, updateMarketplace);
+router.delete('/:id', protect, deleteMarketplace);
+router.put('/buy/:id', protect, buyMarketplace);
 
 export default router;

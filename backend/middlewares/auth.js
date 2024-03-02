@@ -5,6 +5,7 @@ import User from "../model/user.js";
 
 export const protect = ExpressAsyncHandler(async (req, res, next) => {
     let token;
+    console.log(req.body, "reafdsaasdfasdfasdfasdfasdfasdffas")
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
         try {
             token = req.headers.authorization.split(" ")[1];

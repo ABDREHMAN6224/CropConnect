@@ -12,18 +12,17 @@ const marketplaceSchema = new mongoose.Schema({
     },
     image: {
         type: String,
-        required: true
     },
     status: {
         type: String,
         required: true,
         default: "active"
     },
-    seller: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
+    // seller: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'User',
+    //     required: true
+    // },
     buyer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -38,4 +37,12 @@ const marketplaceSchema = new mongoose.Schema({
 
 const Marketplace = mongoose.model('Marketplace', marketplaceSchema);
 
+Marketplace.create({
+    name: "sdf",
+    description: "sdf",
+    // seller: "req.user._id",
+    price: +"0",
+    image: "req.body.image"
+}).then(a => console.log({a}));
+// rs
 export default Marketplace;

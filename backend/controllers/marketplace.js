@@ -4,11 +4,11 @@ import ExpressAsyncHandler from "express-async-handler";
 
 export const createMarketplace = ExpressAsyncHandler(async (req, res) => {
     const marketplace = new Marketplace({
-        name: req.body.name,
-        description: req.body.description,
-        image: req.file.path,
+        name: "sdf",
+        description: "sdf",
         seller: req.user._id,
-        price: req.body.price
+        price: +"0",
+        image: req.body.image
     });
     const createdMarketplace = await marketplace.save();
     res.status(201).json(createdMarketplace);

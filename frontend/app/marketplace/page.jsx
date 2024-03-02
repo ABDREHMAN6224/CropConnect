@@ -1,18 +1,13 @@
 "use client";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import NavBar from "../../components/NavBar";
 import Card from "/components/Card";
+import useAppSelector from "/hooks/useAppSelector";
 
 export default function MarketplacePage() {
-  const [products, setProducts] = useState([]);
   //   const [loading, setLoading] = useState(true);
-
+  const products = useAppSelector()
   useEffect(() => {}, []);
-
-  //   if (loading) {
-  //     return <div>Loading...</div>;
-  //   }
 
   return (
     <>

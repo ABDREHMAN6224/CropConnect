@@ -10,3 +10,5 @@ router.get('/marketplace/:id', getMarketplace);
 router.put('/marketplace/:id', protect, updateMarketplace);
 router.delete('/marketplace/:id', protect, deleteMarketplace);
 router.put('/marketplace/buy/:id', protect, buyMarketplace);
+
+export default router;

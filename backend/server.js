@@ -9,7 +9,9 @@ import storyRoutes from "./routes/storyRoutes.js";
 import connection from "./connection/connection.js";
 import {Server} from "socket.io";
 import { deleteMessage, sendMessage } from "./controllers/messageController.js";
-
+import eventRoutes from "./routes/event.js";
+import userRoutes from "./routes/userGroup.js";
+import marketPlaceRoutes from "./routes/marketplace.js";
 dotenv.config()
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express();
@@ -22,6 +24,9 @@ app.use(express.static(path.join(__dirname, "public/")))
 
 
 app.use("/api/auth", authRoutes)
+app.use("/api/events", eventRoutes)
+app.use("/api/user", userRoutes)
+app.use("/api/marketplace", marketPlaceRoutes)
 app.use("/api/stories", storyRoutes)
 
 connection()

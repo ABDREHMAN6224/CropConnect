@@ -1,10 +1,12 @@
+import { BACKEND_URL } from '@/app/utils/constants';
 import { isSucessfull } from '@/app/utils/general_utils';
 import {createAsyncThunk} from '@reduxjs/toolkit';
+
 
 export const login = createAsyncThunk(
     'auth/login',
     async (payload, {rejectWithValue, dispatch} ) => {
-        const response = await fetch('http://localhost:3000/login', {
+        const response = await fetch(`${BACKEND_URL}/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

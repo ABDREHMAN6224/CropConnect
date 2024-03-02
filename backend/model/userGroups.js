@@ -1,0 +1,29 @@
+import mongoose from 'mongoose';
+
+const userGroup = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    users: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    }],
+    admin: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
+    isGroup: {
+        type: Boolean,
+        default: false,
+    },
+}, {
+    timestamps: true,
+});
+
+const UserGroup = mongoose.model("UserGroup", userGroup);
+export default UserGroup;

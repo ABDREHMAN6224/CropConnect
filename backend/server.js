@@ -5,6 +5,7 @@ import cors from "cors"
 import { fileURLToPath } from "url";
 import path from "path";
 import authRoutes from "./routes/auth.js";
+import connection from "./connection/connection.js";
 
 dotenv.config()
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, "public/")))
 
 app.use("/api/auth", authRoutes)
 
+connection()
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
 })

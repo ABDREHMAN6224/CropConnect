@@ -1,4 +1,4 @@
-import { deleteUser, getUser, getUsers, login, register, updateUser, uploadAvatar } from '../controllers/auth.js';
+import { deleteUser, getUser, getUsers, login, register, resetPassword, updateUser, uploadAvatar } from '../controllers/auth.js';
 import express from 'express';
 import { protect } from '../middlewares/auth.js';
 
@@ -11,7 +11,8 @@ router.get('/user/:id',protect, getUser);
 router.put('/user/:id',protect, updateUser);
 router.put('/user/uploadAvatar/:id',protect, uploadAvatar);
 router.delete('/user/:id',protect, deleteUser);
-
+router.post("/user/resetPassword/:id",protect, resetPassword);
+router.post("/resetPassword/:resetPasswordToken/:id", resetPassword);
 
 
 export default router;

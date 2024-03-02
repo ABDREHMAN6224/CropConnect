@@ -6,7 +6,7 @@ import "/app/globals.css";
 import { SocketProvider } from "./context/socketContext";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { store, persistor } from "@/app/store/store";
+import { store, persistor } from "/app/store/store";
 const inter = Inter({ subsets: ["latin"] });
 
 // export const metadata = {
@@ -19,14 +19,14 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${inter.className} dark:bg-gray-900 dark:text-white`}>
         <SocketProvider>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <main className="flex min-h-screen flex-col items-center justify-between p-24">
-              {children}
-            </main>
-          </PersistGate>
-        </Provider>
-      </SocketProvider>
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+              <main className="flex min-h-screen flex-col items-center justify-between">
+                {children}
+              </main>
+            </PersistGate>
+          </Provider>
+        </SocketProvider>
       </body>
     </html>
   );

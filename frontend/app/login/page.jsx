@@ -1,6 +1,6 @@
 "use client";
-import DarkModeSwitcher from "@/components/DarkModeSwitcher";
-import useColorMode from "@/hooks/useColorMode";
+import DarkModeSwitcher from "/components/DarkModeSwitcher";
+import useColorMode from "/hooks/useColorMode";
 import Link from "next/link";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,7 +11,7 @@ export default function LoginPage() {
   const [colorMode, _] = useColorMode();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch  = useAppDispatch();
+  const dispatch = useAppDispatch();
   const handleLogin = async (e) => {
     e.preventDefault();
     if (!email || !password) {
@@ -22,10 +22,9 @@ export default function LoginPage() {
     const res = dispatch(login({ email, password }));
     if (res.error) {
       toast.error(res.error.message);
-    }
-    else {
+    } else {
       toast.success("Login successful");
-    }    
+    }
   };
 
   return (
@@ -58,7 +57,7 @@ export default function LoginPage() {
                   name="email"
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="name@company.com"
+                  placeholder="namecompany.com"
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
                   required

@@ -1,6 +1,6 @@
 "use client";
-import DarkModeSwitcher from "@/components/DarkModeSwitcher";
-import useColorMode from "@/hooks/useColorMode";
+import DarkModeSwitcher from "/components/DarkModeSwitcher";
+import useColorMode from "/hooks/useColorMode";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -15,7 +15,7 @@ export default function SignUpPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const dispacth = useAppDispatch();
 
-  const handleSignUp = async(e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     if (!email || !password || !confirmPassword) {
       toast.error("Email, password and confirm password are required");

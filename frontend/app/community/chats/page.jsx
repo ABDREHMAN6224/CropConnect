@@ -1,17 +1,16 @@
 "use client";
-import Box from "@/components/message/Box";
-import MessageMine from "@/components/message/MessageMine";
-import MessageOther from "@/components/message/MessageOther";
+import Box from "/components/message/Box";
+import MessageMine from "/components/message/MessageMine";
+import MessageOther from "/components/message/MessageOther";
 import { FaPlus, FaUserPlus } from "react-icons/fa";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import {useSocket} from "@/app/context/socketContext";
-import { useAppSelector } from "@/app/store/hooks";
-
+import { useState } from "react";
+import { useSocket } from "/app/context/socketContext";
+import { useAppSelector } from "/app/store/hooks";
 
 export default function Chats() {
-  const {chats} = useAppSelector(state => state.chat)
-  
+  const obj = useAppSelector((state) => state.chat);
+  console.log(obj);
+
   const socket = useSocket();
   const [chatModalVisible, setChatModalVisible] = useState(false);
   const [groupModalVisible, setGroupModalVisible] = useState(false);
@@ -24,9 +23,9 @@ export default function Chats() {
   });
 
   // useEffect(() => {
-    // socket.emit("get:onlineUsers")
-    // socket.on("onlineUsers", (data) => {
-    //   console.log(data);
+  // socket.emit("get:onlineUsers")
+  // socket.on("onlineUsers", (data) => {
+  //   console.log(data);
   //   })
   // },[])
 
@@ -134,7 +133,7 @@ export default function Chats() {
       {/* Chat Modal */}
       <article
         id="authentication-modal"
-        tabindex="-1"
+        tabIndex="-1"
         aria-hidden="true"
         className={`${
           !chatModalVisible && "hidden"
@@ -175,7 +174,7 @@ export default function Chats() {
               <form className="space-y-4" action="#">
                 <div>
                   <label
-                    for="email"
+                    htmlFor="email"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     User email
@@ -205,7 +204,7 @@ export default function Chats() {
       {/* Group chat Modal */}
       <article
         id="authentication-modal"
-        tabindex="-1"
+        tabIndex="-1"
         aria-hidden="true"
         className={`${
           !groupModalVisible && "hidden"
@@ -246,7 +245,7 @@ export default function Chats() {
               <form className="space-y-4" action="#">
                 <div>
                   <label
-                    for="email"
+                    htmlFor="email"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Group Name
@@ -262,7 +261,7 @@ export default function Chats() {
                 </div>
                 <div>
                   <label
-                    for="email"
+                    htmlFor="email"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     User email you want to add

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -7,6 +8,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
         lowercase: true,
+        match: [/\S+@\S+\.\S+/, "is invalid"],
     },
     password: {
         type: String,
@@ -30,6 +32,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         default: "active",
+        enum: ["active", "inactive"],
     }
 }, {
     timestamps: true,
@@ -39,6 +42,11 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 }
 
+userSchema.methods.generateToken = async function () {
+    return await jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRE,
+    });
+}
 
 userSchema.pre("save", async function (next) {
     try {

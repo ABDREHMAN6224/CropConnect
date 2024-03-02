@@ -9,10 +9,7 @@ import multer from "multer";
 dotenv.config()
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express();
-app.use(cors({
-    origin:["https://archats-arm.netlify.app","http://localhost:5173"],
-    credentials:true
-}))
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.json({ extended: true }))

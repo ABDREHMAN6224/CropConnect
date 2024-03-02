@@ -82,7 +82,7 @@ export default function Chats() {
             </div>
           </div>
         </aside>
-        <main className="flex flex-col flex-auto h-full p-6">
+        <div className="flex flex-col flex-auto h-full p-6">
           <div className="chat-box flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
             <div className="flex flex-col h-full overflow-x-auto mb-4">
               <div className="flex flex-col h-full">
@@ -128,7 +128,7 @@ export default function Chats() {
               </button>
             </div>
           </div>
-        </main>
+        </div>
       </div>
 
       {/* Chat Modal */}
@@ -171,7 +171,7 @@ export default function Chats() {
                 <span className="sr-only">Close modal</span>
               </button>
             </header>
-            <main className="p-4 md:p-5">
+            <div className="p-4 md:p-5">
               <form className="space-y-4" action="#">
                 <div>
                   <label
@@ -197,7 +197,7 @@ export default function Chats() {
                   <p>Search results</p>
                 </div>
               </form>
-            </main>
+            </div>
           </div>
         </div>
       </article>
@@ -242,7 +242,7 @@ export default function Chats() {
                 <span className="sr-only">Close modal</span>
               </button>
             </header>
-            <main className="p-4 md:p-5">
+            <div className="p-4 md:p-5">
               <form className="space-y-4" action="#">
                 <div>
                   <label
@@ -284,7 +284,7 @@ export default function Chats() {
                   <p>Search results</p>
                 </div>
               </form>
-            </main>
+            </div>
           </div>
         </div>
       </article>

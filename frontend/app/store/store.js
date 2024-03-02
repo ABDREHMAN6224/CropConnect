@@ -5,7 +5,6 @@ import storage from 'redux-persist/lib/storage' // Defaults to localStorage for 
 import authReducers from './auth/auth'
 import userReducers from './user/user'
 import chatReducers from './chat/chat'
-import { enviournment } from '@/data/constants'
 
 const persistConfig = {
     key: 'root', // Key for storing data in storage
@@ -21,11 +20,11 @@ const persistedReducer = persistReducer(persistConfig, reducer)
 
 export const store = configureStore({
     reducer: persistedReducer,
+    // reducer:reducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: false
         }),
-    devTools: enviournment === 'DEVELOPMENT'
 })
 
 export const persistor = persistStore(store)

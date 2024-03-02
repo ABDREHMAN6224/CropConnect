@@ -4,18 +4,28 @@ import useColorMode from "@/hooks/useColorMode";
 import Link from "next/link";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { useAppDispatch } from "../store/hooks";
+import { login } from "../store/auth/authThunk";
 
 export default function LoginPage() {
   const [colorMode, _] = useColorMode();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleLogin = (e) => {
+  const dispatch  = useAppDispatch();
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       toast.error("Email and password are required");
       return;
     }
+
+    const res = dispatch(login({ email, password }));
+    if (res.error) {
+      toast.error(res.error.message);
+    }
+    else {
+      toast.success("Login successful");
+    }    
   };
 
   return (

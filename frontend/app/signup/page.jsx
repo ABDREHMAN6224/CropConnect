@@ -5,14 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { registerUser } from "../store/auth/authThunk";
+import { useAppDispatch } from "../store/hooks";
 
 export default function SignUpPage() {
   const [colorMode, _] = useColorMode();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const dispacth = useAppDispatch();
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async(e) => {
     e.preventDefault();
     if (!email || !password || !confirmPassword) {
       toast.error("Email, password and confirm password are required");
@@ -22,6 +25,7 @@ export default function SignUpPage() {
       toast.error("Password and confirm password do not match");
       return;
     }
+    const resp = await dispacth(registerUser({ email, password }));
   };
 
   return (

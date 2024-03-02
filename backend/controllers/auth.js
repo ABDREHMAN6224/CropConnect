@@ -4,7 +4,8 @@ import Email from "../utils/email.js";
 import ApiFeatures from "../utils/ApiFeature.js";
 
 export const register = ExpressAsyncHandler(async (req, res) => {
-    const { name, email, password, avatar, role="user"} = req.body;
+    console.log("asdfasdf", req.body)
+    const { name="a", email, password, avatar="sdfasf", role="user"} = req.body;
     const user = new User({ name, email, password, avatar, role});
     const createdUser = await user.save();
     const sendEmail = new Email(createdUser);

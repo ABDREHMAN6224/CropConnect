@@ -3,6 +3,7 @@ import { isSucessfull } from '@/app/utils/general_utils';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 
 
+
 export const login = createAsyncThunk(
     'auth/login',
     async (payload, {rejectWithValue, dispatch} ) => {
@@ -39,8 +40,8 @@ export const registerUser = createAsyncThunk(
         });
         const data = await response.json();
         if (isSucessfull(response.status)) {
-            dispatch(setToken(data.token));
-            dispatch(setUser(data.user))
+            dispatch(setToken(data?.token));
+            dispatch(setUser(data?.user))
             return data;
         } else {
         return rejectWithValue(data);

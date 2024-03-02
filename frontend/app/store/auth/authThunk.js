@@ -1,5 +1,7 @@
 import { BACKEND_URL } from "/app/utils/constants";
 import { isSucessfull } from "/app/utils/general_utils";
+import { setToken } from "./auth";
+import { setUser } from "../user/user";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const login = createAsyncThunk(

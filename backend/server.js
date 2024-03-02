@@ -71,12 +71,6 @@ io.on("connection", (socket) => {
         socket.to(data.room).emit("user:left", data.user);
     })
     socket.on("send:message",async (data) => {
-        // data: {
-        //     sender: sender,
-        //     group: group,
-        //     content: content,
-        //     type: type
-        // }
         const recievers = data.group.users.filter(user => user !== data.sender);
         recievers.forEach(receiver => {
             const receiverSocket = usersToSocket.get(receiver);

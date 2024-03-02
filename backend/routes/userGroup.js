@@ -7,6 +7,6 @@ const router = express.Router();
 router.route('/create-chat').get(protect, accessUserGroup);
 router.route('/:id').put(protect, updateUserGroup).delete(protect, deleteUserGroup);
 router.route("/leave/:id").delete(protect, leaveChat);
-router.route('/chats').get(protect, getuserChats);
+router.route('/chats').get(protect ,getuserChats);
 
 export default router;

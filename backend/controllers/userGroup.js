@@ -5,9 +5,12 @@ import Message from "../model/messages.js";
 
 
 export const accessUserGroup = ExpressAsyncHandler(async (req, res) => {
+  // const id = req.user._id;
+  const id = req.body._id;
+  const userId = req.body.userId;
   var isChat = await UserGroup.find({
       $and: [
-          { users: { $elemMatch: { $eq: req.user._id } } },
+          { users: { $elemMatch: { $eq: id } } },
           { users: { $elemMatch: { $eq: userId } } }
       ]
   })
@@ -19,13 +22,20 @@ export const accessUserGroup = ExpressAsyncHandler(async (req, res) => {
               select: '-password'
           }
       })
+    console.log(isChat.length);
   if (isChat.length) {
     const chatMessages = await Message.find({ group: isChat[0]._id })
       res.send({ chat: isChat[0], messages: chatMessages })
   } else {
       var chatData = {
           name: "sender",
-          users: [req.user._id, userId]
+          users: [id, userId],
+          isGroup: req.body.isGroup || false
+      }
+      if (req.body.isGroup) {
+          chatData.name = req.body?.name
+          chatData.description = req.body?.description || ""
+          chatData.admin = id
       }
       try {
           const createdChat = await UserGroup.create(chatData)
@@ -42,7 +52,7 @@ export const accessUserGroup = ExpressAsyncHandler(async (req, res) => {
           
       } catch (error) {
           res.status(400)
-          throw new Error("error")
+          throw new Error("error creating chat")
       }
   }
 })

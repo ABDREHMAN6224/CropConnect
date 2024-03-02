@@ -4,7 +4,7 @@ import Email from "../utils/email.js";
 import ApiFeatures from "../utils/ApiFeature.js";
 
 export const register = ExpressAsyncHandler(async (req, res) => {
-    const { name, email, password, avatar, role} = req.body;
+    const { name, email, password, avatar, role="user"} = req.body;
     const user = new User({ name, email, password, avatar, role});
     const createdUser = await user.save();
     const sendEmail = new Email(createdUser);
@@ -16,8 +16,7 @@ export const register = ExpressAsyncHandler(async (req, res) => {
 export const login = ExpressAsyncHandler(async (req, res) => {
     const { email, password } = req.body;
     const query = User.findOne({ email });
-    const feature = new ApiFeatures(query, req.query).filter().sort().paginate();
-    const user = await feature.query;
+    const user = await query;
     if (user && (await user.matchPassword(password))) {
         const token = await user.generateToken();
         res.json({
@@ -31,10 +30,8 @@ export const login = ExpressAsyncHandler(async (req, res) => {
 })
 
 export const getUsers = ExpressAsyncHandler(async (req, res) => {
-    const feature = new ApiFeatures(User.find({
-        status: "active"
-    }), req.query).filter().sort().paginate();
-    const users = await feature.query;
+    const query = User.find();
+    const users = await query;
     res.json(users);
 })
 

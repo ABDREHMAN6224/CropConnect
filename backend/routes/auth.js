@@ -18,3 +18,6 @@ router.post("/resetPassword/:resetPasswordToken/:id", resetPassword);
 
 
 export default router;
+
+// 
+//5000/auth/upload

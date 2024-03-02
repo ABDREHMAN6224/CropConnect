@@ -8,6 +8,7 @@ const SocketContext = createContext()
 
 export const SocketProvider = ({ children }) => {
     const socket = io(serverUrl, []);
+    
 
     return (
         <SocketContext.Provider value={socket}>

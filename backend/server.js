@@ -30,10 +30,7 @@ app.use("/events", eventRoutes)
 app.use("/user", userRoutes)
 app.use("/marketplace", marketPlaceRoutes)
 app.use("/stories", storyRoutes)
-<<<<<<< Updated upstream
-=======
 app.use("/chats",chatRoutes)
->>>>>>> Stashed changes
 
 connection()
 const server = app.listen(process.env.PORT, () => {

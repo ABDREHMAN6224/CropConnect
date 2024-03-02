@@ -21,9 +21,7 @@ export default function RootLayout({ children }) {
         <SocketProvider>
           <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-              <main className="flex min-h-screen flex-col items-center justify-between">
-                {children}
-              </main>
+              <main className="">{children}</main>
             </PersistGate>
           </Provider>
         </SocketProvider>

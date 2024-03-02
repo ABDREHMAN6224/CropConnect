@@ -1,6 +1,6 @@
-import { BACKEND_URL } from '/app/utils/constants';
-import { isSucessfull } from '/app/utils/general_utils';
-import {createAsyncThunk} from '@reduxjs/toolkit';
+import { BACKEND_URL } from "/app/utils/constants";
+import { isSucessfull } from "/app/utils/general_utils";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const login = createAsyncThunk(
   "auth/login",

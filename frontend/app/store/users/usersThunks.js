@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BACKEND_URL } from "/app/utils/constants";
 import { isSucessfull } from "/app/utils/general_utils";
 import { setUsers } from "./users";

@@ -82,18 +82,6 @@ export const deleteUser = ExpressAsyncHandler(async (req, res) => {
     }
 })
 
-export const uploadAvatar = ExpressAsyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
-    if (user) {
-        user.avatar = req.file.path;
-        const updatedUser = await user.save();
-        res.json(updatedUser);
-    } else {
-        res.status(404);
-        throw new Error("User not found");
-    }
-})
-
 
 export const resetPassword = ExpressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);

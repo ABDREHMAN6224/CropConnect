@@ -23,11 +23,11 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "public/")))
 
 
-app.use("/api/auth", authRoutes)
-app.use("/api/events", eventRoutes)
-app.use("/api/user", userRoutes)
-app.use("/api/marketplace", marketPlaceRoutes)
-app.use("/api/stories", storyRoutes)
+app.use("/auth", authRoutes)
+app.use("/events", eventRoutes)
+app.use("/user", userRoutes)
+app.use("/marketplace", marketPlaceRoutes)
+app.use("/stories", storyRoutes)
 
 connection()
 const server = app.listen(process.env.PORT, () => {

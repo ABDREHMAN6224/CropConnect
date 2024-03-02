@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage' // Defaults to localStorage for 
 
 import authReducers from './auth/auth'
 import userReducers from './user/user'
+import chatReducers from './chat/chat'
 import { enviournment } from '@/data/constants'
 
 const persistConfig = {
@@ -13,7 +14,8 @@ const persistConfig = {
 }
 const reducer = combineReducers({
     auth: authReducers,
-    user: userReducers
+    user: userReducers,
+    chat: chatReducers,
 })
 const persistedReducer = persistReducer(persistConfig, reducer)
 

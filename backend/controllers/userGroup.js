@@ -82,6 +82,18 @@ export const deleteUserGroup = ExpressAsyncHandler(async (req, res) => {
   }
 });
 
+export const leaveChat = ExpressAsyncHandler(async (req, res) => {
+  const userGroup = await UserGroup.findById(req.params.id);
+  if (userGroup) {
+    userGroup.users = userGroup.users.filter(user => user.toString() !== req.user._id.toString());
+    const updatedUserGroup = await userGroup.save();
+    res.json(updatedUserGroup);
+  } else {
+    res.status(404);
+    throw new Error("User Group not found");
+  }
+});
+
 export const getuserChats = ExpressAsyncHandler(async (req, res) => {
   const userGroups = await UserGroup.find({
     users:{

@@ -12,6 +12,8 @@ import { deleteMessage, sendMessage } from "./controllers/messageController.js";
 import eventRoutes from "./routes/event.js";
 import userRoutes from "./routes/userGroup.js";
 import marketPlaceRoutes from "./routes/marketplace.js";
+import chatRoutes from  "./routes/userGroup.js"
+import { getChatData } from "./controllers/userGroup.js";
 dotenv.config()
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express();
@@ -28,6 +30,10 @@ app.use("/events", eventRoutes)
 app.use("/user", userRoutes)
 app.use("/marketplace", marketPlaceRoutes)
 app.use("/stories", storyRoutes)
+<<<<<<< Updated upstream
+=======
+app.use("/chats",chatRoutes)
+>>>>>>> Stashed changes
 
 connection()
 const server = app.listen(process.env.PORT, () => {
@@ -54,12 +60,13 @@ io.on("connection", (socket) => {
         console.log("Client disconnected");
     });
 
-    socket.on("join:room", (data) => {
-        // room = chatId
+    socket.on("join:room",async (data) => {
         socket.join(data.room);
         usersToSocket.set(data.user, socket.id);
         onlineUsers.set(data.user, data.user);
         socket.to(data.room).emit("user:joined", data.user);
+        const meassages = await getChatData(data.room);
+        socket.emit("chat:data", meassages);
     })
     socket.on("leave:room", (data) => {
         socket.leave(data.room);

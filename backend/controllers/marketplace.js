@@ -1,4 +1,6 @@
-import Marketplace from "../model/marketplace";
+import Marketplace from "../model/marketplace.js";
+import ExpressAsyncHandler from "express-async-handler";
+
 
 export const createMarketplace = ExpressAsyncHandler(async (req, res) => {
     const marketplace = new Marketplace({

@@ -1,8 +1,10 @@
-import express from "express";
 import ExpressAsyncHandler from "express-async-handler";
-import UserGroup from "../model/userGroup.js";
+import UserGroup from "../model/userGroups.js";
+import Message from "../model/messages.js";
 
-export const accessUserGroup = asyncHandler(async (req, res) => {
+
+
+export const accessUserGroup = ExpressAsyncHandler(async (req, res) => {
   var isChat = await UserGroup.find({
       $and: [
           { users: { $elemMatch: { $eq: req.user._id } } },
@@ -45,15 +47,6 @@ export const accessUserGroup = asyncHandler(async (req, res) => {
   }
 })
 
-export const getUserGroups = ExpressAsyncHandler(async (req, res) => {
-  const userGroups = await UserGroup.find({
-
-  })
-    .populate("users")
-    .populate("admin");
-
-  res.json(userGroups);
-});
 
 
 export const updateUserGroup = ExpressAsyncHandler(async (req, res) => {
@@ -100,3 +93,14 @@ export const getuserChats = ExpressAsyncHandler(async (req, res) => {
 
   res.json(userGroups);
 });
+
+
+export const getChatData =async (chatId) => {
+  const chat = await Message.find({ group
+    : chatId })
+    .populate("sender", "-password")
+    .populate("group")
+    .populate("group.users", "-password")
+    .populate("group.admin", "-password")
+  return chat
+}

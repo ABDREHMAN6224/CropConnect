@@ -5,8 +5,11 @@ import MessageOther from "@/components/message/MessageOther";
 import { FaPlus, FaUserPlus } from "react-icons/fa";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import {useSocket} from "@/app/context/socketContext";
+
 
 export default function Chats() {
+  const socket = useSocket();
   const [chatModalVisible, setChatModalVisible] = useState(false);
   const [groupModalVisible, setGroupModalVisible] = useState(false);
 
@@ -17,7 +20,12 @@ export default function Chats() {
     }
   });
 
-  useEffect(() => {},[])
+  useEffect(() => {
+    socket.emit("get:onlineUsers")
+    socket.on("onlineUsers", (data) => {
+      console.log(data);
+    })
+  },[])
 
   return (
     <section className="flex h-screen antialiased text-gray-800">

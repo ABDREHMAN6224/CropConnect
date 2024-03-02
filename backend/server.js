@@ -6,8 +6,7 @@ import { fileURLToPath } from "url";
 import path from "path";
 import authRoutes from "./routes/auth.js";
 import connection from "./connection/connection.js";
-import Server from "socket.io";
-import Message from "./model/messages.js";
+import {Server} from "socket.io";
 import { deleteMessage, sendMessage } from "./controllers/messageController.js";
 
 dotenv.config()

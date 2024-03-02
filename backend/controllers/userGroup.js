@@ -37,6 +37,7 @@ export const accessUserGroup = asyncHandler(async (req, res) => {
                   }
               })
           res.status(200).send({ chat: fullChat, messages: [] })
+          
       } catch (error) {
           res.status(400)
           throw new Error("error")

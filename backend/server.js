@@ -5,6 +5,7 @@ import cors from "cors"
 import { fileURLToPath } from "url";
 import path from "path";
 import authRoutes from "./routes/auth.js";
+import storyRoutes from "./routes/storyRoutes.js";
 import connection from "./connection/connection.js";
 import {Server} from "socket.io";
 import { deleteMessage, sendMessage } from "./controllers/messageController.js";
@@ -21,6 +22,7 @@ app.use(express.static(path.join(__dirname, "public/")))
 
 
 app.use("/api/auth", authRoutes)
+app.use("/api/stories", storyRoutes)
 
 connection()
 const server = app.listen(process.env.PORT, () => {

@@ -3,10 +3,12 @@ import { isSucessfull } from "/app/utils/general_utils";
 import { setToken } from "./auth";
 import { setUser } from "../user/user";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { getUsers } from "../users/usersThunks";
 
 export const login = createAsyncThunk(
   "auth/login",
   async (payload, { rejectWithValue, dispatch }) => {
+    console.log(payload);
     const response = await fetch(`${BACKEND_URL}/auth/login`, {
       method: "POST",
       headers: {
@@ -15,6 +17,7 @@ export const login = createAsyncThunk(
       body: JSON.stringify(payload),
     });
     const data = await response.json();
+    console.log(data);
     if (isSucessfull(response.status)) {
       dispatch(setToken(data.token));
       dispatch(setUser(data.user));

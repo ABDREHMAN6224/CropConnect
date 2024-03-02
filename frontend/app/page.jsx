@@ -1,8 +1,12 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import NavBar from "../components/NavBar";
+import { useAppSelector } from "./store/hooks";
 
 export default function Home() {
+  const user = useAppSelector((state) => state.user);
+  console.log(user);
   return (
     <>
       <NavBar />

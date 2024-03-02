@@ -5,6 +5,7 @@ const initialState = {
   name: "",
   email: "",
   role: "",
+  avatar: "",
 };
 
 const userSlice = createSlice({
@@ -17,6 +18,7 @@ const userSlice = createSlice({
       state.name = action.payload?.name;
       state.email = action.payload?.email;
       state.role = action.payload?.role;
+      state.avatar = action.payload?.avatar;
     },
   },
 });

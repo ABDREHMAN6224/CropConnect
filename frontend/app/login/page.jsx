@@ -2,11 +2,12 @@
 import DarkModeSwitcher from "/components/DarkModeSwitcher";
 import useColorMode from "/hooks/useColorMode";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { useAppDispatch } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { login } from "../store/auth/authThunk";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 export default function LoginPage() {
   const [colorMode, _] = useColorMode();
@@ -15,6 +16,8 @@ export default function LoginPage() {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
+  const isLoggedIn = useAppSelector((state) => state.auth.token) !== "";
+
   const handleLogin = async (e) => {
     e.preventDefault();
     if (!email || !password) {
@@ -22,7 +25,7 @@ export default function LoginPage() {
       return;
     }
 
-    const res = await dispatch(login({ email, password }));
+    const res = dispatch(login({ email, password }));
     console.log(res);
     if (res.error) {
       toast.error(res.error.message);
@@ -31,6 +34,59 @@ export default function LoginPage() {
       router.push("/");
     }
   };
+
+  const handleLogout = (e) => {
+    Swal.fire({
+      title: "Are you sure to logout?",
+      text: "You would need password to login again",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("hehe");
+        localStorage.clear();
+        router.push("/login");
+      }
+    });
+  };
+
+  console.log(isLoggedIn);
+
+  if (isLoggedIn) {
+    return (
+      <section className="bg-gray-50 dark:bg-gray-900 min-h-screen">
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+          <div className="w-full flex justify-between items-center mb-6 sm:max-w-md">
+            <Link
+              href="/"
+              className="flex items-center text-2xl font-semibold text-gray-900 dark:text-white"
+            >
+              HarvestHub
+            </Link>
+            <DarkModeSwitcher />
+          </div>
+          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h1 className="text-2xl leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white">
+                You are already signed in, want to sign out?
+              </h1>
+              <button
+                type="submit"
+                className="w-full text-white bg-meta-1 hover:bg-meta-7 focus:ring-4 focus:outline-none focus:ring-meta-6 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:focus:ring-meta-6"
+                onClick={handleLogout}
+              >
+                Sign out?
+              </button>
+            </div>
+          </div>
+        </div>
+        <ToastContainer theme={colorMode} />
+      </section>
+    );
+  }
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900 min-h-screen">

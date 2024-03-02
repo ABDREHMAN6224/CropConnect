@@ -3,17 +3,9 @@ import Box from "/components/message/Box";
 import MessageMine from "/components/message/MessageMine";
 import MessageOther from "/components/message/MessageOther";
 import { FaPlus, FaUserPlus } from "react-icons/fa";
-<<<<<<< Updated upstream
 import { useState } from "react";
 import { useSocket } from "/app/context/socketContext";
 import { useAppSelector } from "/app/store/hooks";
-=======
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import {useSocket} from "/app/context/socketContext";
-import { useAppSelector } from "/app/store/hooks";
-
->>>>>>> Stashed changes
 
 export default function Chats() {
   const obj = useAppSelector((state) => state.chat);

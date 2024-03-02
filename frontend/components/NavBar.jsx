@@ -110,7 +110,7 @@ export default function NavBar() {
 
       {/* Cart area */}
       <div
-        class={`relative z-10 transition-none ${
+        class={`relative transition-none ${
           !cartVisible &&
           "opacity-0 -z-10 transition-opacity ease-in-out duration-500"
         }`}

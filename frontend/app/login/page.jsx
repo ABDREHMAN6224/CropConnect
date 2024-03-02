@@ -1,21 +1,41 @@
+"use client";
+import DarkModeSwitcher from "@/components/DarkModeSwitcher";
+import useColorMode from "@/hooks/useColorMode";
 import Link from "next/link";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function LoginPage() {
+  const [colorMode, _] = useColorMode();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      toast.error("Email and password are required");
+      return;
+    }
+  };
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900 min-h-screen">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <Link
-          href="/"
-          className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
-        >
-          HarvestHub
-        </Link>
+        <div className="w-full flex justify-between items-center mb-6 sm:max-w-md">
+          <Link
+            href="/"
+            className="flex items-center text-2xl font-semibold text-gray-900 dark:text-white"
+          >
+            HarvestHub
+          </Link>
+          <DarkModeSwitcher />
+        </div>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-4xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            <h1 className="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white">
               Sign in to your account
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" onSubmit={handleLogin}>
               <div>
                 <label
                   htmlFor="email"
@@ -29,7 +49,9 @@ export default function LoginPage() {
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
-                  required=""
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  required
                 />
               </div>
               <div>
@@ -45,7 +67,9 @@ export default function LoginPage() {
                   id="password"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required=""
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                  required
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -64,17 +88,18 @@ export default function LoginPage() {
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don&apos;t have an account yet?{" "}
-                <a
-                  href="#"
+                <Link
+                  href="/signup"
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Sign up
-                </a>
+                </Link>
               </p>
             </form>
           </div>
         </div>
       </div>
+      <ToastContainer theme={colorMode} />
     </section>
   );
 }

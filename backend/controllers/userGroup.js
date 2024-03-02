@@ -2,27 +2,55 @@ import express from "express";
 import ExpressAsyncHandler from "express-async-handler";
 import UserGroup from "../model/userGroup.js";
 
-export const createUserGroup = ExpressAsyncHandler(async (req, res) => {
-  const { name, description, users } = req.body;
-  const userGroup = new UserGroup({
-    name,
-    description,
-    users,
-    isGroup: true,
-    admin: req.user._id,
-  });
-  const createdUserGroup = await userGroup.save();
-  res.status(201).json(createdUserGroup);
-});
+export const accessUserGroup = asyncHandler(async (req, res) => {
+  var isChat = await UserGroup.find({
+      $and: [
+          { users: { $elemMatch: { $eq: req.user._id } } },
+          { users: { $elemMatch: { $eq: userId } } }
+      ]
+  })
+      .populate("users", "-password")
+      .populate({
+          path: 'recentMessage',
+          populate: {
+              path: 'sender',
+              select: '-password'
+          }
+      })
+  if (isChat.length) {
+    const chatMessages = await Message.find({ group: isChat[0]._id })
+      res.send({ chat: isChat[0], messages: chatMessages })
+  } else {
+      var chatData = {
+          name: "sender",
+          users: [req.user._id, userId]
+      }
+      try {
+          const createdChat = await UserGroup.create(chatData)
+          const fullChat = await UserGroup.findOne({ _id: createdChat._id })
+              .populate("users", "-password")
+              .populate({
+                  path: 'recentMessage',
+                  populate: {
+                      path: 'author',
+                      select: 'name picturePath email'
+                  }
+              })
+          res.status(200).send({ chat: fullChat, messages: [] })
+      } catch (error) {
+          res.status(400)
+          throw new Error("error")
+      }
+  }
+})
 
 export const getUserGroups = ExpressAsyncHandler(async (req, res) => {
-  const userGroups = await UserGroup.find({})
+  const userGroups = await UserGroup.find({
+
+  })
     .populate("users")
     .populate("admin");
 
-  if(req.user.role === "user") {
-    userGroups = userGroups.filter((group) => group.users.includes(req.user._id) || group.admin === req.user._id);
-  }
   res.json(userGroups);
 });
 
@@ -58,4 +86,16 @@ export const deleteUserGroup = ExpressAsyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("User Group not found");
   }
+});
+
+export const getuserChats = ExpressAsyncHandler(async (req, res) => {
+  const userGroups = await UserGroup.find({
+    users:{
+      $in:[req.user._id]
+    }
+  })
+    .populate("users")
+    .populate("admin");
+
+  res.json(userGroups);
 });

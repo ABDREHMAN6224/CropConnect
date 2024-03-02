@@ -21,6 +21,10 @@ const userGroup = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    recentMessage: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Message",
+    },
 }, {
     timestamps: true,
 });

@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import NavBar from "@/components/NavBar";
-import Card from "@/components/Card";
+import NavBar from "../../components/NavBar";
+import Card from "/components/Card";
 
 export default function MarketplacePage() {
   const [products, setProducts] = useState([]);

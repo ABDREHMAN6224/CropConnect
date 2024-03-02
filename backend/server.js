@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors"
 import { fileURLToPath } from "url";
 import path from "path";
-import multer from "multer";
+import authRoutes from "./routes/auth.js";
 
 dotenv.config()
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -16,14 +16,9 @@ app.use(bodyParser.json({ extended: true }))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "public/")))
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "public/uploads/")
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`)
-    }
-})
+
+app.use("/api/auth", authRoutes)
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
 })

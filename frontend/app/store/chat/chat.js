@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 
-const serverUrl = "http://localhost:3000";
+const serverUrl = "http://localhost:5000";
 
 export const getAllChats = createAsyncThunk(
   "chat/getChat",
@@ -123,7 +123,7 @@ const chatSlice = createSlice({
     });
     builder.addCase(getAllChats.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload.error;
+      state.error = action.payload;
     });
     builder.addCase(GetCreateChat.pending, (state) => {
       state.loading = true;
@@ -135,7 +135,7 @@ const chatSlice = createSlice({
     });
     builder.addCase(GetCreateChat.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload.error;
+      state.error = action.payload;
     });
     builder.addCase(getUserChats.pending, (state) => {
       state.loading = true;
@@ -146,7 +146,7 @@ const chatSlice = createSlice({
     });
     builder.addCase(getUserChats.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload.error;
+      state.error = action.payload;
     });
     builder.addCase(deleteChat.pending, (state) => {
       state.loading = true;
@@ -159,7 +159,7 @@ const chatSlice = createSlice({
     });
     builder.addCase(deleteChat.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload.error;
+      state.error = action.payload;
     });
     builder.addCase(leaveChat.pending, (state) => {
       state.loading = true;
@@ -172,7 +172,7 @@ const chatSlice = createSlice({
     });
     builder.addCase(leaveChat.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload.error;
+      state.error = action.payload;
     });
   },
 });

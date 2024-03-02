@@ -40,12 +40,8 @@ export const registerUser = createAsyncThunk(
       body: JSON.stringify(payload),
     });
     const data = await response.json();
-    if (isSucessfull(response.status)) {
       dispatch(setToken(data?.token));
-      dispatch(setUser(data?.user));
+      dispatch(setUser(data?.user))
       return data;
-    } else {
-      return rejectWithValue(data);
-    }
   }
 );

@@ -31,6 +31,10 @@ app.use("/user", userRoutes)
 app.use("/marketplace", marketPlaceRoutes)
 app.use("/stories", storyRoutes)
 app.use("/chats",chatRoutes)
+app.use((error,req, res, next) => {
+    res.status(500).json({ message: error.message })
+})
+
 
 connection()
 const server = app.listen(process.env.PORT, () => {
@@ -49,21 +53,22 @@ const io = new Server(server, {
 
 const usersToSocket = new Map();
 const onlineUsers = new Map();
-
+let room=""
 io.on("connection", (socket) => {
-    console.log("New client connected");
     socket.on("disconnect", () => {
+        socket.emit("user:disconnected", socket.id);
         onlineUsers.delete(socket.id);
         console.log("Client disconnected");
     });
 
     socket.on("join:room",async (data) => {
         socket.join(data.room);
+        room=data.room
         usersToSocket.set(data.user, socket.id);
         onlineUsers.set(data.user, data.user);
-        socket.to(data.room).emit("user:joined", data.user);
+        io.to(data.room).emit("user:joined", data.user);
         const meassages = await getChatData(data.room);
-        socket.emit("chat:data", meassages);
+        io.to(data.room).emit("chat:data", meassages);
     })
     socket.on("leave:room", (data) => {
         socket.leave(data.room);
@@ -71,14 +76,18 @@ io.on("connection", (socket) => {
         socket.to(data.room).emit("user:left", data.user);
     })
     socket.on("send:message",async (data) => {
-        const recievers = data.group.users.filter(user => user !== data.sender);
+        const {message,chat,sender}= data
+        console.log("sender",chat);
+        const currentlyJoinedRooms = Object.keys(socket.rooms);
+        const recievers = chat.users.filter(user => user._id !== data.sender);
         recievers.forEach(receiver => {
-            const receiverSocket = usersToSocket.get(receiver);
+            const receiverSocket = usersToSocket.get(receiver._id);
             if (receiverSocket) {
-                socket.to(receiverSocket).emit("new:message", data);
-                sendMessage(data);
+                io.to(receiverSocket).emit("message", data);
             }
+            // }
         })
+        sendMessage(data);
         
     })
     socket.on("get:onlineUsers", () => {

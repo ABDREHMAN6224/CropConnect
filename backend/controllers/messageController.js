@@ -6,9 +6,9 @@ import UserGroup from "../model/userGroups.js";
 export const sendMessage = (data) =>{
     const msg = {
         sender: data.sender,
-        content: data.content,
-        group:data.group._id ,
-        type: data.type
+        content: data.message,
+        group:data.chat._id ,
+        type: data?.type || "text"
     }
     
     Message.create(msg)
@@ -23,7 +23,7 @@ export const sendMessage = (data) =>{
                     path: "users",
                     select: "name avatar email"
                 }
-            })
+            }).sort({ createdAt: -1 })
             .then(created => {
                 return created
             })

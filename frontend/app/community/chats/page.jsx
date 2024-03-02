@@ -3,13 +3,29 @@ import Box from "/components/message/Box";
 import MessageMine from "/components/message/MessageMine";
 import MessageOther from "/components/message/MessageOther";
 import { FaPlus, FaUserPlus } from "react-icons/fa";
+<<<<<<< Updated upstream
 import { useState } from "react";
 import { useSocket } from "/app/context/socketContext";
 import { useAppSelector } from "/app/store/hooks";
+=======
+import { useEffect, useState } from "react";
+import { useSocket } from "/app/context/socketContext";
+import { useAppSelector } from "/app/store/hooks";
+import { useAppDispatch } from "/app/store/hooks";
+import { getAllChats } from "/app/store/chat/chat";
+>>>>>>> Stashed changes
 
 export default function Chats() {
-  const obj = useAppSelector((state) => state.chat);
-  console.log(obj);
+  const {chats, messages} = useAppSelector((state) => state.chat);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const [DirectChats, setDirectChats] = useState([]);
+  const [GroupChats, setGroupChats] = useState([]);
+  const [currentChatMessages,setCurrentChatMessages] = useState([])
+  const [chatOn, setChatOn] = useState(false)
+  const [message, setMessage] = useState("")
+  const [currentChat, setCurrentChat] = useState({})
 
   const socket = useSocket();
   const [chatModalVisible, setChatModalVisible] = useState(false);
@@ -22,12 +38,78 @@ export default function Chats() {
     }
   });
 
-  // useEffect(() => {
-  // socket.emit("get:onlineUsers")
-  // socket.on("onlineUsers", (data) => {
-  //   console.log(data);
-  //   })
-  // },[])
+  const handleOpenChat = (chatId) => {
+    setCurrentChat(chats.find(chat => chat._id === chatId))
+     socket.emit("join:room", {room: chatId, user: user._id})
+  }
+
+  const handleSendMessage = () => {
+    const meesgaeObj = {
+      content:message,
+      sender: user,
+      group: {
+        users: currentChatMessages.users,
+      }
+    }
+    socket.emit("send:message", {message,chat:currentChat, sender: user._id})
+    setCurrentChatMessages([...currentChatMessages,meesgaeObj])
+    setMessage("")
+  
+  }
+
+  useEffect(() => {
+    dispatch(getAllChats());
+    setCurrentUserId(user?._id);
+    setDirectChats(chats.filter((chat) => chat.users.length <= 2));
+    setGroupChats(chats.filter((chat) => chat.users.length > 2));
+  }, []);
+
+
+
+  const handleGetOnlineUsers = () => {
+    socket.emit("get:onlineUsers")
+  }
+
+  const handleJoinRoom = (data) => {
+    console.log("User joined room", data);
+   setChatOn(true);
+  }
+
+  const handleChatData = (data) => {
+    console.log("Chat data", data);
+    setCurrentChatMessages(data);
+  }
+
+  const handleNewMessage = (data) => {
+    console.log("New message", data);
+    setCurrentChatMessages([...currentChatMessages,data]) 
+  }
+
+  useEffect(() => {
+    console.log("Current chat messages", currentChatMessages);
+  }, [currentChatMessages]);
+
+  useEffect(() => {
+  socket.emit("get:onlineUsers")
+  socket.on("onlineUsers", (data) => {
+    })
+    socket.on("user:joined",handleJoinRoom)  
+    socket.on("chat:data",handleChatData)
+    socket.on("new:message",handleNewMessage)
+    socket.on("user:disconnected", (data) => {
+      setChatOn(false);
+      setCurrentChatMessages([]);
+      setCurrentChat({});
+    })
+
+    return () => {
+      socket.off("new:message",handleNewMessage);
+      socket.off("user:joined",handleJoinRoom);
+      socket.off("onlineUsers");
+      socket.off("get:onlineUsers");
+      socket.off("chat:data",handleChatData);
+    }
+  },[socket])
 
   return (
     <section className="flex h-screen antialiased text-gray-800">
@@ -60,11 +142,16 @@ export default function Chats() {
               </span>
             </div>
             <div className="flex flex-col">
-              <Box letter="H" name="Henry Boyd" />
-              <Box letter="H" name="Henry Boyd" />
-              <Box letter="H" name="Henry Boyd" />
-              <Box letter="H" name="Henry Boyd" />
-              <Box letter="H" name="Henry Boyd" />
+              {chats?.map((chat) => (
+                <Box key={chat._id} letter={
+                  chat.users.find((user) => user._id !== currentUserId).name[0]
+                } name={
+                  // find name of users in chat other than current user
+                  chat.users.find((user) => user._id !== currentUserId).name
+                } 
+                onClick={()=>handleOpenChat(chat._id)}
+                />
+              ))}
             </div>
             <div className="flex flex-row items-center justify-between text-xs mt-6">
               <span className="font-bold">Communities</span>
@@ -73,19 +160,28 @@ export default function Chats() {
               </span>
             </div>
             <div className="flex flex-col h-full">
-              <Box letter="H" name="Henry Boyd" />
-              <Box letter="H" name="Henry Boyd" />
-              <Box letter="H" name="Henry Boyd" />
-              <Box letter="H" name="Henry Boyd" />
-              <Box letter="H" name="Henry Boyd" />
+            {
+              GroupChats?.map((chat) => (
+                <Box key={chat._id} letter="G" name={chat.name} onClick={()=>handleOpenChat(chat._id)}/>
+              ))
+            }
             </div>
           </div>
         </aside>
+        {chatOn &&
         <div className="flex flex-col flex-auto h-full p-6">
           <div className="chat-box flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
             <div className="flex flex-col h-full overflow-x-auto mb-4">
               <div className="flex flex-col h-full">
                 <div className="grid grid-cols-12 gap-y-2">
+                  {currentChatMessages.map((message) => (
+                    message.sender === user._id ? 
+                    <MessageMine key={message._id} letter="H" message={message.content} /> :
+                    <MessageOther key={message._id} letter="A" message={message.content} />
+                  ))}
+{/* 
+                   <MessageMine letter="H" message="Lorem ipsum dolor sit amet." />  
+                  
                   <MessageOther
                     letter="A"
                     message="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel ipsa commodi illum saepe numquam maxime asperiores voluptate sit, minima perspiciatis."
@@ -94,6 +190,14 @@ export default function Chats() {
                     letter="H"
                     message="Lorem ipsum dolor sit amet."
                   />
+                  <MessageOther
+                    letter="A"
+                    message="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel ipsa commodi illum saepe numquam maxime asperiores voluptate sit, minima perspiciatis."
+                  />
+                  <MessageMine
+                    letter="H"
+                    message="Lorem ipsum dolor sit amet."
+                  /> */}
                 </div>
               </div>
             </div>
@@ -104,9 +208,13 @@ export default function Chats() {
                   className="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 pt-2 h-10 resize-none"
                   placeholder="Type your message..."
                   rows={1}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                 ></textarea>
               </div>
-              <button className="flex items-center justify-center bg-primary-500 hover:bg-primary-600 rounded-xl text-white px-4 py-2 flex-shrink-0">
+              <button className="flex items-center justify-center bg-primary-500 hover:bg-primary-600 rounded-xl text-white px-4 py-2 flex-shrink-0"
+                onClick={handleSendMessage}
+              >
                 <span>Send</span>
                 <span className="ml-2">
                   <svg
@@ -128,6 +236,7 @@ export default function Chats() {
             </div>
           </div>
         </div>
+        }
       </div>
 
       {/* Chat Modal */}

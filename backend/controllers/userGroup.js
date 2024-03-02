@@ -5,8 +5,8 @@ import Message from "../model/messages.js";
 
 
 export const accessUserGroup = ExpressAsyncHandler(async (req, res) => {
-  // const id = req.user._id;
-  const id = req.body._id;
+  const id = req.user._id;
+  // const id = req.body._id;
   const userId = req.body.userId;
   var isChat = await UserGroup.find({
       $and: [
@@ -25,6 +25,7 @@ export const accessUserGroup = ExpressAsyncHandler(async (req, res) => {
     console.log(isChat.length);
   if (isChat.length) {
     const chatMessages = await Message.find({ group: isChat[0]._id })
+    console.log(chatMessages);
       res.send({ chat: isChat[0], messages: chatMessages })
   } else {
       var chatData = {
@@ -110,8 +111,11 @@ export const getuserChats = ExpressAsyncHandler(async (req, res) => {
       $in:[req.user._id]
     }
   })
+
     .populate("users")
-    .populate("admin");
+    .populate("admin")
+    .populate("recentMessage");
+
 
   res.json(userGroups);
 });

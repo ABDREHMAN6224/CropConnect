@@ -110,7 +110,7 @@ export default function NavBar() {
 
       {/* Cart area */}
       <div
-        class={`relative transition-none ${
+        className={`relative transition-none ${
           !cartVisible &&
           "opacity-0 -z-10 transition-opacity ease-in-out duration-500"
         }`}
@@ -149,13 +149,13 @@ export default function NavBar() {
                             className="h-6 w-6"
                             fill="none"
                             viewBox="0 0 24 24"
-                            stroke-width="1.5"
+                            strokeWidth="1.5"
                             stroke="currentColor"
                             aria-hidden="true"
                           >
                             <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
                               d="M6 18L18 6M6 6l12 12"
                             />
                           </svg>

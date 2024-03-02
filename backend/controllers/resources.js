@@ -11,7 +11,7 @@ export const createResource = ExpressAsyncHandler(async (req, res) => {
 });
 
 export const getResources = ExpressAsyncHandler(async (req, res) => {
-  const query = Resource.find();
+  const query = await Resource.find();
   const resources = await query;
   res.json(resources);
 });

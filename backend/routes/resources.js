@@ -12,8 +12,8 @@ import { uploadFile } from "../controllers/uploadFile.js";
 const router = express.Router();
 
 router.post("/upload", upload.single("file"), uploadFile);
+router.get("/all", getResources);
 router.post("/create", createResource);
-router.get("/resources", getResources);
 router.get("/resource/:id", getResource);
 router.put("/user/:id", updateResource);
 router.delete("/user/:id", deleteResource);

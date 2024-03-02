@@ -6,7 +6,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 export const login = createAsyncThunk(
     'auth/login',
     async (payload, {rejectWithValue, dispatch} ) => {
-        const response = await fetch(`${BACKEND_URL}/login`, {
+        const response = await fetch(`${BACKEND_URL}/auth/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -16,7 +16,32 @@ export const login = createAsyncThunk(
         const data = await response.json();
         if (isSucessfull(response.status)) {
             dispatch(setToken(data.token));
-        return data;
+            dispatch(setUser(data.user))
+            Promise.all([
+                dispatch(getUsers())
+            ])
+            return data;
+        } else {
+        return rejectWithValue(data);
+        }
+    }
+);
+
+export const registerUser = createAsyncThunk(
+    'auth/register',
+    async (payload, {rejectWithValue, dispatch}) => {
+        const response = await fetch(`${BACKEND_URL}/auth/register`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+        if (isSucessfull(response.status)) {
+            dispatch(setToken(data.token));
+            dispatch(setUser(data.user))
+            return data;
         } else {
         return rejectWithValue(data);
         }

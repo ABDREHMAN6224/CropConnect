@@ -1,35 +1,35 @@
 import Marketplace from "../model/marketplace.js";
-import ExpressAsyncHandler from "express-async-handler";
+import AppError from "../utils/AppError.js";
+import catchAsync from "../utils/catchAsync.js";
 
 
-export const createMarketplace = ExpressAsyncHandler(async (req, res) => {
+export const createMarketplace = catchAsync(async (req, res, next) => {
     const marketplace = new Marketplace({
-        name: "sdf",
-        description: "sdf",
+        name: req.body.name, 
+        description: req.body.description,
         seller: req.user._id,
-        price: +"0",
+        price: req.body.price,
         image: req.body.image
     });
     const createdMarketplace = await marketplace.save();
     res.status(201).json(createdMarketplace);
 })
 
-export const getMarketplaces = ExpressAsyncHandler(async (req, res) => {
+export const getMarketplaces = catchAsync(async (req, res, next) => {
     const marketplaces = await Marketplace.find();
     res.json(marketplaces);
 })
 
-export const getMarketplace = ExpressAsyncHandler(async (req, res) => {
+export const getMarketplace = catchAsync(async (req, res, next) => {
     const marketplace = await Marketplace.findById(req.params.id);
     if (marketplace) {
         res.json(marketplace);
     } else {
-        res.status(404);
-        throw new Error("Marketplace not found");
+        next(new AppError("Marketplace not found", 404));
     }
 })
 
-export const updateMarketplace = ExpressAsyncHandler(async (req, res) => {
+export const updateMarketplace = catchAsync(async (req, res, next) => {
     const marketplace = await Marketplace.findById(req.params.id);
     
     if (marketplace) {
@@ -40,23 +40,21 @@ export const updateMarketplace = ExpressAsyncHandler(async (req, res) => {
         const updatedMarketplace = await marketplace.save();
         res.json(updatedMarketplace);
     } else {
-        res.status(404);
-        throw new Error("Marketplace not found");
+        next(new AppError("Marketplace not found", 404));
     }
 })
 
-export const deleteMarketplace = ExpressAsyncHandler(async (req, res) => {
+export const deleteMarketplace = catchAsync(async (req, res, next) => {
     const marketplace = await Marketplace.findById(req.params.id);
     if (marketplace) {
         await marketplace.remove();
         res.json({ message: "Marketplace removed" });
     } else {
-        res.status(404);
-        throw new Error("Marketplace not found");
+        next(new AppError("Marketplace not found", 404));
     }
 })
 
-export const buyMarketplace = ExpressAsyncHandler(async (req, res) => {
+export const buyMarketplace = catchAsync(async (req, res, next) => {
     const marketplace = await Marketplace.findById(req.params.id);
     if (marketplace) {
         if (marketplace.status === "active") {
@@ -69,7 +67,6 @@ export const buyMarketplace = ExpressAsyncHandler(async (req, res) => {
             throw new Error("Marketplace already sold");
         }
     } else {
-        res.status(404);
-        throw new Error("Marketplace not found");
+        next(new AppError("Marketplace not found", 404));
     }
 })

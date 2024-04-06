@@ -1,16 +1,17 @@
 import express from "express";
-import ExpressAsyncHandler from "express-async-handler";
 import Event from "../model/event.js";
+import catchAsync from "../utils/catchAsync.js";
+import AppError from "../utils/AppError.js";
 
 const router = express.Router();
 
-export const getEvents = ExpressAsyncHandler(async (req, res) => {
+export const getEvents = catchAsync(async (req, res, next) => {
     const events = await Event.find({});
     res.json(events);
     }
 );
 
-export const createEvent = ExpressAsyncHandler(async (req, res) => {
+export const createEvent = catchAsync(async (req, res, next) => {
     const { title, description, images, date, location } = req.body;
     const event = new Event({
         title,
@@ -24,18 +25,18 @@ export const createEvent = ExpressAsyncHandler(async (req, res) => {
     }
 );
 
-export const deleteEvent = ExpressAsyncHandler(async (req, res) => {
+export const deleteEvent = catchAsync(async (req, res, next) => {
     const event = await Event.findById(req.params.id);
     if (event) {
         const deletedEvent = await event.remove();
         res.json(deletedEvent);
     } else {
-        res.status(404).json({ message: "Event not found" });
+        next(new AppError("Event not found", 404));
     }
     }
 );
 
-export const updateEvent = ExpressAsyncHandler(async (req, res) => {
+export const updateEvent = catchAsync(async (req, res, next) => {
     const event = await Event.findById(req.params.id);
     if (event) {
         event.title = req.body.title || event.title;
@@ -46,19 +47,19 @@ export const updateEvent = ExpressAsyncHandler(async (req, res) => {
         const updatedEvent = await event.save();
         res.json(updatedEvent);
     } else {
-        res.status(404).json({ message: "Event not found" });
+        next(new AppError("Event not found", 404));
     }
     }
 );
 
-export const registerEvent = ExpressAsyncHandler(async (req, res) => {
+export const registerEvent = catchAsync(async (req, res, next) => {
     const event = await Event.findById(req.params.id);
     if (event) {
         event.users.push(req.user._id);
         const updatedEvent = await event.save();
         res.json(updatedEvent);
     } else {
-        res.status(404).json({ message: "Event not found" });
+        next(new AppError("Event not found", 404));
     }
     }
 );

@@ -17,7 +17,7 @@ export default function NavBar() {
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            HarvestHub
+            CropConnect
           </span>
         </Link>
         <button

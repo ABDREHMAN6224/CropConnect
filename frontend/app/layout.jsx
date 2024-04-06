@@ -20,9 +20,9 @@ export default function RootLayout({ children }) {
       <body className={`${inter.className} dark:bg-gray-900 dark:text-white`}>
         <SocketProvider>
           <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
+            {/* <PersistGate loading={null} persistor={persistor}> */}
               <main className="">{children}</main>
-            </PersistGate>
+            {/* </PersistGate> */}
           </Provider>
         </SocketProvider>
       </body>

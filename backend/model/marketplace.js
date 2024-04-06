@@ -4,7 +4,7 @@ const marketplaceSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        unique: true
+        // unique: true
     },
     description: {
         type: String,
@@ -37,12 +37,5 @@ const marketplaceSchema = new mongoose.Schema({
 
 const Marketplace = mongoose.model('Marketplace', marketplaceSchema);
 
-Marketplace.create({
-    name: "sdf",
-    description: "sdf",
-    // seller: "req.user._id",
-    price: +"0",
-    image: "req.body.image"
-}).then(a => console.log({a}));
 // rs
 export default Marketplace;

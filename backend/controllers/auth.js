@@ -1,30 +1,31 @@
-import ExpressAsyncHandler from "express-async-handler";
 import User from "../model/user.js";
 import Email from "../utils/email.js";
 import ApiFeatures from "../utils/ApiFeature.js";
+import AppError from "../utils/AppError.js";
+import catchAsync from "../utils/catchAsync.js";
 
-export const register = ExpressAsyncHandler(async (req, res) => {
-  console.log("asdfasdf", req.body);
+export const register = catchAsync(async (req, res, next) => {
+  if(req.file){
+    req.body.avatar =process.env.SERVER_URL + "/uploads/" + req.file.filename;
+  }
   const {
-    name = "a",
+    name ,
     email,
     password,
-    avatar = "sdfasf",
+    avatar = "",
     role = "user",
   } = req.body;
   const user = new User({ name, email, password, avatar, role });
   const createdUser = await user.save();
   const sendEmail = new Email(createdUser);
   await sendEmail.sendWelcome();
-  console.log("Email sent");
   res.status(201).json(createdUser);
 });
 
-export const login = ExpressAsyncHandler(async (req, res) => {
+export const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
   const query = User.findOne({ email });
   const user = await query;
-  console.log(user);
   if (user && (await user.matchPassword(password))) {
     const token = await user.generateToken();
     res.json({
@@ -32,18 +33,19 @@ export const login = ExpressAsyncHandler(async (req, res) => {
       token,
     });
   } else {
-    res.status(401);
-    throw new Error("Invalid email or password");
+    next(new AppError("Invalid email or password", 401));
   }
 });
 
-export const getUsers = ExpressAsyncHandler(async (req, res) => {
-  const query = User.find();
-  const users = await query;
-  res.json(users);
+export const getUsers = catchAsync(async (req, res, next) => {
+  const feature = new ApiFeatures(User.find(), req.query).sort().limitFields();
+  const users = await feature.query.select("-password");
+  users.filter((user) => user._id !== req.user._id);
+  res.status(200).json({
+    users:users.filter((user) => user._id !== req.user._id)} );
 });
 
-export const getUser = ExpressAsyncHandler(async (req, res) => {
+export const getUser = catchAsync(async (req, res, next) => {
   const feature = new ApiFeatures(User.findById(req.params.id), req.query);
   const user = await feature.query.select("-password");
   if (user) {
@@ -54,7 +56,7 @@ export const getUser = ExpressAsyncHandler(async (req, res) => {
   }
 });
 
-export const updateUser = ExpressAsyncHandler(async (req, res) => {
+export const updateUser = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.params.id);
   if (user) {
     user.name = req.body.name || user.name;
@@ -70,7 +72,7 @@ export const updateUser = ExpressAsyncHandler(async (req, res) => {
   }
 });
 
-export const deleteUser = ExpressAsyncHandler(async (req, res) => {
+export const deleteUser = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.params.id);
   if (user) {
     user.status = "inactive";
@@ -82,7 +84,7 @@ export const deleteUser = ExpressAsyncHandler(async (req, res) => {
   }
 });
 
-export const resetPassword = ExpressAsyncHandler(async (req, res) => {
+export const resetPassword = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.params.id);
   if (user) {
     user.generateResetPasswordToken();
@@ -96,7 +98,7 @@ export const resetPassword = ExpressAsyncHandler(async (req, res) => {
   }
 });
 
-export const updatePassword = ExpressAsyncHandler(async (req, res) => {
+export const updatePassword = catchAsync(async (req, res, next) => {
   const resetToken = req.params.resetPasswordToken;
   const user = await User.findById(req.params.id);
   if (user) {

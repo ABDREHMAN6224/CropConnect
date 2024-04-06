@@ -2,11 +2,11 @@
 import { useState, useEffect } from "react";
 import NavBar from "../../components/NavBar";
 import Card from "/components/Card";
-import useAppSelector from "/hooks/useAppSelector";
+// import useAppSelector from "/hooks/useAppSelector";
 
 export default function MarketplacePage() {
   //   const [loading, setLoading] = useState(true);
-  const products = useAppSelector()
+  // const products = useAppSelector()
   useEffect(() => {}, []);
 
   return (

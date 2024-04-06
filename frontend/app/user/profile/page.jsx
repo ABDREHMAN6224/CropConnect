@@ -10,10 +10,6 @@ export default function Profile() {
   const router = useRouter();
   const userState = useAppSelector((state) => state.user);
   const isLoggedIn = useAppSelector((state) => state.auth).token !== "";
-  const imageUrl = userState.avatar
-    .split("/")
-    .filter((v) => v.length !== 0)
-    .join("/");
   console.log(userState);
 
   if (!isLoggedIn) {
@@ -52,7 +48,7 @@ export default function Profile() {
                 <div className="my-4 w-full flex justify-start gap-8 items-center">
                   <Image
                     className="h-32 w-32 rounded-full border-4 border-white dark:border-gray-800 my-4"
-                    src={"/" + imageUrl}
+                    src={userState?.avatar}
                     alt=""
                     width={200}
                     height={200}

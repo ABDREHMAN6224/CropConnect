@@ -64,7 +64,7 @@ export default function LoginPage() {
               href="/"
               className="flex items-center text-2xl font-semibold text-gray-900 dark:text-white"
             >
-              HarvestHub
+              CropConnect
             </Link>
             <DarkModeSwitcher />
           </div>
@@ -96,7 +96,7 @@ export default function LoginPage() {
             href="/"
             className="flex items-center text-2xl font-semibold text-gray-900 dark:text-white"
           >
-            HarvestHub
+            CropConnect
           </Link>
           <DarkModeSwitcher />
         </div>

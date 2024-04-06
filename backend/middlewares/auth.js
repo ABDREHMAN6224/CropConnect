@@ -1,39 +1,29 @@
-import express from "express";
 import jwt from "jsonwebtoken";
-import ExpressAsyncHandler from "express-async-handler";
 import User from "../model/user.js";
+import AppError from "../utils/AppError.js";
+import catchAsync from "../utils/catchAsync.js";
 
-export const protect = ExpressAsyncHandler(async (req, res, next) => {
+
+export const protect = catchAsync(async (req, res, next) => {
     let token;
-    console.log(req.body, "reafdsaasdfasdfasdfasdfasdfasdffas")
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-        try {
-            token = req.headers.authorization.split(" ")[1];
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            req.user = await User.findById(decoded.id);
-            if (!req.user) {
-                res.status(404);
-                throw new Error("Unauthorized, user not found");
-            }
-            next();
-        } catch (error) {
-            res.status(401);
-            throw new Error("Not authorized, token failed");
-        }
+        token = req.headers.authorization.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = await User.findById(decoded.id).select("-password");
+        next();
     }
-    if (!token) {
+    else if (!token) {
         res.status(401);
-        throw new Error("Not authorized, no token");
+        next(new AppError("Not authorized, no token", 401));
     }
 })
 
 
-export const isAdmin = ExpressAsyncHandler(async (req, res, next) => {
+export const isAdmin = catchAsync(async (req, res, next) => {
     if (req.user && req.user.role === "admin") {
         next();
     } else {
-        res.status(401);
-        throw new Error("Not authorized as an admin");
+        next(new AppError("Not authorized as an admin", 401));
     }
 }
 )

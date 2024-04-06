@@ -4,12 +4,10 @@ import Link from "next/link";
 import NavBar from "../components/NavBar";
 import { useAppSelector } from "./store/hooks";
 import { FaPlus } from "react-icons/fa";
-
 export default function Home() {
   const user = useAppSelector((state) => state.user);
   const isAdmin = user.role === "admin";
 
-  console.log(isAdmin);
 
   return (
     <>
@@ -48,6 +46,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+
     </>
   );
 }

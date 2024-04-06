@@ -15,6 +15,8 @@ export default function SignUpPage() {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [error,setError]=useState(false);
   const dispatch = useAppDispatch();
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
@@ -27,30 +29,29 @@ export default function SignUpPage() {
       );
       return;
     }
-    const form = e.target;
-    console.log(form.file_input.files[0]);
-
+    const server_route = "http://localhost:5000/auth/register";
+    const form=e.target;
     const formData = new FormData();
-    formData.append("file", form.file_input.files[0]);
-
+    formData.append("name", userName);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("file", form.file_input.files[0])
     setSubmitting(true);
-    const response = await fetch("http://localhost:5000/auth/upload", {
+    const response = await fetch(server_route, {
       method: "POST",
       body: formData,
     });
-    const imagePath = await response.json();
-
-    const resp = await dispatch(
-      registerUser({ name: userName, email, password, avatar: imagePath.url })
-    );
-    console.log(resp, resp.status);
-    if (resp.type.includes("fulfilled")) {
-      toast.success("Account created");
-      router.push("/");
-    } else {
-      toast.error("Email already registered!");
-    }
-    setSubmitting(false);
+    const data = await response.json();
+    if(response.ok){
+        setSubmitting(false);
+        console.log(data);
+        toast.success("Account created successfully");
+        
+      }
+      else{
+        setSubmitting(false);
+        toast.error(data.message);
+      }
   };
 
   return (
@@ -138,6 +139,8 @@ export default function SignUpPage() {
                   name="file_input"
                   id="file_input"
                   type="file"
+                  accept="image/*"
+                  onChange={(e) => setAvatar(e.target.files[0])}
                 />
               </div>
               <button

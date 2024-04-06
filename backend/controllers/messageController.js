@@ -1,44 +1,35 @@
-import asyncHandler from "express-async-handler"
+import Chat from "../model/Chats.js";
 import Message from "../model/messages.js";
-import UserGroup from "../model/userGroups.js";
+import catchAsync from "../utils/catchAsync.js";
 
-
-export const sendMessage = (data) =>{
-    const msg = {
-        sender: data.sender,
-        content: data.message,
-        group:data.chat._id ,
-        type: data?.type || "text"
+export const sendMessage = catchAsync(async (req, res) => {
+    let {chat,content,type}=req.body;
+    if(req.file){
+        content=process.env.SERVER_URL + "/uploads/" + req.file.filename;
+        type="file";
     }
-    
-    Message.create(msg)
-    .then(created => {
-        UserGroup.findByIdAndUpdate(chatId, { recentMessage: created }, { new: true })
-        .then(updated => {
-            Message.findOne({ _id: created._id })
-            .populate("sender", "name avatar email")
-            .populate({
-                path: "group",
-                populate: {
-                    path: "users",
-                    select: "name avatar email"
-                }
-            }).sort({ createdAt: -1 })
-            .then(created => {
-                return created
-            })
-        })
-    })
-    .catch(error => {
-        return error
-    })
-}
+    const newMessage = await Message.create({
+        chat,
+        content,
+        type,
+        sender: req.user._id,
+    });
+    const message=await Message.findById(newMessage._id).populate("sender");
+    // set recent message in chat
+    const chat_ =await Chat.findById(chat);
+    chat_.recentMessage=newMessage._id;
+    await chat_.save();
+    res.status(200).json({
+        status: "success",
+        data: message,
+    });
+})
 
-export const deleteMessage = async(id) => {
-    const deleted = await Message.findByIdAndDelete(id)
-    .then(deleted => {
-        return deleted
-    })
-}
-
-
+export const getMessages = catchAsync(async (req, res) => {
+    const { chatId } = req.params;
+    const messages = await Message.find({ chat:chatId }).populate("sender");
+    res.status(200).json({
+        status: "success",
+        data: messages,
+    });
+})

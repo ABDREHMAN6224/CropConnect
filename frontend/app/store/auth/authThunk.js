@@ -3,7 +3,8 @@ import { isSucessfull } from "/app/utils/general_utils";
 import { setToken } from "./auth";
 import { setUser } from "../user/user";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getUsers } from "../users/usersThunks";
+import { getUsers } from "../users/users";
+
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -18,7 +19,7 @@ export const login = createAsyncThunk(
     });
     const data = await response.json();
     console.log(data);
-    if (isSucessfull(response.status)) {
+    if (response.ok) {
       dispatch(setToken(data.token));
       dispatch(setUser(data.user));
       Promise.all([dispatch(getUsers())]);
@@ -34,10 +35,7 @@ export const registerUser = createAsyncThunk(
   async (payload, { rejectWithValue, dispatch }) => {
     const response = await fetch(`${BACKEND_URL}/auth/register`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
+      body:payload,
     });
     const data = await response.json();
       dispatch(setToken(data?.token));

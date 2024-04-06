@@ -25,8 +25,8 @@ class Email{
             from: this.from,
             to: this.to,
             subject,
-            text: message
-            // html
+            text: message,
+            html:`<h1>${message}</h1> <p>${message}</p> <a href=${message}></a>${message}</a>`
         };
 
         // 2) Create a transport and send email

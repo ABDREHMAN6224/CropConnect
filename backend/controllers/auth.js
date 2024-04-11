@@ -13,7 +13,7 @@ export const register = catchAsync(async (req, res, next) => {
     email,
     password,
     avatar = "",
-    role = req.body.role || "admin",
+    role = req.body.role || "user",
   } = req.body;
   const user = new User({ name, email, password, avatar, role });
   const createdUser = await user.save();

@@ -6,19 +6,41 @@ import AppError from "../utils/AppError.js";
 const router = express.Router();
 
 export const getEvents = catchAsync(async (req, res, next) => {
-    const events = await Event.find({});
-    res.json(events);
+    const events = await Event.find({
+        date: { $gte: new Date() }
+    }).sort({createdAt:-1});
+    res.status(200).json(events);
     }
 );
 
+export const getRegisteredEvents = catchAsync(async (req, res, next) => {
+    const events = await Event.find({
+        users: { 
+            $elemMatch: { $eq: req.user._id } 
+        },
+        date: { $gte: new Date() },
+    });
+    res.status(200).json(events);
+    }
+);
+
+export const getPastEvents = catchAsync(async (req, res, next) => {
+    const events = await Event.find({
+        date: { $lt: new Date() },
+    }).select("time users image");
+    res.status(200).json(events);
+    });
+
 export const createEvent = catchAsync(async (req, res, next) => {
-    const { title, description, images, date, location } = req.body;
+    const { name:title, description,  date, location,guests } = req.body;
     const event = new Event({
         title,
         description,
-        images,
+        image:`${process.env.SERVER_URL}/uploads/${req.file.filename}`,
         date,
         location,
+        time: req.body.time,
+        guests,
     });
     const createdEvent = await event.save();
     res.status(201).json(createdEvent);
@@ -41,7 +63,7 @@ export const updateEvent = catchAsync(async (req, res, next) => {
     if (event) {
         event.title = req.body.title || event.title;
         event.description = req.body.description || event.description;
-        event.images = req.body.images || event.images;
+        event.image = req.body.images || event.images;
         event.date = req.body.date || event.date;
         event.location = req.body.location || event.location;
         const updatedEvent = await event.save();
@@ -57,7 +79,7 @@ export const registerEvent = catchAsync(async (req, res, next) => {
     if (event) {
         event.users.push(req.user._id);
         const updatedEvent = await event.save();
-        res.json(updatedEvent);
+        res.status(201).json(updatedEvent);
     } else {
         next(new AppError("Event not found", 404));
     }

@@ -13,7 +13,7 @@ export const register = catchAsync(async (req, res, next) => {
     email,
     password,
     avatar = "",
-    role = "user",
+    role = req.body.role || "admin",
   } = req.body;
   const user = new User({ name, email, password, avatar, role });
   const createdUser = await user.save();
@@ -123,4 +123,11 @@ export const updatePassword = catchAsync(async (req, res, next) => {
     res.status(404);
     throw new Error("User not found");
   }
+});
+
+export const contactUs = catchAsync(async (req, res, next) => {
+  const { name, email, message } = req.body;
+  const sendEmail = new Email({ name, email, message });
+  await sendEmail.sendContactUs();
+  res.status(200).json("Email sent successfully");
 });

@@ -44,7 +44,7 @@ export default function SignUpPage() {
     const data = await response.json();
     if(response.ok){
         setSubmitting(false);
-        console.log(data);
+        router.push("/login");
         toast.success("Account created successfully");
         
       }

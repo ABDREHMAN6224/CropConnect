@@ -25,8 +25,7 @@ class Email{
             from: this.from,
             to: this.to,
             subject,
-            text: message,
-            html:`<h1>${message}</h1> <p>${message}</p> <a href=${message}></a>${message}</a>`
+            text: message          
         };
 
         // 2) Create a transport and send email
@@ -41,6 +40,10 @@ class Email{
         const frontendURL = process.env.FRONTEND_URL;
         const resetURL = `${frontendURL}`
         await this.send('Your password reset token (valid for 10 minutes)', resetURL);
+    }
+
+    async sendContactUs(){
+        await this.send('Contact Us', 'Thank you for contacting us. We will get back to you soon.');
     }
 
 }

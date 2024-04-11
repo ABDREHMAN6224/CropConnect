@@ -1,7 +1,7 @@
 import multer from "multer";
 import path from "path";
 
-const storage = multer.diskStorage({
+let storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./public/uploads/");
   },
@@ -15,4 +15,14 @@ const storage = multer.diskStorage({
 
 export const upload = multer({
   storage,
+});
+
+export const uploadImageOnly = multer({
+  storage:multer.memoryStorage(),
+  fileFilter: (req, file, cb) => {
+    if (!file.mimetype.startsWith("image")) {
+      return cb(new Error("Please upload an image"));
+    }
+    cb(null, true);
+  },
 });

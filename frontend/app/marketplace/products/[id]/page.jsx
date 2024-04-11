@@ -55,6 +55,7 @@ export default function SingleProduct({params}){
             const data = await response.json();
             if(response.ok){
                 setProduct(data);
+                console.log(data.reviews);
                 setReviews(data.reviews);
             }else{
                 console.log(data);
@@ -169,7 +170,7 @@ export default function SingleProduct({params}){
          </h1>
             
             {reviews.length < 1?
-            <div className="sm:w-3/5 sm:pl-6 mx-auto">
+            <div className=" sm:w-3/4 sm:pl-6 mx-auto">
                 <p className="leading-relaxed text-base">Reviews are not available for this product</p>
             </div>
             :
@@ -177,14 +178,14 @@ export default function SingleProduct({params}){
                 <div className="flex flex-col">
                     <div className="flex flex-wrap gap-18 flex-col py-6 mb-12">
                         <h2 className="sm:w-2/5 text-gray-900 font-medium title-font text-2xl mb-2 sm:mb-0">Customer Reviews</h2>
-                        <div className="sm:w-3/5 sm:pl-6 mt-4">
+                        <div className="sm:w-3/4 sm:pl-6 mt-4">
                             {reviews.map((review) => (
                                 <div key={review._id} className="p-4 border-2 border-gray-200 mb-4 rounded-lg">
                                     <div className="flex items-center">
-                                        <img alt="testimonial" src={review.author.pic} className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center" />
+                                        <img alt="testimonial" src={review.author?.avatar} className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center" />
                                         <span className="flex-grow pl-6">
-                                            <h2 className="title-font font-medium text-gray-900">{review.author.name}</h2>
-                                            <p className="text-gray-500 flex"><Rating rating={review.rating}/></p>
+                                            <h2 className="title-font font-medium text-gray-900">{review.author?.name}</h2>
+                                            <p className="text-gray-500 flex"><Rating rating={review?.rating}/></p>
                                         </span>
                                     </div>
                                     <p className="leading-relaxed mt-4">{review.comment}</p>

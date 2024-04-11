@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "react-toastify/dist/ReactToastify.css";
 import "/app/globals.css";
 import { SocketProvider } from "./context/socketContext";
+import { CartProvider } from "./context/cartContext";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "/app/store/store";
@@ -15,9 +16,11 @@ const inter = Inter({ subsets: ["latin"] });
 // };
 
 export default function RootLayout({ children }) {
+
   return (
     <html lang="en">
       <body className={`${inter.className} dark:bg-gray-900 dark:text-white`}>
+        <CartProvider>
         <SocketProvider>
           <Provider store={store}>
             {/* <PersistGate loading={null} persistor={persistor}> */}
@@ -25,6 +28,7 @@ export default function RootLayout({ children }) {
             {/* </PersistGate> */}
           </Provider>
         </SocketProvider>
+        </CartProvider>
       </body>
     </html>
   );

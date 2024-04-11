@@ -9,9 +9,9 @@ const eventSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    images: [{
+    image: {
         type: String,
-    }],
+    },
     date: {
         type: Date,
         required: true,
@@ -24,6 +24,9 @@ const eventSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     }], 
+    guests:[{
+        type:String,
+    }]
 }, {
     timestamps: true,
 });

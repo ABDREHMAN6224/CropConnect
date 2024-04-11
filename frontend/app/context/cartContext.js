@@ -7,6 +7,7 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useLocalStorage("cart", []);
   const [loading, setLoading] = useState(false);
+  const [shippingAmount, setShippingAmount] = useState(150);
 
   const addToCart = (product) => {
     setCart((prev) => [product, ...prev]);
@@ -20,6 +21,18 @@ export const CartProvider = ({ children }) => {
     setCart([]);
   };
 
+  const getTotals = () => {
+    return cart.reduce((acc, item) => {
+      return acc + item.price;
+    }, 0);
+
+  }
+  const getBill = (shippingFee,selectedProducts) => {
+    return selectedProducts.reduce((acc, item) => {
+      return acc + item.price;
+    }, 0) + shippingFee;
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -28,6 +41,10 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         clearCart,
         loading,
+        setLoading,
+        getTotals,
+        getBill,
+        shippingAmount,
       }}
     >
       {children}

@@ -6,21 +6,20 @@ export default function Box({ letter, name, onClick = () => {},highlight=false,c
   
 
   return (
-    <div className="flex flex-col space-y-1 mt-2  min-h-8 ">
+    <div className="flex flex-col space-y-1 mt-2  min-h-8 dark:bg-gray-800">
       <button
-        className="flex flex-row items-center hover:bg-gray-200 rounded-xl p-2 "
+        className={`flex flex-row items-center hover:bg-gray-200 rounded-xl p-2 dark:hover:bg-gray-700 dark:text-white dark:bg-gray-800 ${highlight && "bg-gray-200"}`}
         type="button"
         onClick={onClick}
-        style={{backgroundColor:highlight?"#e2e0e0":"white"}}
       >
         {!avatar?
-        <div className="flex items-center justify-center h-8 w-8 bg-primary-200 rounded-full">
+        <div className="flex items-center justify-center h-8 w-8 bg-primary-200 rounded-full text-primary-600 dark:bg-primary-400 dark:text-primary-200">
           {letter}
         </div>
         :
         <img src={avatar} alt="avatar" className="h-8 w-8 rounded-full"/>
       }
-        <div className="ml-2 text-sm font-semibold text-left text-pretty">
+        <div className="ml-2 text-sm font-semibold text-left text-pretty dark:text-white">
           {name}
           {chatBox && <div className="text-xs text-gray-500">{
             recentMessage.length>20?recentMessage.slice(0,20)+"...":recentMessage

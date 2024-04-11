@@ -15,7 +15,10 @@
     z-index: 9999;
 
 }
+html{
+  scroll-behavior: smooth;
 
+}
 .loader__spinner {
   border: 8px solid rgba(0, 0, 0, 0.1);
   /* shade of green */
@@ -25,9 +28,40 @@
   height: 100px;
   animation: spin 1s linear infinite;
 }
+.modal-container-order{
+  background: transparent;
+}
+.main-order-modal{
+  background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url("../assets/success.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+}
+.section-bg{
+    /* greeish gradient on top */
 
+  background: linear-gradient(rgba(60, 230, 131, 0.3), rgba(60,230,131,0.3)), url("/crop_3.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(5, 129, 57);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(71, 216, 131);
+  border-radius: 6px;
 }

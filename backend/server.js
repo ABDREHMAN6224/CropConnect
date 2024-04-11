@@ -3,18 +3,28 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { fileURLToPath } from "url";
+import { Server } from "socket.io";
 import path from "path";
+
+
 import authRoutes from "./routes/auth.js";
 import storyRoutes from "./routes/storyRoutes.js";
 import connection from "./connection/connection.js";
-import { Server } from "socket.io";
 import eventRoutes from "./routes/event.js";
 import messageRoutes from "./routes/message.js";
 import marketPlaceRoutes from "./routes/marketplace.js";
 import chatRoutes from "./routes/chat.js";
 import resourcesRoutes from "./routes/resources.js";
+import reviewRoutes from "./routes/review.js";
+import orderRoutes from "./routes/order.js";
+import feedbackRoutes from "./routes/feedback.js";
+
+
+
 import AppError from "./utils/AppError.js";
 import errorController from "./controllers/errorController.js";
+
+
 dotenv.config();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -33,6 +43,9 @@ app.use("/marketplace", marketPlaceRoutes);
 app.use("/stories", storyRoutes);
 app.use("/chats", chatRoutes);
 app.use("/resources", resourcesRoutes);
+app.use("/reviews", reviewRoutes);
+app.use("/orders", orderRoutes);
+app.use("/feedback", feedbackRoutes);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
@@ -95,7 +108,6 @@ io.on("connection", (socket) => {
       if(typeof member==="object"){
         member=member._id;
       }
-      // message.sender=data.sender;
       socket.to(member).emit("receive:message",data);
     }
   })

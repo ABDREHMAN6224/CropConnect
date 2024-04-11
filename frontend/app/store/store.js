@@ -6,6 +6,7 @@ import authReducers from './auth/auth'
 import userReducers from './user/user'
 import chatReducers from './chat/chat'
 import usersReducers from './users/users'
+import marketPlaceReducers from './marketPlace/marketPlace'
 
 const persistConfig = {
     key: 'root', // Key for storing data in storage
@@ -19,6 +20,7 @@ const reducer = combineReducers({
     user: userReducers,
     chat: chatReducers,
     users: usersReducers,
+    marketPlace: marketPlaceReducers,
 })
 const persistedReducer = persistReducer(persistConfig, reducer)
 

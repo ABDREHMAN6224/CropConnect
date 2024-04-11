@@ -1,7 +1,8 @@
-import { deleteUser, getUser, getUsers, login, register, resetPassword, updateUser } from '../controllers/auth.js';
+import { contactUs, deleteUser, getUser, getUsers, login, register, resetPassword, updateUser } from '../controllers/auth.js';
 import express from 'express';
 import { protect } from '../middlewares/auth.js';
-import { upload } from '../utils/upload.js';
+import { upload, uploadImageOnly } from '../utils/upload.js';
+
 import { uploadFile } from '../controllers/uploadFile.js';
 
 const router = express.Router();
@@ -9,6 +10,7 @@ const router = express.Router();
 router.post("/upload",protect, upload.single("file"), uploadFile);
 router.post('/register',upload.single("file"),register);
 router.post('/login', login);
+router.post('/contact', contactUs);
 router.get('/users',protect, getUsers);
 router.get('/user/:id',protect, getUser);
 router.put('/user/:id',protect, updateUser);

@@ -4,10 +4,18 @@ import { useState } from "react";
 import { FaCartArrowDown, FaUser } from "react-icons/fa";
 import DarkModeSwitcher from "/components/DarkModeSwitcher";
 import CartItem from "./CartItem";
+import { useCart } from "../app/context/cartContext";
+import { useRouter } from "next/navigation";
+import { formatAmount } from "../app/utils/general_utils";
 
 export default function NavBar() {
   const [showNavBar, setShowNavBar] = useState(false);
   const [cartVisible, setCartVisible] = useState(false);
+  const router=useRouter();
+
+  const {cart,removeFromCart,getTotals} = useCart();
+
+  
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
@@ -78,10 +86,10 @@ export default function NavBar() {
             </li>
             <li>
               <Link
-                href="#"
+                href="/resources"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-600 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
-                Contact
+                Resources
               </Link>
             </li>
             <li>
@@ -111,8 +119,8 @@ export default function NavBar() {
       {/* Cart area */}
       <div
         className={`relative transition-none ${
-          !cartVisible &&
-          "opacity-0 -z-10 transition-opacity ease-in-out duration-500"
+          !cartVisible ?
+          "opacity-0 -z-10 transition-opacity ease-in-out duration-500":"z-50 transition-opacity ease-in-out duration-500 opacity-100"
         }`}
         aria-labelledby="slide-over-title"
         role="dialog"
@@ -169,48 +177,15 @@ export default function NavBar() {
                           role="list"
                           className="-my-6 divide-y divide-gray-200"
                         >
-                          <CartItem
-                            imgSrc="/31343C.svg"
-                            productPrice={90}
-                            productTitle="Throwback Hip Bag"
-                            productQty={1}
-                          />
-                          <CartItem
-                            imgSrc="/31343C.svg"
-                            productPrice={90}
-                            productTitle="Throwback Hip Bag"
-                            productQty={1}
-                          />
-                          <CartItem
-                            imgSrc="/31343C.svg"
-                            productPrice={90}
-                            productTitle="Throwback Hip Bag"
-                            productQty={1}
-                          />
-                          <CartItem
-                            imgSrc="/31343C.svg"
-                            productPrice={90}
-                            productTitle="Throwback Hip Bag"
-                            productQty={1}
-                          />
-                          <CartItem
-                            imgSrc="/31343C.svg"
-                            productPrice={90}
-                            productTitle="Throwback Hip Bag"
-                            productQty={1}
-                          />
-                          <CartItem
-                            imgSrc="/31343C.svg"
-                            productPrice={90}
-                            productTitle="Throwback Hip Bag"
-                            productQty={1}
-                          />
-                          <CartItem
-                            imgSrc="/31343C.svg"
-                            productPrice={90}
-                            productTitle="Throwback Hip Bag"
-                            productQty={1}
-                          />
+                         {cart.map((item) => (
+                           <CartItem
+                             key={item.id}
+                             imgSrc={item.images[0]}
+                             productPrice={item.price}
+                             productTitle={item.name}
+                             onRemove={()=>removeFromCart(item.id)}
+                           />
+                         ))}
                         </ul>
                       </div>
                     </div>
@@ -219,18 +194,20 @@ export default function NavBar() {
                   <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                     <div className="flex justify-between text-base font-medium text-gray-900">
                       <p>Subtotal</p>
-                      <p>$262.00</p>
+                      <p>{
+                        getTotals(cart) > 0 ? `PKR ${formatAmount(getTotals())}` : "PKR 0"
+                      }</p>
                     </div>
                     <p className="mt-0.5 text-sm text-gray-500">
                       Shipping and taxes calculated at checkout.
                     </p>
                     <div className="mt-6">
-                      <a
-                        href="#"
+                      <Link
                         className="flex items-center justify-center rounded-md border border-transparent bg-primary-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-primary-700"
+                        href="/marketplace/checkout/all"
                       >
                         Checkout
-                      </a>
+                      </Link>
                     </div>
                     <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                       <p>
@@ -238,6 +215,10 @@ export default function NavBar() {
                         <button
                           type="button"
                           className="font-medium text-primary-600 hover:text-primary-500"
+                          onClick={() =>{
+                            setCartVisible(!cartVisible);
+                            router.push("/marketplace");
+                          }}
                         >
                           Continue Shopping
                           <span aria-hidden="true"> &rarr;</span>

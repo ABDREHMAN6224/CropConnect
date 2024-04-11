@@ -2,13 +2,18 @@ import mongoose from "mongoose";
 
 const resourcesSchema = new mongoose.Schema(
   {
-    resourceUrl: {
-      type: String,
-      required: true,
-    },
+    resources:[
+      {
+        type: String,
+        required: true,
+        minlength:1,
+        
+      }
+    ],
     description: {
       type: String,
       required: true,
+      trim: true
     },
   },
   {

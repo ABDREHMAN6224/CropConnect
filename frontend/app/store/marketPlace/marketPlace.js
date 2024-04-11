@@ -8,10 +8,15 @@ const marketPlaceSlice = createSlice({
     reducers: {
         setMartetPlace: (state, action) => {
             return action.payload;
-        }
+            
+        },
+        addToMarketPlace: (state, action) => {
+            state.unshift(action.payload);
+        },
+        
     }
 });
 
-export const { setMartetPlace } = marketPlaceSlice.actions;
+export const { setMartetPlace,addToMarketPlace } = marketPlaceSlice.actions;
 
 export default marketPlaceSlice.reducer;

@@ -13,6 +13,15 @@ const storySchema = new mongoose.Schema({
     content: {
         type: String,
         required: true,
+    },
+    files: [
+        {
+            type: String,
+        }
+    ],
+    category: {
+        type: String,
+        required: true,
     }
 }, {
     timestamps: true,

@@ -46,7 +46,7 @@ export const accessChat = catchAsync(async (req, res, next) => {
       var chatData = {
           name: "sender",
           members: [id, ...users],
-          isGroup: req.body.isGroup || false
+          isGroup: req.body.isGroup || false,
       }
       if (req.body.isGroup) {
           chatData.name = req.body?.name
@@ -150,7 +150,8 @@ export const createGroupChat = catchAsync(async (req, res, next) => {
   const {name,description,members} = req.body;
   const admin = req.user._id;
   const isGroup = true;
-  const newChat = await Chat.create({name,description,members,admin,isGroup});
+  const newChat = await Chat.create({name,description,members,admin,isGroup,isPublic: req.body.isPublic || false
+  });
   const chat= await Chat.findById(newChat._id).populate("members","-password").populate("admin","-password");
   res.status(201).json(chat);
 });
@@ -202,3 +203,26 @@ export const removeFromGroupChat = catchAsync(async (req, res, next) => {
     next(new AppError("Chat not found", 404));
   }
 });
+
+export const getPublicChats = catchAsync(async (req, res, next) => {
+  const Chats = await Chat.find({
+    isPublic: true
+  })
+    .populate("admin","name email avatar")
+    .sort({createdAt: -1});
+  res.status(200).json(Chats);
+})
+
+export const joinPublicChat = catchAsync(async (req, res, next) => {
+  const chat = await Chat.findByIdAndUpdate(req.params.id, {
+    $push: {members: req.user._id},
+  },{new:true})
+  .populate("admin","name email avatar");
+  if(chat){
+    res.status(200).json(chat);
+  }
+  else{
+    next(new AppError("Chat not found", 404));
+  }
+})
+

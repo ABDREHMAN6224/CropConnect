@@ -2,11 +2,11 @@ import { BACKEND_URL } from '/app/utils/constants';
 import { isSucessfull } from '/app/utils/general_utils';
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { setMartetPlace } from "./marketPlace";
+import { setMartetPlace,addToMarketPlace } from "./marketPlace";
 
-export const getMarketplace = createAsyncThunk(
+export const getMarketplaces = createAsyncThunk(
     "MargetMarketplace/getMarketplace",
-    async (_, { rejectWithValue, getState, dispactch }) => {
+    async (_, { rejectWithValue, getState, dispatch }) => {
       const response = await fetch(`${BACKEND_URL}/marketplace`, {
         method: "GET",
         headers: {
@@ -15,35 +15,36 @@ export const getMarketplace = createAsyncThunk(
         },
       });
       const data = await response.json();
-      if (isSucessfull(response.status)) {
-        dispactch(setMartetPlace(data));
-        return data;
-      } else {
-        return rejectWithValue(data);
-      }
+      console.log(data);
+        if (response.ok) {
+            dispatch(setMartetPlace(data));
+            return data;
+        } else {
+            return rejectWithValue(data);
+        }
     }
   );
   
 export const createMarketplace = createAsyncThunk(
     "MargetMarketplace/createMarketplace",
-    async (payload, { rejectWithValue, getState, dispactch }) => {
+    async (payload, { rejectWithValue, getState, dispatch }) => {
     const response = await fetch(`${BACKEND_URL}/marketplace/as`, {
         method: "POST",
         headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${getState().auth.token}`,
         },
-        body: JSON.stringify(payload),
+        body: payload,
     });
     const data = await response.json();
-    if (isSucessfull(response.status)) {
-        dispactch(getMarketplace());
+    if(response.ok){
+        dispatch(addToMarketPlace(data));
         return data;
-    } else {
-        return rejectWithValue(data);
     }
+    else{
+        return rejectWithValue(data.message);
     }
-);
+})
+;
 
 export const updateMarketplace = createAsyncThunk(
     "MargetMarketplace/updateMarketplace",
@@ -102,4 +103,5 @@ export const buyMarketplace = createAsyncThunk(
     }
     }
 )
+
 

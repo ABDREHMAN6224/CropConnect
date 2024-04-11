@@ -4,23 +4,27 @@ import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/AppError.js";
 
 export const createResource = catchAsync(async (req, res, next) => {
-  const { resourceUrl, description } = req.body;
-  const resource = new Resource({ resourceUrl, description });
+  const { description } = req.body;
+  const resource = new Resource({ 
+    resources: req.files.map((file) => `${process.env.SERVER_URL}/uploads/${file.filename}`),
+    description });
   const createdResource = await resource.save();
   res.status(201).json(createdResource);
 });
 
 export const getResources = catchAsync(async (req, res, next) => {
-  const query = Resource.find();
-  const resources = await query;
-  res.json(resources);
+  const feature = new ApiFeatures(Resource.find({}), req.query)
+    .sort()
+    .limitFields()
+  const resources = await feature.query;
+  res.status(200).json(resources);
 });
 
 export const getResource = catchAsync(async (req, res, next) => {
   const feature = new ApiFeatures(Resource.findById(req.params.id), req.query);
   const resource = await feature.query;
   if (resource) {
-    res.json(resource);
+    res.status(200).json(resource);
   } else {
     next(new AppError("Resource not found", 404));
   }

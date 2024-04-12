@@ -19,7 +19,8 @@ export const getRegisteredEvents = catchAsync(async (req, res, next) => {
             $elemMatch: { $eq: req.user._id } 
         },
         date: { $gte: new Date() },
-    });
+    }).sort({createdAt:-1})
+    ;
     res.status(200).json(events);
     }
 );

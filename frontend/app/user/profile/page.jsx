@@ -45,7 +45,7 @@ export default function Profile() {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        localStorage.clear();
+        window.localStorage.clear();
         router.replace("/login");
       }
     });
@@ -421,7 +421,7 @@ export default function Profile() {
             {currentOrder && openReviewModal &&<ReviewModal products={currentOrder?.orderItems} 
               setMyOrders={setMyOrders}
               onClose={() => {
-                router.reload()
+                window.location.reload()
                 setOpenReviewModal(false)
                 setCurrentOrder(null)
               }}

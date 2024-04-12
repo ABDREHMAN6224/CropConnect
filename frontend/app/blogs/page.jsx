@@ -86,7 +86,7 @@ const BlogsPage = () => {
           </section>
 
             {/* categories filter and search*/}
-        {filteredBlogs.length > 0 && 
+        {blogs.length > 0 && 
             <div className="flex justify-center py-8 px-16 w-full">
             
               <div className="flex items-center gap-12 w-full justify-around">
@@ -118,7 +118,7 @@ const BlogsPage = () => {
         {loading ? 
           <div className="flex justify-center items-center h-96">
             <FaSpinner className="animate-spin h-12 w-12 text-primary-600"/>
-          </div>: filteredBlogs.length >0 &&
+          </div>: blogs.length > 0 &&
           <section className="text-gray-600 body-font" id="blogs">
             <div className="container px-5 py-24 mx-auto">
               <div className="flex flex-wrap -mx-4 -my-8">

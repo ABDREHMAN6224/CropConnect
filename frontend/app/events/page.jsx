@@ -135,7 +135,7 @@ const EventsPage = () => {
                     <SingleEvent
                       key={event.id}
                       event={event}
-                      registered={false}
+                      registered={isRegistered(event)}
                       past={true}
                     />
                   );
@@ -216,9 +216,9 @@ const SingleEvent = ({ event, registered, past, setEvents = () => {} }) => {
                 </button>
               </div>
             )}
-            {registered && !past && (
+            {registered && (
               <p className="leading-relaxed text-base text-primary-500 mt-4">
-                Registered <FaCheckCircle className="inline-block" />
+               {past? "Attended":"Registered"} <FaCheckCircle className="inline-block" />
               </p>
             )}
           </div>

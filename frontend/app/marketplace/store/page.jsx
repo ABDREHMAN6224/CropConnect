@@ -388,7 +388,7 @@ const UpdateOrder = ({ order, setOrders }) => {
           setFilter(e.target.value);
         }}
       >
-        {orderFilters.map((filter) => (
+        {orderFilters.slice(orderFilters.indexOf(order.status)).map((filter) => (
           <option key={filter} value={filter}>
             {filter}
           </option>

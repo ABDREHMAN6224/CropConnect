@@ -104,6 +104,10 @@ export default function Checkout({params}) {
       const data = await response.json();
       if(response.ok){
         setOrder(data);
+        // remove items from cart
+        selectedProducts.forEach((product) => {
+          removeFromCart(product._id);
+        })
         setOpenOrderModal(true);
       }
       setLoading(false);

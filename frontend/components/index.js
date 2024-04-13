@@ -7,7 +7,7 @@ import ContactUsSection from "./ContactUsSection";
 import OurBlogsSection from "./OurBlogsSection";
 import OurEventsSection from "./OurEventsSection";
 import OurCommunitySection from "./OurCommunitySection";
-
+import OurMarketplaceSection from "./OurMarketplaceSection";
 export {
     HomePageHeroSection,
     ResourcesSection,
@@ -18,4 +18,5 @@ export {
     OurBlogsSection,
     OurEventsSection,
     OurCommunitySection,
+    OurMarketplaceSection,
 };

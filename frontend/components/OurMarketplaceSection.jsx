@@ -1,9 +1,5 @@
-// Stay Informed and Inspired with Our Latest Blogs
-// images = crop_6.jpeg
 
-// Stay informed and inspired with our latest blogs, where users share industry insights, farming tips, and stories from the field to help you grow and succeed in agriculture.   
-const OurBlogsSection = () => {
-    // page is overview of blogs and helps user to navigate to  "/blogs"
+const OurMarketplaceSection = () => {
   return (
     <section className="text-gray-600 body-font px-8 lg:px-16 w-full flex justify-center">
     <div className="w-full mx-auto flex  py-24  md:flex-row-reverse flex-col items-center">
@@ -13,26 +9,24 @@ const OurBlogsSection = () => {
                 lineHeight: "1.3"
             }}
         >
-        Stay Informed and Inspired with Our Latest Blogs
+        Visit Our Marketplace
           <br className="hidden lg:inline-block"/>
         </h1>
         <p className="mb-8 leading-relaxed text-md">
-        Stay informed and inspired with our latest blogs, where users share industry insights, farming tips, and stories from the field to help you grow and succeed in agriculture.
+        Visit our marketplace to buy and sell agricultural products, equipment, and services.
         </p>
         <div className="flex justify-center">
           <button className="inline-flex text-white bg-primary-500 border-0 py-2 px-6 focus:outline-none hover:bg-primary-600 rounded text-lg"
-            onClick={() => {
-              window.location.href = '/blogs'
-            }}
-          >Read More</button>
+            onClick={() => window.location.href = '/marketplace'}
+          >Maketplace</button>
           </div>
       </div>
       <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-        <img className="object-cover object-center rounded shadow-sm" alt="crop-img" src={"/blogs.jpeg"}/>
+        <img className="object-cover object-center rounded shadow-sm" alt="crop-img" src={"/market.jpeg"}/>
       </div>
     </div>
   </section>
   )
 }
 
-export default OurBlogsSection
+export default OurMarketplaceSection

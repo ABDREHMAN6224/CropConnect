@@ -3,7 +3,7 @@ import Link from "next/link";
 import NavBar from "../components/NavBar";
 import { useAppSelector } from "./store/hooks";
 import { FaPlus } from "react-icons/fa";
-import {HomePageHeroSection,ResourcesSection,CustomerFeedbacksSection,OurTeamSection,FooterSection,ContactUsSection, OurBlogsSection, OurEventsSection, OurCommunitySection, SuccessStories} from "../components"
+import {HomePageHeroSection,ResourcesSection,CustomerFeedbacksSection,OurTeamSection,FooterSection,ContactUsSection, OurBlogsSection, OurEventsSection, OurCommunitySection, SuccessStories, OurMarketplaceSection} from "../components"
 export default function Home() {
   const user = useAppSelector((state) => state.user);
   const isAdmin = user.role.toLowerCase() === "admin";
@@ -68,7 +68,8 @@ export default function Home() {
           <ResourcesSection />
           <OurCommunitySection />
           <OurBlogsSection />
-          <OurEventsSection/> 
+          <OurEventsSection/>
+          <OurMarketplaceSection/> 
           <CustomerFeedbacksSection />
           <ContactUsSection />
           <OurTeamSection />

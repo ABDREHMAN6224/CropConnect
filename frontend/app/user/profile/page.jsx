@@ -82,7 +82,6 @@ export default function Profile() {
         },
       });
       const data = await response.json();
-      console.log(data);
       if(response.ok){
         setEvents(data);
       }};
@@ -133,7 +132,7 @@ export default function Profile() {
               
 
               
-             <div class="bg-gradient-to-br from-green-400 to-cyan-500 rounded-lg flex-1">
+             <div class="bg-gradient-to-br from-green-400 to-cyan-500 rounded-lg flex-1 section-bg-2">
                 <div class=" mx-auto px-6 py-8 ">
                     <div class="items-center flex">
                         <div class="w-full">
@@ -148,7 +147,7 @@ export default function Profile() {
              </div>
 
              {/* for community  having link to "/community/chats"*/}
-              <div class="bg-gradient-to-br from-primary-400 to-yellow-500 rounded-lg flex-1">
+              <div class="bg-gradient-to-br from-primary-400 to-yellow-500 rounded-lg flex-1 section-bg">
                   <div class="px-6 py-8 ">
                       <div class="items-center flex">
                           <div class="w-full">

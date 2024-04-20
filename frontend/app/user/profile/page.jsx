@@ -10,6 +10,7 @@ import OrderInvoiceModal from "../../../components/modals/OrderInvoiceModal";
 import { formatAmount,generateStatusBadge } from "../../utils/general_utils";
 import ReviewModal from "../../../components/modals/ReviewModal";
 import ShowEventTicketModal from "../../../components/modals/EventTicketModal";
+
 export default function Profile() {
   const router = useRouter();
   const userState = useAppSelector((state) => state.user);
@@ -29,7 +30,8 @@ export default function Profile() {
   const [events, setEvents] = useState([]);
 
 
-
+  const user = useAppSelector((state) => state.user);
+  const isAdmin = user.role.toLowerCase() === "admin";
   if (!isLoggedIn) {
     return router.push("/login");
   }
@@ -100,7 +102,7 @@ export default function Profile() {
         <div className="container mx-auto p-4 flex flex-col  h-full lg:overflow-hidden">
           <section className="flex flex-col flex-1 overflow-hidden">
             <div className="mx-auto bg-white dark:bg-gray-900 rounded-lg  shadow-sm flex items-center  justify-between flex-col lg:flex-row gap-4 flex-wrap">
-              <div className="border-b px-4 pb-2 flex flex-col flex-1 overflow-hidden">
+              <div className="flex flex-col flex-1 overflow-hidden">
                 {/* card to show user avaraty email and role with iption t sign out*/}
                 <div className="flex items-center gap-4">
                   <div className="rounded-full overflow-hidden w-[64px] h-[64px]">
@@ -165,8 +167,6 @@ export default function Profile() {
                     </div>
               </div>
 
-
-
             </div>
             <div className="my-8 flex-1 overflow-hidden flex flex-col items-start">
               <div className="font-bold text-gray-800 dark:text-white flex justify-between mb-8 w-full">
@@ -179,7 +179,7 @@ export default function Profile() {
                       onClick={() => setActiveTab(tab)}
                       className={`cursor-pointer ${
                         activeTab === tab
-                          ? "text-primary-600 dark:text-white border-b-2 border-primary-900"
+                          ? "text-primary-600 dark:text-white border-primary-900"
                           : "text-gray-600 dark:text-white"
                       }`}
                     >

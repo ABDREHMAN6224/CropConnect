@@ -36,6 +36,7 @@ const SingleBlogPage = ({params}) => {
             }
             {blog && 
             <>
+            
             <section className="relative h-72 px-8 lg:px-32 text-white overflow-hidden section-bg dark:bg-gray-900">
                 <div className="relative z-10 flex flex-col justify-end items-start h-full text-left">
                     <div className="flex items-center w-full justify-between gap-3 max-w-screen-2xl px-8 lg:px-16">

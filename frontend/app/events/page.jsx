@@ -233,7 +233,16 @@ const SingleEvent = ({ event, registered, past, setEvents = () => {} }) => {
           <div className="flex justify-start self-start flex-col mb-4">
             <h3 className="text-lg font-semibold">Guests</h3>
             <div className="flex justify-start self-start flex-wrap">
-              {event.guests.map((guest) => (
+              {
+              typeof(event.guests==="string")?
+              <span
+                  className="inline-flex text-primary-500 bg-gray-200 border-0 py-1 px-2 focus:outline-none hover:bg-gray-300 rounded text-xs mb-2 mr-2"
+                >
+                  {event.guests}
+                </span>
+              :
+              event.guests
+              .map((guest) => (
                 <span
                   key={guest}
                   className="inline-flex text-primary-500 bg-gray-200 border-0 py-1 px-2 focus:outline-none hover:bg-gray-300 rounded text-xs mb-2 mr-2"

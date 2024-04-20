@@ -18,7 +18,7 @@ const eventSchema = new mongoose.Schema({
     },
     time: {
         type: String,
-        required: true,
+        default: new Date().toLocaleTimeString(),
     },
     location: {
         type: String,

@@ -5,7 +5,7 @@ class Email{
     constructor(user){
         this.to = user.email;
         this.firstName = user.name.split(' ')[0];
-        this.from = `Harvest Hub <${process.env.EMAIL_FROM}>`;
+        this.from = `Crop Connect <${process.env.EMAIL_FROM}>`;
     }
 
     newTransport(){
@@ -33,7 +33,7 @@ class Email{
     }
 
     async sendWelcome(){
-        await this.send('Welcome to the Harvest Hub!');
+        await this.send('Welcome to the Crop Connect!', 'Thank you for joining us!');
     }
 
     async sendPasswordReset(){

@@ -39,7 +39,6 @@ html{
   
 }
 .section-bg{
-    /* greeish gradient on top */
 
   background: linear-gradient(rgba(60, 230, 131, 0.3), rgba(60,230,131,0.3)), url("/crop_3.jpeg");
   background-size: cover;
@@ -47,7 +46,6 @@ html{
   background-position: center;
 }
 .section-bg-2{
-    /* greeish gradient on top */
 
   background: linear-gradient(rgba(60, 230, 131, 0.3), rgba(60,230,131,0.3)), url("/crop_6.jpeg");
   background-size: cover;

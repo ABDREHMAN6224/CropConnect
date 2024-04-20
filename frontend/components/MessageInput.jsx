@@ -1,4 +1,4 @@
-export default function MessageInput({ value, onChange, placeholder, fileAllowed=true,onFileChange,disabled }) {
+export default function MessageInput({ value, onChange, placeholder, fileAllowed=true,onFileChange,disabled,required }) {
     // create inpiut for chat where there is a clip along with text input for selecting files
     return (
       <div className="flex items-center">
@@ -17,6 +17,7 @@ export default function MessageInput({ value, onChange, placeholder, fileAllowed
               id="file"
               className="hidden"
               onChange={onFileChange}
+              required={required}
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"

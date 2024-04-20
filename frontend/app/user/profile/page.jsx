@@ -94,10 +94,10 @@ export default function Profile() {
   },[myOrders]);
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col">
+    <div className="lg:h-screen lg:overflow-hidden flex flex-col">
       <NavBar />
-      <main className="dark:bg-gray-900 flex-1 overflow-hidden ">
-        <div className="container mx-auto p-4 flex flex-col  h-full overflow-hidden">
+      <main className="dark:bg-gray-900 flex-1 lg:overflow-hidden ">
+        <div className="container mx-auto p-4 flex flex-col  h-full lg:overflow-hidden">
           <section className="flex flex-col flex-1 overflow-hidden">
             <div className="mx-auto bg-white dark:bg-gray-900 rounded-lg  shadow-sm flex items-center  justify-between flex-col lg:flex-row gap-4 flex-wrap">
               <div className="border-b px-4 pb-2 flex flex-col flex-1 overflow-hidden">
@@ -139,7 +139,7 @@ export default function Profile() {
                             <h2 class="text-3xl font-semibold text-white">Welcome to your profile</h2>
                             <p class="mt-4 text-gray-300">You can view your orders, give feedback and manage your store from here.</p>
                             <button class="mt-8 bg-white text-primary-500 font-semibold py-2 px-6 rounded-lg"
-                              onClick={() => router.push("/marketplace")}
+              h-screen                onClick={() => router.push("/marketplace")}
                             >Go to Marketplace</button>
                         </div>
                     </div>
@@ -158,7 +158,7 @@ export default function Profile() {
                                   Join the community to connect with other users and share your thoughts.
                               </p>
                               <button class="mt-8 bg-white text-primary-500 font-semibold py-2 px-6 rounded-lg"
-                                onClick={() => router.push("/community/chats")}
+                                onClick={() => router.push("/community/")}
                               >Go to Community</button>
                           </div>
                       </div>

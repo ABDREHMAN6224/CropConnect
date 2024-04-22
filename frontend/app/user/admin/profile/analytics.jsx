@@ -18,11 +18,27 @@ import {
   RadialLinearScale,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
-import { enUS } from "date-fns/locale";
 import { ReactChart } from "chartjs-react";
+import ChartBox from "../../../../components/chartBox/ChartBox";
+import Approvals from "./Approvals";
+export const chartBoxProduct = {
+  color: "skyblue",
+  icon: "./productIcon.svg",
+  title: "Total Products",
+  number: "238",
+  dataKey: "products",
+  percentage: Math.round(Math.random() * 50),
+  chartData: [
+    { name: "Sun", products: 400 },
+    { name: "Mon", products: 600 },
+    { name: "Tue", products: 500 },
+    { name: "Wed", products: 700 },
+    { name: "Thu", products: 400 },
+    { name: "Fri", products: 500 },
+    { name: "Sat", products: 450 },
+  ],
+};
 
-// Register modules,
-// this example for time scale and linear scale
 ReactChart.register(
   BarController,
   PieController,
@@ -37,27 +53,6 @@ ReactChart.register(
   LineElement,
   Tooltip
 );
-
-// options of chart similar to v2 with a few changes
-// https://www.chartjs.org/docs/next/getting-started/v3-migration/
-// data of chart similar to v2, check the migration guide
-const chartData = {
-  labels: [
-    "2021-01-01",
-    "2021-01-02",
-    "2021-01-03",
-    "2021-01-04",
-    "2021-01-05",
-  ],
-  datasets: [
-    {
-      label: "Dataset 1",
-      data: [1, 2, 3, 4, 5],
-      borderColor: "rgb(75, 192, 192)",
-      backgroundColor: "rgba(75, 192, 192, 0.2)",
-    },
-  ],
-};
 
 const Analytics = ({ orders }) => {
   const [users, setusers] = useState([]);
@@ -124,138 +119,115 @@ const Analytics = ({ orders }) => {
     if (!(date in eventsData)) eventsData[date] = 0;
     eventsData[date] += 1;
   }
-
+  console.log(users, events, orders, pieData);
   return (
     <div>
-      <h1 className="text-2xl font-extrabold">Analytics</h1>
+      <h1 className="text-2xl font-extrabold my-4">Analytics</h1>
       <div className="flex justify-evenly w-100">
-        <div className="h-60 w-60 m-8">
-          <legend>Total Transactions / Day </legend>
-          <ReactChart
-            type="bar"
-            data={{
-              labels: Object.keys(barData),
-              datasets: [
-                {
-                  label: "Total Price",
-                  data: Object.values(barData).map((d) => d.totalPrice),
-                  borderColor: "rgb(75, 192, 192)",
-                  backgroundColor: "rgba(75, 192, 192, 0.2)",
-                },
-                {
-                  label: "Count",
-                  data: Object.values(barData).map((d) => d.count),
-                  borderColor: "rgb(192, 75, 75)",
-                  backgroundColor: "rgba(192, 75, 75, 0.2)",
-                },
-              ],
-            }}
-            options={{
-              scales: {
-                x: {
-                  type: "time",
-                  time: {
-                    unit: "day",
-                    displayFormats: {
-                      day: "MMM d",
+        <div>
+          <div className="flex w-full justify-evenly">
+            <ChartBox
+              {...{
+                ...chartBoxProduct,
+                title: "Total Users",
+                percentage: Math.round(Math.random() * 50),
+                number: users.length,
+                dataKey: "users",
+              }}
+            />
+            <ChartBox
+              {...{
+                ...chartBoxProduct,
+                percentage: Math.round(Math.random() * 50),
+                title: "Total Events",
+                number: events.length,
+                dataKey: "events",
+              }}
+            />
+            <ChartBox
+              {...{
+                ...chartBoxProduct,
+                title: "Total Orders",
+                percentage: Math.round(Math.random() * 50),
+                number: orders.length,
+                dataKey: "orders",
+              }}
+            />
+            <ChartBox
+              {...{
+                ...chartBoxProduct,
+                title: "Total Products",
+                percentage: Math.round(Math.random() * 50),
+                number: Object.keys(pieData).length,
+              }}
+            />
+          </div>
+
+          <Approvals />
+        </div>
+        <div className="">
+          <div className="h-60 w-60 m-8">
+            <legend>Total Transactions / Day </legend>
+            <ReactChart
+              type="bar"
+              data={{
+                labels: Object.keys(barData),
+                datasets: [
+                  {
+                    label: "Total Price",
+                    data: Object.values(barData).map((d) => d.totalPrice),
+                    borderColor: "rgb(75, 192, 192)",
+                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                  },
+                  {
+                    label: "Count",
+                    data: Object.values(barData).map((d) => d.count),
+                    borderColor: "rgb(192, 75, 75)",
+                    backgroundColor: "rgba(192, 75, 75, 0.2)",
+                  },
+                ],
+              }}
+              options={{
+                scales: {
+                  x: {
+                    type: "time",
+                    time: {
+                      unit: "day",
+                      displayFormats: {
+                        day: "MMM d",
+                      },
                     },
                   },
                 },
-              },
-            }}
-            height={50}
-            width={50}
-          />
-        </div>
-        <div className="h-60 w-60 m-8">
-          <legend>Items Sold</legend>
-          <ReactChart
-            type="polarArea"
-            data={{
-              datasets: Object.entries(pieData).map(([u, d]) => ({
+              }}
+              height={50}
+              width={50}
+            />
+          </div>
+          <div className="h-60 w-60 m-8">
+            <legend>Items Sold</legend>
+            <ReactChart
+              type="polarArea"
+              data={{
+                datasets: Object.entries(pieData).map(([u, d]) => ({
                   data: [d],
                   label: u,
                   borderColor: "rgb(75, 192, 192)",
                   backgroundColor: "rgba(75, 192, 192, 0.2)",
-                }),
-              ),
-            }}
-            options={{
-              plugins: {
-                legend: {
-                  display: true,
-                  position: "right",
-                },
-              },
-            }}
-            height={50}
-            width={50}
-          />
-        </div>
-      </div>
-      <div className="flex  justify-evenly w-100">
-        <div className="h-60 w-60 m-8">
-          <legend>Community Activity</legend>
-          <ReactChart
-            type="line"
-            data={{
-              labels: Array.from({ length: 10 }, (_, i) => i + 1),
-              datasets: Object.entries(lineData).map(([user, data]) => ({
-                label: user,
-                data,
-                borderColor: `rgb(${Math.random() * 255}, ${
-                  Math.random() * 255
-                }, ${Math.random() * 255})`,
-                backgroundColor: `rgba(${Math.random() * 255}, ${
-                  Math.random() * 255
-                }, ${Math.random() * 255}, 0.2)`,
-              })),
-            }}
-            options={{
-              scales: {
-                x: {
-                  type: "linear",
-                  min: 0,
-                  max: 10,
-                },
-              },
-            }}
-            height={50}
-            width={50}
-          />
-        </div>
-        <div className="h-60 w-60 m-8">
-          <legend>Events / Day</legend>
-          <ReactChart
-            type="bar"
-            data={{
-              labels: Object.keys(eventsData),
-              datasets: [
-                {
-                  label: "Events",
-                  data: Object.values(eventsData),
-                  borderColor: "rgb(75, 192, 192)",
-                  backgroundColor: "rgba(75, 192, 192, 0.2)",
-                },
-              ],
-            }}
-            options={{
-              scales: {
-                x: {
-                  type: "time",
-                  time: {
-                    unit: "day",
-                    displayFormats: {
-                      day: "MMM d",
-                    },
+                })),
+              }}
+              options={{
+                plugins: {
+                  legend: {
+                    display: true,
+                    position: "right",
                   },
                 },
-              },
-            
-            }}
-            height={50}
-            width={50}
-          />
+              }}
+              height={50}
+              width={50}
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ const page = () => {
   return (
     <>
     <NavBar/>
-    <div class="bg-gray-100">
+    <div class="dark:bg-gray-800">
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold mb-4 text-primary-900">Privacy Policy</h1>
 

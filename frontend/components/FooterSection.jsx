@@ -23,6 +23,10 @@ const footerItems = [
         name: "Marketplace",
         path: "/marketplace",
       },
+      {
+        name : "Resources",
+        path : "/resources"
+      }
     ]
   },
   {
@@ -36,6 +40,14 @@ const footerItems = [
         name: "Community",
         path: "/community",
       },
+      {
+        name: "Chats",
+        path: "/community/chats",
+      },
+      {
+        name: "Write a Blog",
+        path: "/blogs/create",
+      }
     ]
   },
   {
@@ -69,6 +81,10 @@ const footerItems = [
       {
         name: "Give Feedback",
         path: "/feedback",
+      },
+      {
+        name: "Customer Feedbacks",
+        path: "/#feedback-section",
       }
     ]
   },

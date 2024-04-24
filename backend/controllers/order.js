@@ -36,7 +36,6 @@ export const getMyOrders = catchAsync(async (req, res, next) => {
 })
 
 export const getStoreOrders = catchAsync(async (req, res, next) => {
-    // orderItems is an array of Marketplace Model ids, select only those orderItems where orderItems.seller id contain the user id
     const found_orders = await Order.aggregate([
         {
             $unwind: "$orderItems"

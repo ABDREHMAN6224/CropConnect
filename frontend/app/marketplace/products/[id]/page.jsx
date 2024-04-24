@@ -120,7 +120,11 @@ export default function SingleProduct({params}){
                                 <img alt="ecommerce" src={product.seller && product.seller.avatar} className="w-10 h-10 rounded-full flex-shrink-0 object-cover object-center" />
                                 <span className="flex-grow pl-3">
                                     <h2 className="title-font font-medium text-gray-600 underline-offset-2 underline dark:text-gray-300 ">
-                                        {product.seller && product.seller.name}</h2>
+                                        {product.seller && product.seller.name}
+                                            <p className="text-gray-500 dark:text-gray-400 underline underline-offset-4 cursor-pointer"
+                                                onClick={() => router.push("/community/chats/?userId="+product.seller._id)}
+                                            >Contact Seller</p>
+                                    </h2>
                                 </span>
 
                             </div>                                

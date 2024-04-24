@@ -55,6 +55,7 @@ export default function Store() {
     });
     const data = await response.json();
     if (response.ok) {
+      console.log(data);
       setStoreOrders(data);
       setFilteredStoreOrders(data);
     } else {

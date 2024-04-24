@@ -1,7 +1,7 @@
 
 const OurTeamSection = () => {
   return (
-    <section className="text-gray-600 body-font px-8 lg:px-16 w-full flex justify-center">
+    <section className="text-gray-600 body-font px-8 lg:px-16 w-full flex justify-center" id="our-team">
     <div className="w-full mx-auto flex  py-24 md:flex-row flex-col items-center flex-wrap">
     <div className="flex flex-col text-center w-full mb-20">
           <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Our Team</h1>

@@ -156,7 +156,7 @@ const SingleEvent = ({ event, registered, past, setEvents = () => {} }) => {
   const { token } = useAppSelector((state) => state.auth);
   const user = useAppSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
-
+  console.log(event);
   const register = async () => {
     setLoading(true);
     const response = await fetch(
@@ -204,7 +204,7 @@ const SingleEvent = ({ event, registered, past, setEvents = () => {} }) => {
             <p className="leading-relaxed text-gray-800">{event.time}</p>
             {/* location */}
             <p className="leading-relaxed text-base">{event.location}</p>
-            {(!registered || past) && (
+            {(!registered && !past) && (
               <div className="flex justify-start self-start mt-4">
                 <button
                   className="inline-flex text-white bg-primary-500 border-0 py-2 px-6 focus:outline-none hover:bg-primary-600 rounded text-lg"

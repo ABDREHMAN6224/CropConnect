@@ -15,7 +15,7 @@ const CustomerFeedbacksSection = () => {
   }, []);
 
   return (
-    <section className="text-gray-600 body-font px-2 sm:px-8 lg:px-16 w-full flex justify-center">
+    <section className="text-gray-600 body-font px-2 sm:px-8 lg:px-16 w-full flex justify-center" id="feedback-section">
       <div className="w-full mx-auto flex  py-24 md:flex-row flex-col items-center flex-wrap">
         <h1 className="text-3xl font-medium title-font text-primary-900 mb-12 text-center  mx-auto">
           Customer Feedbacks

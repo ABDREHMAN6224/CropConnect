@@ -1,6 +1,7 @@
 import express from 'express';
 import { protect } from '../middlewares/auth.js';
 import { accessChat, addToGroupChat, createGroupChat, deleteChat, getGroupChats, getPublicChats, getUserChats, joinPublicChat, leaveChat, removeFromGroupChat, updateChat } from '../controllers/chatController.js';
+import Chat from '../model/Chats.js';
 
 const router = express.Router();
 
@@ -13,6 +14,10 @@ router.route("/add/:id").put(protect, addToGroupChat);
 router.route("/remove/:id").put(protect, removeFromGroupChat);
 router.route("/community/public").get(protect,getPublicChats);
 router.route("/community/join/:id").put(protect,joinPublicChat);
+// router.get("/removeAll", async (req,res)=>{
+//     await Chat.deleteMany();
+//     res.json({message:"Chat removed"});
+// })
 
 
 

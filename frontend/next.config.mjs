@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+
+  reactStrictMode: false,
+};
 
 // configure localhost under images
 nextConfig.images = {

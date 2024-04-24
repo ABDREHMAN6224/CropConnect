@@ -1,7 +1,7 @@
 
 const HomePageHeroSection = ({isAdmin}) => {
   return (
-    <section className={`relative min-h-[93vh] ${isAdmin ? "md:pt-80 pt-72  xl:pt-96":"py-44"} flex items-center justify-center   text-white overflow-hidden section-bg lg:px-44 md:px-32  pb-16 px-8 sm:px-24 sm:pb-32`}>
+    <section className={`relative min-h-[93vh] py-44 flex items-center justify-center   text-white overflow-hidden section-bg lg:px-44 md:px-32  pb-16 px-8 sm:px-24 sm:pb-32`}>
       <div className="relative z-10 flex flex-col justify-center items-center h-full text-center">
         <h1 className="text-5xl font-bold leading-tight mb-4">
        Crop Connect: Navigating the Modern World of Farming

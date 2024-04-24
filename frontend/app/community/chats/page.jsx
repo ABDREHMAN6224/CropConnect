@@ -42,6 +42,7 @@ export default function Chats() {
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("text");
   const [file, setFile] = useState(null);
+  const [firstRender, setFirstRender] = useState(true);
 
   const socket = useSocket();
   const [chatModalVisible, setChatModalVisible] = useState(false);
@@ -51,26 +52,7 @@ export default function Chats() {
   const [notifications, setNotifications] = useState([]);
   const [groupNotifications, setGroupNotifications] = useState([]);
 
-  useEffect(() => {
-    dispatch(updateFileteredUsers(search));
-  }, [search]);
-
-  useEffect(() => {
-    dispatch(updateFileteredUsers(search2));
-  }, [search2]);
-
-  const handleAddUsers = (user) => {
-    setSelectedMembers([...selectedMembers, user]);
-  };
-
-  document.addEventListener("keyup", (e) => {
-    if (e.key === "Escape") {
-      setChatModalVisible(false);
-      setGroupModalVisible(false);
-    }
-  });
-
-  const handleOpenChat = async (users, isGroup, chatId = null) => {
+  const handleOpenChat = async (users, isGroup=false, chatId = null) => {
     setChatModalVisible(false);
     setLoader(true);
     const response = await fetch(`${serverUrl}/chats/create_chat`, {
@@ -107,13 +89,34 @@ export default function Chats() {
       }
       setCurrentChatMessages(data.messages);
     } else {
-      console.log(data);
       setError(data.message);
       toast.error(data.message);
     }
     setLoader(false);
     socket.emit("join:room", { room: data.chat._id, user: user._id });
   };
+
+
+
+  useEffect(() => {
+    dispatch(updateFileteredUsers(search));
+  }, [search]);
+
+  useEffect(() => {
+    dispatch(updateFileteredUsers(search2));
+  }, [search2]);
+
+  const handleAddUsers = (user) => {
+    setSelectedMembers([...selectedMembers, user]);
+  };
+
+  document.addEventListener("keyup", (e) => {
+    if (e.key === "Escape") {
+      setChatModalVisible(false);
+      setGroupModalVisible(false);
+    }
+  });
+
 
   const handleCollapse = (id) => {
     const element = document.getElementById(id);
@@ -185,6 +188,12 @@ export default function Chats() {
     dispatch(getUsers());
     dispatch(getAllChats());
     setCurrentUserId(user?._id);
+  }, []);
+
+  useEffect(() => {
+    const userId = new URLSearchParams(window.location.search).get("userId");
+    if(!userId) return;
+    handleOpenChat(userId, false, null);
   }, []);
 
   const handleGroupModalSubmit = (e) => {

@@ -17,7 +17,7 @@ const ChartBox = (props: Props) => {
     <div className="w-min p-4 border border-blue-900 rounded-lg chartBox mx-4">
       <div className="boxInfo">
         <div className="title">
-          <img src={("./productIcon.svg")} alt="" />
+          <img src={("/productIcon.svg")} alt="" />
           <span>{props.title}</span>
         </div>
         <h1>{props.number}</h1>

@@ -26,8 +26,8 @@ export const accessChat = catchAsync(async (req, res, next) => {
 
   
   isChat = await Chat.find({
-      members: { $all: [id, ...users] },
-      isGroup: req.body.isGroup || false
+    members: { $all: [id, users[0]] },
+      isGroup: req.body.isGroup
   },
   )
       .populate("members", "-password")
@@ -39,10 +39,12 @@ export const accessChat = catchAsync(async (req, res, next) => {
           }
       })
     }
+  
   if (isChat.length) {
     const chatMessages = await Message.find({ chat: isChat[0]._id }).populate("sender", "-password")
       res.status(200).send({ chat: isChat[0], messages: chatMessages })
   } else {
+    console.log("new chat");
       var chatData = {
           name: "sender",
           members: [id, ...users],

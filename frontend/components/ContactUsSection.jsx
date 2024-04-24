@@ -42,7 +42,7 @@ const ContactUsSection = () => {
         sendData()
     }
   return (
-    <section className="text-gray-600 body-font px-8 lg:px-16 w-full flex justify-center relative">
+    <section className="text-gray-600 body-font px-8 lg:px-16 w-full flex justify-center relative" id="contact-us">
 
         
      <div className="px-5 grid gap-8 grid-cols-1 md:grid-cols-2 py-24 items-center mx-auto text-primary-900 rounded-lg">

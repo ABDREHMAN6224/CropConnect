@@ -28,7 +28,7 @@ export const getRegisteredEvents = catchAsync(async (req, res, next) => {
 export const getPastEvents = catchAsync(async (req, res, next) => {
     const events = await Event.find({
         date: { $lt: new Date() },
-    }).select("time users image");
+    }).sort({createdAt:-1});
     res.status(200).json(events);
     });
 

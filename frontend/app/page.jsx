@@ -26,7 +26,7 @@ export default function Home() {
       <main className="dark:bg-gray-900 w-full relative">
         <HomePageHeroSection isAdmin={isAdmin} />
         <div className="max-w-screen-2xl mx-auto">
-          {isAdmin && (
+          {/* {isAdmin && (
             <div className=" w-80 block mb-8 absolute top-10 left-10">
               <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <div className="p-5">
@@ -73,7 +73,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          )}
+          )} */}
           <ResourcesSection />
           <OurCommunitySection />
           <OurBlogsSection />

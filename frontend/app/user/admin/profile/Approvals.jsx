@@ -12,21 +12,17 @@ const dummyBlogs = [
   },
 ];
 const Approvals = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [cur, setCur] = useState('blogs');
+
+
+  const theads = cur=="blogs"? ["ID", "Owner", "Created At", "Status", "Actions"] : []
   return (
     <div>
-      {showModal && <AddAdminModal setShowModal={setShowModal} />}
       <div className="flex my-8 justify-between">
-        <h1 className="text-2xl font-extrabold">Approvals</h1>
-        <button
-          onClick={() => setShowModal(!showModal)}
-          className="bg-blue-500 hover:bg-blue-700 text-white mx-2 font-bold py-2 px-4 rounded"
-        >
-          + Add Admin
-        </button>
+        <h1 className="text-2xl font-semibold">Approvals</h1>
       </div>
-      <table className="divide-y divide-gray-300 w-50">
-        <thead className=" bg-blue-950">
+      <table className="divide-y divide-gray-300 w-full">
+        <thead className=" bg-slate-100">
           <tr>
             {["ID", "Owner", "Created At", "Status", "Actions"].map((title) => (
               <th className="px-6 py-2 text-left md:text-sm font-medium text-gray-500 uppercase tracking-wider text-lg">

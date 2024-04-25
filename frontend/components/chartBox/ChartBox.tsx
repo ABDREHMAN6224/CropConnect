@@ -14,17 +14,14 @@ type Props = {
 
 const ChartBox = (props: Props) => {
   return (
-    <div className="w-min p-4 border border-blue-900 rounded-lg chartBox mx-4">
-      <div className="boxInfo">
-        <div className="title">
-          <img src={("/productIcon.svg")} alt="" />
-          <span>{props.title}</span>
-        </div>
+    <div className="w-auto p-4 border border-blue-900 rounded-lg mx-4">
+      <div className="flex gap-1 mr-3">
+        <img src={"/productIcon.svg"} alt="" />
         <h1>{props.number}</h1>
-      
+        <span>{props.title}</span>
       </div>
-      <div className="chartInfo">
-        <div className="chart">
+      <div className="">
+        <div className="chart gap-2 mx-1">
           <ResponsiveContainer width="99%" height="100%">
             <LineChart data={props.chartData}>
               <Tooltip

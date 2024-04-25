@@ -21,6 +21,7 @@ import "chartjs-adapter-date-fns";
 import { ReactChart } from "chartjs-react";
 import ChartBox from "../../../../components/chartBox/ChartBox";
 import Approvals from "./Approvals";
+import AddAdminModal from "./AddAdminModal";
 export const chartBoxProduct = {
   color: "skyblue",
   icon: "./productIcon.svg",
@@ -119,10 +120,9 @@ const Analytics = ({ orders }) => {
     if (!(date in eventsData)) eventsData[date] = 0;
     eventsData[date] += 1;
   }
-  console.log(users, events, orders, pieData);
   return (
     <div>
-      <h1 className="text-2xl font-extrabold my-4">Analytics</h1>
+      <h1 className="text-2xl font-semibold my-4">Analytics</h1>
       <div className="flex justify-evenly w-100">
         <div>
           <div className="flex w-full justify-evenly">
@@ -132,7 +132,6 @@ const Analytics = ({ orders }) => {
                 title: "Total Users",
                 percentage: Math.round(Math.random() * 50),
                 number: users.length,
-                dataKey: "users",
               }}
             />
             <ChartBox
@@ -141,7 +140,6 @@ const Analytics = ({ orders }) => {
                 percentage: Math.round(Math.random() * 50),
                 title: "Total Events",
                 number: events.length,
-                dataKey: "events",
               }}
             />
             <ChartBox
@@ -150,7 +148,6 @@ const Analytics = ({ orders }) => {
                 title: "Total Orders",
                 percentage: Math.round(Math.random() * 50),
                 number: orders.length,
-                dataKey: "orders",
               }}
             />
             <ChartBox
@@ -165,7 +162,8 @@ const Analytics = ({ orders }) => {
 
           <Approvals />
         </div>
-        <div className="">
+        <AddAdminModal />
+        {/* <div className="">
           <div className="h-60 w-60 m-8">
             <legend>Total Transactions / Day </legend>
             <ReactChart
@@ -204,31 +202,7 @@ const Analytics = ({ orders }) => {
               width={50}
             />
           </div>
-          <div className="h-60 w-60 m-8">
-            <legend>Items Sold</legend>
-            <ReactChart
-              type="polarArea"
-              data={{
-                datasets: Object.entries(pieData).map(([u, d]) => ({
-                  data: [d],
-                  label: u,
-                  borderColor: "rgb(75, 192, 192)",
-                  backgroundColor: "rgba(75, 192, 192, 0.2)",
-                })),
-              }}
-              options={{
-                plugins: {
-                  legend: {
-                    display: true,
-                    position: "right",
-                  },
-                },
-              }}
-              height={50}
-              width={50}
-            />
-          </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

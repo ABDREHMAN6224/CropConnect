@@ -208,7 +208,7 @@ export default function Profile() {
                 products={currentOrder?.orderItems}
                 setallOrders={setallOrders}
                 onClose={() => {
-                  // window.location.reload();
+                  window.location.reload();
                   setOpenReviewModal(false);
                   setCurrentOrder(null);
                 }}

@@ -55,19 +55,19 @@ const footerItems = [
     links: [
       {
         name: "Crop Connect",
-        path: "/aboutUs",
+        path: "/aboutus",
       },
       {
         name: "Our Mission",
-        path: "/aboutUs/#our-mission",
+        path: "/aboutus/#our-mission",
+      },
+      {
+        name: "Our Vision",
+        path: "/aboutus/#our-vision",
       },
       {
         name: "Our Team",
         path: "/#our-team",
-      },
-      {
-        name: "Contact Us",
-        path: "/#contact-us",
       },
     ]
   },
@@ -85,7 +85,11 @@ const footerItems = [
       {
         name: "Customer Feedbacks",
         path: "/#feedback-section",
-      }
+      },
+      {
+        name: "Contact Us",
+        path: "/#contact-us",
+      },
     ]
   },
 

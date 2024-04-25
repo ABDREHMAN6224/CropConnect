@@ -47,7 +47,15 @@ html{
 }
 .section-bg-2{
 
-  background: linear-gradient(rgba(60, 230, 131, 0.3), rgba(60,230,131,0.3)), url("/crop_6.jpeg");
+  background: linear-gradient(rgba(60, 230, 131, 0.2), rgba(60,230,131,0.2)), url("/crop_6.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
+.section-bg-3{
+
+  background: linear-gradient(rgba(60, 230, 131, 0.3), rgba(60,230,131,0.3)), url("/logo.jpeg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

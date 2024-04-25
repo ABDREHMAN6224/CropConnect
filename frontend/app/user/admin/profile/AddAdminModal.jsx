@@ -50,7 +50,7 @@ const AddAdminModal = () => {
                 htmlFor="name"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Your name
+                Username
               </label>
               <input
                 type="text"
@@ -68,7 +68,7 @@ const AddAdminModal = () => {
                 htmlFor="email"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Your email
+                User email
               </label>
               <input
                 type="email"

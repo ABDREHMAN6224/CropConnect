@@ -53,3 +53,16 @@ export const getPendeingStories = catchAsync(async (req, res) => {
     res.status(200).json(stories);
 })
 
+export const approveStory = catchAsync(async (req, res) => {
+    const story = await Story.findByIdAndUpdate(req.params.id, {
+        status: "approved"
+    }, { new: true});
+    res.status(200).json(story);
+})
+
+export const rejectStory = catchAsync(async (req, res) => {
+    const story = await Story.findByIdAndUpdate(req.params.id, {
+        status: "rejected"
+    }, { new: true});
+    res.status(200).json(story);
+})

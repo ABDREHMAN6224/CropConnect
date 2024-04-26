@@ -10,6 +10,11 @@ const storySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
+    status:{
+        type: String,
+        default: "pending",
+        enum: ["approved", "pending", "rejected"],
+    },
     content: {
         type: String,
         required: true,

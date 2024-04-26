@@ -43,7 +43,7 @@ export const getStory = catchAsync(async (req, res) => {
 
 export const deleteStory = catchAsync(async (req, res) => {
     const story = await Story.findByIdAndDelete(req.params.id);
-    res.json(story);
+    res.status(204).json(story);
 })
 
 export const updateStory = catchAsync(async (req, res) => {

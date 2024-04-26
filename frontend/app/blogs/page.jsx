@@ -4,9 +4,10 @@ import NavBar from "../../components/NavBar";
 import { useRouter } from "next/navigation";
 import { BACKEND_URL } from "../utils/constants";
 import TextInput from "../../components/inputs/TextInput";
-import {  FaSpinner } from "react-icons/fa";
+import {  FaSpinner, FaTrash } from "react-icons/fa";
 import { useAppSelector } from "../store/hooks";
 import { FooterSection } from "../../components";
+import { generateStatusBadge } from "../utils/general_utils";
 const BlogsPage = () => {
   const router = useRouter();
   const [blogs, setBlogs] = useState([]);
@@ -47,7 +48,7 @@ const BlogsPage = () => {
       }
     }
     async function getMyBlogs() {
-      const response = await fetch(`${BACKEND_URL}/stories/my`, {
+      const response = await fetch(`${BACKEND_URL}/stories/user/stories/my`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -153,7 +154,7 @@ const BlogsPage = () => {
                       </span>
                     </div>
                     <div className="flex-grow pl-6">
-                      <h2 className="tracking-widest text-xs title-font font-medium text-indigo-500 mb-1 uppercase">
+                      <h2 className="tracking-widest text-xs title-font font-medium text-primary-500 mb-1 uppercase">
                         {blog.category}
                       </h2>
                       <h1 className="title-font text-xl font-medium text-gray-900 mb-3">
@@ -197,7 +198,24 @@ const BlogsPage = () => {
             <div className="flex flex-wrap -mx-4 -my-8">
               {myBlogs.map((blog) => {
              return <div className="py-8 px-4 lg:w-1/3">
-                <div className="h-full flex items-start">
+                <div className="h-full flex items-start relative">
+                  {/* on top right show delete icon */}
+                  <span className="cursor-pointer absolute bottom-2 right-2 z-10" onClick={async () => {
+                    const response = await fetch(`${BACKEND_URL}/stories/${blog._id}`, {
+                      method: "DELETE",
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                        contentType: "application/json",
+                      }
+                    });
+                    if(response.ok){
+                      const updatedBlogs = myBlogs.filter((b) => b._id !== blog._id);
+                      setMyBlogs(updatedBlogs);
+                    }
+                  }}>
+                    <FaTrash className="text-red-500"/>
+                  </span>
+                  
                   <div className="w-12 flex-shrink-0 flex flex-col text-center leading-none">
                     <span className="text-gray-500 pb-2 mb-2 border-b-2 border-gray-200">
                       {new Date(blog.createdAt).toLocaleDateString('default',{month:"short"})}
@@ -207,7 +225,7 @@ const BlogsPage = () => {
                     </span>
                   </div>
                   <div className="flex-grow pl-6">
-                    <h2 className="tracking-widest text-xs title-font font-medium text-indigo-500 mb-1 uppercase">
+                    <h2 className="tracking-widest text-xs title-font font-medium text-primary-500 mb-1 uppercase">
                       {blog.category}
                     </h2>
                     <h1 className="title-font text-xl font-medium text-gray-900 mb-3">
@@ -215,7 +233,6 @@ const BlogsPage = () => {
                     </h1>
                     <p className="leading-relaxed mb-5">
                       {blog.content.slice(0, 200)} {blog.content.length > 200 ? "..." : ""}
-                      {" "} <a className="text-primary-500 cursor-pointer" onClick={() => router.push(`/blogs/${blog._id}`)}>Read More</a>
                     </p>
                     <a className="inline-flex items-center">
                       <img
@@ -225,7 +242,10 @@ const BlogsPage = () => {
                       />
                       <span className="flex-grow flex flex-col pl-3">
                         <span className="title-font font-medium text-gray-900">
-                          {blog.author.name}
+                        {blog.author.name}
+                        <span className="text-xs block">
+                          {generateStatusBadge(blog.status)}
+                        </span>
                         </span>
                       </span>
                     </a>

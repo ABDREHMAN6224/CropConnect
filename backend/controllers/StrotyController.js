@@ -4,12 +4,21 @@ import catchAsync from '../utils/catchAsync.js';
 
 export const getStories = catchAsync(async (req, res) => {
     const feature = new ApiFeatures(Story.find({
-        status: "approved"
+        status: "approved",
+        author: { $ne: req.user._id }
     }), req.query).sort().limitFields();
     const stories = await feature.query.populate("author","name email avatar");
     res.status(200).json(stories);
 })
 
+export const getMyStories = catchAsync(async (req, res) => {
+    const feature = new ApiFeatures(Story.find({
+        author: req.user._id
+    }
+    ), req.query).sort().limitFields();
+    const stories = await feature.query.populate("author","name email avatar");
+    res.status(200).json(stories);
+})
 
 export const createStory = catchAsync(async (req, res) => {
     const story={

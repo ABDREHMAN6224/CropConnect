@@ -17,6 +17,7 @@ const BlogsPage = () => {
   const [search,setSearch] = useState("");
   const [myBlogs, setMyBlogs] = useState([]);
   const user = useAppSelector((state) => state.user);
+  const {token} = useAppSelector((state) => state.auth);
   useEffect(() => {
     let filtered = blogs;
     if(category !== "All"){
@@ -32,17 +33,35 @@ const BlogsPage = () => {
     async function getBlogs() {
       const response = await fetch(`${BACKEND_URL}/stories/`, {
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          contentType: "application/json",
+        }
       });
       const data = await response.json();
       console.log(data);
       if (response.ok) {
-        setBlogs(data.filter((blog) => blog.author._id !== user._id));
-        setFilteredBlogs(data.filter((blog) => blog.author._id !== user._id));
-        setMyBlogs(data.filter((blog) => blog.author._id === user._id));
+        setBlogs(data);
+        setFilteredBlogs(data);
         setLoading(false);
       }
     }
+    async function getMyBlogs() {
+      const response = await fetch(`${BACKEND_URL}/stories/my`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          contentType: "application/json",
+        }
+      });
+      const data = await response.json();
+      console.log(data);
+      if (response.ok) {
+        setMyBlogs(data);
+      }
+    }
     getBlogs();
+    getMyBlogs();
   }, []);
 
 

@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import useColorMode from "../../hooks/useColorMode";
 import { FaSpinner } from "react-icons/fa";
 import { SingleChat } from "./SingleChat";
+import AuthWrapper from "../AuthWrapper";
 
 const CommunityPage = () => {
   const router = useRouter();
@@ -29,7 +30,6 @@ const CommunityPage = () => {
         },
       });
       const data = await response.json();
-      console.log(data);
       if (response.ok) {
         let sortedData = data;
         sortedData.sort((a, b) => {
@@ -46,7 +46,7 @@ const CommunityPage = () => {
   }, []);
 
   return (
-    <>
+    <AuthWrapper>
       <NavBar />
 
       <main className="dark:bg-gray-900 w-full">
@@ -109,7 +109,7 @@ const CommunityPage = () => {
       </main>
       <FooterSection />
       <ToastContainer theme={colorMode} />
-    </>
+    </AuthWrapper>
   );
 };
 

@@ -8,6 +8,7 @@ import { getMarketplaces } from "../store/marketPlace/marketPlaceThunk";
 import { useRouter } from "next/navigation";
 import TextInput from "../../components/inputs/TextInput";
 import { formatAmount } from "../utils/general_utils";
+import AuthWrapper from "../AuthWrapper";
 export default function MarketplacePage() {
   //   const [loading, setLoading] = useState(true);
   const products = useAppSelector(store=>store.marketPlace)
@@ -58,9 +59,6 @@ export default function MarketplacePage() {
 
 
   useEffect(() => {
-    console.log("filteredProducts",filteredProducts);
-  },[filteredProducts]);
-  useEffect(() => {
     if(!products.length) return;
     let newProducts = [...products];
     if(filters.category !== "All"){
@@ -91,7 +89,7 @@ export default function MarketplacePage() {
   }, [filters]);
 
   return (
-    <>
+    <AuthWrapper>
       <NavBar />
       <main className="dark:bg-gray-900 flex">
         <aside className="text-white p-4 sticky top-0 h-screen w-1/4 border-r border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800">
@@ -199,6 +197,6 @@ export default function MarketplacePage() {
         </div>
         
       </main>
-    </>
+    </AuthWrapper>
   );
 }

@@ -7,6 +7,7 @@ import { BACKEND_URL } from "../../utils/constants";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import useColorMode from "/hooks/useColorMode";
+import AuthWrapper from "../../AuthWrapper";
 
 export default function ResourcesCreate() {
   const [colorMode, _] = useColorMode();
@@ -53,7 +54,7 @@ export default function ResourcesCreate() {
     setSubmitting(false);
   };
   return (
-    <>
+    <AuthWrapper admin={true}>
           <ToastContainer theme={colorMode} />
 
       <NavBar />
@@ -170,6 +171,6 @@ export default function ResourcesCreate() {
           </div>
         </div>
       </main>
-    </>
+    </AuthW>
   );
 }

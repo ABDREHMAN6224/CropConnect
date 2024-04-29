@@ -11,6 +11,8 @@ import TextInput from "../../../components/inputs/TextInput";
 import { formatDate } from "../../utils/general_utils";
 import { FaSpinner } from "react-icons/fa";
 import Chart from 'chart.js/auto';
+import { useSocket } from "../../context/socketContext";
+import AuthWrapper from "../../AuthWrapper";
 
 
 export default function Store() {
@@ -55,7 +57,6 @@ export default function Store() {
     });
     const data = await response.json();
     if (response.ok) {
-      console.log(data);
       setStoreOrders(data);
       setFilteredStoreOrders(data);
     } else {
@@ -96,6 +97,7 @@ export default function Store() {
   }, []);
 
   return (
+    <AuthWrapper>
     <div className={`${activeTab===tabs[1] && "lg:h-screen lg:flex lg:flex-col lg:overflow-hidden"}`}>
       <NavBar />
       {/* my products section */}
@@ -341,10 +343,12 @@ export default function Store() {
       </main>
       <ToastContainer />
     </div>
+    </AuthWrapper>
   );
 }
 
 const UpdateOrder = ({ order, setOrders }) => {
+  const socket = useSocket();
   const [loading, setLoading] = useState(false);
   const orderFilters = ["pending", "processing", "shipped", "delivered"];
   const [filter, setFilter] = useState(order.status);
@@ -362,9 +366,15 @@ const UpdateOrder = ({ order, setOrders }) => {
       },
       body: JSON.stringify({ status: filter }),
     });
-    const data = await response.json();
 
     if (response.ok) {
+      socket.emit("notification:order", { 
+        user: order.user._id,
+        content: `Your order with id ${order._id} has been ${filter=="processing"?"processed":filter}`,
+        link: "#",
+        category: "order",
+        scope: filter
+       });
       toast.success("Order updated successfully");
       setOrders((prev) => {
         return prev.map((o) => {
@@ -381,6 +391,7 @@ const UpdateOrder = ({ order, setOrders }) => {
   };
 
   return (
+    
     <div className="flex gap-4 items-center">
       <select
         className="border border-gray-200 rounded-lg p-2"

@@ -5,6 +5,7 @@ import NavBar from "../../components/NavBar";
 import { useAppSelector } from "../store/hooks";
 import { BACKEND_URL } from "../utils/constants";
 import { useRouter } from "next/navigation";
+import AuthWrapper from "../AuthWrapper";
 
 function FeedbackPage() {
     const user = useAppSelector((state) => state.user);
@@ -48,6 +49,7 @@ function FeedbackPage() {
         router.push("/");
     }
   return (
+    <AuthWrapper>
     <div className="flex flex-col h-screen">
       <NavBar />
       <div className="w-full h-full flex-1 flex items-center justify-center main-order-modal dark:bg-gray-900"
@@ -97,6 +99,7 @@ function FeedbackPage() {
         </div>{" "}
       </div>
     </div>
+    </AuthWrapper>
   );
 }
 

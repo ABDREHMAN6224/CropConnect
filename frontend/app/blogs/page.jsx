@@ -40,7 +40,6 @@ const BlogsPage = () => {
         }
       });
       const data = await response.json();
-      console.log(data);
       if (response.ok) {
         setBlogs(data);
         setFilteredBlogs(data);
@@ -56,7 +55,6 @@ const BlogsPage = () => {
         }
       });
       const data = await response.json();
-      console.log(data);
       if (response.ok) {
         setMyBlogs(data);
       }
@@ -233,6 +231,9 @@ const BlogsPage = () => {
                     </h1>
                     <p className="leading-relaxed mb-5">
                       {blog.content.slice(0, 200)} {blog.content.length > 200 ? "..." : ""}
+                      {blog.status === "approved" ? 
+                        <span className="text-primary-500 cursor-pointer" onClick={() => router.push(`/blogs/${blog._id}`)}>Read More</span>
+                      :"" }
                     </p>
                     <a className="inline-flex items-center">
                       <img

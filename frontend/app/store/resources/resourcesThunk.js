@@ -5,7 +5,6 @@ import { isSucessfull } from "/app/utils/general_utils";
 export const createResource = createAsyncThunk(
   "resources/create",
   async (payload, { rejectWithValue, dispatch }) => {
-    console.log(payload);
     const response = await fetch(`${BACKEND_URL}/resources/create`, {
       method: "POST",
       headers: {

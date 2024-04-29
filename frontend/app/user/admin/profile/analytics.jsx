@@ -91,7 +91,6 @@ const Analytics = ({ orders }) => {
     fetchEvents();
     fetchUsers();
   }, []);
-  console.log(events, "users");
   const pieData = {};
   for (const order of orders)
     for (const orderItem of order.orderItems) {
@@ -124,24 +123,23 @@ const Analytics = ({ orders }) => {
   const statsData = {
     "Total Users": [
       users.length,
-      <img src="/abc.jpg" alt="" />,
+      <img src="/abc.jpg"  className="h-auto w-32 mb-2 mx-auto" alt="" />,
     ],
     "Total Events": [
       events.length,
-      <img src="/a290e801-15d8-4100-82a5-d1e622bbba8b.jpg" alt="" />,
+      <img src="/a290e801-15d8-4100-82a5-d1e622bbba8b.jpg" className="h-auto w-32 mb-2 mx-auto"  alt="" />,
     ],
     "Total Orders": [
       orders.length,
-      <img src="/9212305.jpg" alt="" />
+      <img src="/9212305.jpg" className="h-auto w-32 mb-2 mx-auto" alt="" />
     ],
     "Total Products": [
       Object.keys(pieData).length,
-      <img src="/hand_giving_growing_plant_flat_style.jpg" alt="" />
+      <img src="/hand_giving_growing_plant_flat_style.jpg"  className="h-auto w-32 mb-2 mx-auto" alt="" />
     ],
   };
   return (
     <div>
-      <h1 className="text-2xl font-semibold my-4">Analytics</h1>
       <div className="flex justify-evenly w-100">
         <div>
           <div className="flex w-full justify-evenly">
@@ -149,8 +147,8 @@ const Analytics = ({ orders }) => {
               <div class="container mx-auto">
                 <div class="flex flex-wrap text-center">
                   {Object.entries(statsData).map((stat) => (
-                    <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
-                      <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
+                    <div class="p-2 md:w-1/5 sm:w-1/2 w-full">
+                      <div class="border-2 border-gray-200 px-4 shadow-md rounded-lg">
                         {stat[1][1]}
                         <h2 class="title-font font-medium text-3xl text-gray-900">
                           {stat[1][0]}

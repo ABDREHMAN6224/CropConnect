@@ -7,6 +7,7 @@ import { useAppSelector } from "../store/hooks";
 import ViewResourceModal from "../../components/modals/ViewResourceModal";
 import { FaChevronCircleRight } from "react-icons/fa";
 import { FooterSection } from "../../components";
+import AuthWrapper from "../AuthWrapper";
 
 export default function ResourcesPage() {
   const [currentResource, setCurrentResource] = useState(null);
@@ -31,7 +32,6 @@ export default function ResourcesPage() {
         },
       });
       const data = await response.json();
-      console.log(data);
       if(response.ok){
         setResources(data);
       }
@@ -41,7 +41,7 @@ export default function ResourcesPage() {
   }, []);
 
   return (
-    <>
+    <AuthWrapper>
       <NavBar />
       <main className="dark:bg-gray-900 w-full">
         <div className="p-4 mx-auto w-full max-w-screen-2xl">
@@ -110,6 +110,6 @@ export default function ResourcesPage() {
         onClose={() => setOpenViewResourceModal(false)}
         resource = {currentResource}
       />}
-    </>
+    </AuthWrapper>
   );
 }

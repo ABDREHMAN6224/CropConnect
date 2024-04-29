@@ -11,6 +11,7 @@ import {BACKEND_URL} from "../../../utils/constants";
 import Spinner from "../../../../components/Spinner";
 import OrderInvoiceModal from "../../../../components/modals/OrderInvoiceModal";
 import { useRouter } from "next/navigation";
+import AuthWrapper from "../../../AuthWrapper";
 
 
 export default function Checkout({params}) {
@@ -115,7 +116,7 @@ export default function Checkout({params}) {
 
 
   return (
-    <>
+    <AuthWrapper>
     <NavBar />
 <div className="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32 lg:pt-20">
   <div className="px-4 pt-8">
@@ -298,6 +299,6 @@ export default function Checkout({params}) {
       router.push("/user/profile")
     }} open={openOrderModal} />
     }
-    </>
+    </AuthWrapper>
   )
 }

@@ -108,7 +108,6 @@ export default function Profile() {
       <main className="dark:bg-gray-900 flex-1 overflow-auto ">
         <div className="container mx-auto p-4 flex flex-coll">
           <section className="flex flex-col flex-1">
-            <h1 className=" text-2xl font-extrabold">Admin Dashboard</h1>
             <div className="mx-auto bg-white dark:bg-gray-900 rounded-lg  shadow-sm flex items-center  justify-between flex-col lg:flex-row gap-4 flex-wrap">
             
 

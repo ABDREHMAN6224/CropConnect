@@ -13,8 +13,8 @@ import { getUsers, updateFileteredUsers } from "../../store/users/users";
 import { createCommunityChat, setRecentMessage } from "/app/store/chat/chat";
 import { ToastContainer, toast } from "react-toastify";
 import useColorMode from "/hooks/useColorMode";
-import Link from "next/link";
 import NavBar from "../../../components/NavBar";
+import AuthWrapper from "../../AuthWrapper";
 
 const serverUrl = "http://localhost:5000";
 
@@ -42,7 +42,6 @@ export default function Chats() {
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("text");
   const [file, setFile] = useState(null);
-  const [firstRender, setFirstRender] = useState(true);
 
   const socket = useSocket();
   const [chatModalVisible, setChatModalVisible] = useState(false);
@@ -70,17 +69,8 @@ export default function Chats() {
 
     const data = await response.json();
     if (response.ok) {
-      let isChat = false;
-      data.chat.members.map((member) => {
-        if (member._id !== user._id) {
-          isChat = false;
-        }
-      });
       socket.emit("chat:created", { chat: data.chat, user: user._id });
-      if (!isChat.length) {
-        dispatch(getAllChats());
-      }
-
+      dispatch(getAllChats());
       setCurrentChat(data.chat);
       if (data.chat.isGroup) {
         setGroupNotifications((n) => n.filter((id) => id !== data.chat._id));
@@ -110,13 +100,15 @@ export default function Chats() {
     setSelectedMembers([...selectedMembers, user]);
   };
 
-  document.addEventListener("keyup", (e) => {
-    if (e.key === "Escape") {
-      setChatModalVisible(false);
-      setGroupModalVisible(false);
-    }
-  });
-
+  useEffect(()=>{
+    document.addEventListener("keyup", (e) => {
+      if (e.key === "Escape") {
+        setChatModalVisible(false);
+        setGroupModalVisible(false);
+      }
+    });
+    
+  },[])
 
   const handleCollapse = (id) => {
     const element = document.getElementById(id);
@@ -191,10 +183,26 @@ export default function Chats() {
   }, []);
 
   useEffect(() => {
-    const userId = new URLSearchParams(window.location.search).get("userId");
-    if(!userId) return;
-    handleOpenChat(userId, false, null);
-  }, []);
+    const search = new URLSearchParams(window.location.search);
+    const userId= search.get("userId");
+    if(userId) handleOpenChat(userId, false, null);
+    const grpChat = search.get("g_chatId");
+    if(grpChat) {
+      let ch = communityChats.find(chat => chat._id === grpChat);
+      if(ch) {
+        handleOpenChat(ch.members.map(member => member._id), true, ch._id);
+      }
+
+    };
+    const chat_ = search.get("chatId");
+    if(chat_) {
+      let ch = chats.find(chat => chat._id === chat_);
+      if(ch) {
+        handleOpenChat(ch.members.map(member => member._id), false, ch._id);
+      }
+    };
+    
+  }, [window.location.search]);
 
   const handleGroupModalSubmit = (e) => {
     e.preventDefault();
@@ -313,7 +321,6 @@ export default function Chats() {
     };
 
     const handleChatRemoved = ({ chat }) => {
-      console.log(chat);
       toast.error(`admin removed you from ${chat.name}`);
       if (currentChat && chat._id === currentChat._id) {
         setCurrentChat(null);
@@ -325,7 +332,6 @@ export default function Chats() {
       dispatch(getAllChats());
     };
 
-    socket.emit("setup", user);
     socket.on("receive:message", handleNewMessage);
     socket.on("chat:created", handleChatCeated);
     socket.on("chat:removed", handleChatRemoved);
@@ -340,6 +346,7 @@ export default function Chats() {
   }, [socket, currentChat, communityChats, chats]);
 
   return (
+    <AuthWrapper>
     <div className="h-screen overflow-hidden flex flex-col">
       <NavBar />
       <section className="flex-1  antialiased text-gray-800 overflow-hidden dark:text-gray-200">
@@ -1021,5 +1028,6 @@ export default function Chats() {
         <ToastContainer theme={colorMode} />
       </section>
     </div>
+    </AuthWrapper>
   );
 }

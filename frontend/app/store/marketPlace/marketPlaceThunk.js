@@ -15,7 +15,6 @@ export const getMarketplaces = createAsyncThunk(
         },
       });
       const data = await response.json();
-      console.log(data);
         if (response.ok) {
             dispatch(setMartetPlace(data));
             return data;

@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import useColorMode from "../../../hooks/useColorMode";
 import { FaSpinner } from "react-icons/fa";
 import { BACKEND_URL } from "../../utils/constants";
+import AuthWrapper from "../../AuthWrapper";
 
 const CreateEventPage = () => {
     const {role} = useAppSelector((state) => state.user);
@@ -75,7 +76,7 @@ const CreateEventPage = () => {
         }
     }, [])
   return (
-    <>
+    <AuthWrapper admin={true}>
     <ToastContainer theme={colorMode} />
 
 <NavBar />
@@ -309,7 +310,7 @@ const CreateEventPage = () => {
   </div>
 </main>
 <FooterSection />
-</>
+</AuthWrapper>
   );
 }
 

@@ -9,6 +9,7 @@ import { formatDate } from "../utils/general_utils";
 import { FaCheckCircle, FaSpinner } from "react-icons/fa";
 import useColorMode from "../../hooks/useColorMode";
 import { toast, ToastContainer } from "react-toastify";
+import AuthWrapper from "../AuthWrapper";
 
 const EventsPage = () => {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
@@ -52,7 +53,7 @@ const EventsPage = () => {
   }, []);
 
   return (
-    <>
+    <AuthWrapper>
       <ToastContainer theme={colorMode} />
       <NavBar />
       <main className="dark:bg-gray-900 w-full">
@@ -146,7 +147,7 @@ const EventsPage = () => {
         </div>
       </main>
       <FooterSection />
-    </>
+    </AuthWrapper>
   );
 };
 
@@ -156,7 +157,6 @@ const SingleEvent = ({ event, registered, past, setEvents = () => {} }) => {
   const { token } = useAppSelector((state) => state.auth);
   const user = useAppSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
-  console.log(event);
   const register = async () => {
     setLoading(true);
     const response = await fetch(
@@ -170,7 +170,6 @@ const SingleEvent = ({ event, registered, past, setEvents = () => {} }) => {
       }
     );
     const data = await response.json();
-    console.log(data);
     if (response.ok) {
       setEvents((prevEvents) => {
         return prevEvents.map((prevEvent) => {

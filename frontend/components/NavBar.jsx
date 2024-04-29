@@ -1,33 +1,82 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
-import { FaCartArrowDown, FaUser } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { FaBell, FaCartArrowDown, FaUser } from "react-icons/fa";
 import DarkModeSwitcher from "/components/DarkModeSwitcher";
 import CartItem from "./CartItem";
 import { useCart } from "../app/context/cartContext";
 import { useRouter } from "next/navigation";
 import { formatAmount } from "../app/utils/general_utils";
+import { useNotification } from "../app/context/notificationContext";
+import { useAppSelector } from "../app/store/hooks";
+import Swal from "sweetalert2";
+
+const navLinks = [
+  { title: "Home", link: "/" },
+  { title: "Marketplace", link: "/marketplace" },
+  { title: "Community", link: "/community" },
+  { title: "Resources", link: "/resources" },
+];
 
 export default function NavBar() {
   const [showNavBar, setShowNavBar] = useState(false);
   const [cartVisible, setCartVisible] = useState(false);
+  const [notificationsVisible, setNotificationsVisible] = useState(false);
+  const [authDropdownVisible, setAuthDropdownVisible] = useState(false);
   const router=useRouter();
 
   const {cart,removeFromCart,getTotals} = useCart();
+  const { notification,notifications,deleteNotification} = useNotification();
+  const {role} = useAppSelector(state => state.user);
 
-  
+  useEffect(() => {
+    document.addEventListener("keyup", (e) => {
+      if (e.key === "Escape") {
+        setCartVisible(false);
+        setNotificationsVisible(false);
+      }
+    }
+    );
+    return () => {
+      document.removeEventListener("keyup", (e) => {
+        if (e.key === "Escape") {
+          setCartVisible(false);
+          setNotificationsVisible(false);
+          setAuthDropdownVisible(false);
+        }
+      });
+    }
+  }, [notificationsVisible, cartVisible,authDropdownVisible]);
+
+  const handleLogout = (e) => {
+    Swal.fire({
+      title: "Are you sure to logout?",
+      text: "You would need password to login again",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.localStorage.clear();
+        window.location.href = "/login";
+      }
+    });
+  };  
+
 
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <Link
-          href="/"
+    <nav className="bg-white relative border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+      <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <a
+          href="/aboutus"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          <span className="self-center text-2xl font-semibold whitespace-nowrap text-primary-800 dark:text-white">
             CropConnect
           </span>
-        </Link>
+        </a>
         <button
           data-collapse-toggle="navbar-dropdown"
           type="button"
@@ -58,7 +107,7 @@ export default function NavBar() {
           id="navbar-dropdown"
         >
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
+            {/* <li>
               <Link
                 href="/"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-500 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
@@ -66,32 +115,19 @@ export default function NavBar() {
               >
                 Home
               </Link>
-            </li>
-
-            <li>
-              <Link
-                href="/marketplace"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-600 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >
-                Marketplace
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/community"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-600 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >
-                Community
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/resources"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-600 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >
-                Resources
-              </Link>
-            </li>
+            </li> */}
+            {/* if active then color is primary */}
+            {navLinks.map((link) => (
+              <li key={link.title}>
+                <a
+                  href={link.link}
+                  className={`block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-500 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent ${window.location.pathname === link.link ? "text-primary-700" : ""}`}
+                >
+                  {link.title}
+                </a>
+              </li>
+            ))}
+            <div className="flex items-center justify-center space-x-4 gap-3">
             <li>
               <Link
                 href=""
@@ -102,16 +138,32 @@ export default function NavBar() {
               </Link>
             </li>
             <li>
+
+            <Link 
+              href=""
+              className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-600 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent relative"
+              onClick={() => setNotificationsVisible(!notificationsVisible)}
+              >
+
+              <FaBell className="text-2xl text-primary-900" />
+              {notifications.length > 0 && <span className="absolute -top-2 -right-1 h-5 w-5 grid place-items-center bg-primary-600 text-white text-xs rounded-full">{notifications.length}</span>}
+            </Link>
+              </li>
+
+              <li>
               <Link
-                href="/user/profile"
+                href=""
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-600 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                onClick={() => setAuthDropdownVisible(!authDropdownVisible)}
               >
                 <FaUser className="text-2xl" />
               </Link>
             </li>
+              
             <li>
               <DarkModeSwitcher />
             </li>
+            </div>
           </ul>
         </div>
       </div>
@@ -232,6 +284,77 @@ export default function NavBar() {
           </div>
         </div>
       </div>
+
+     <div className="absolute bottom-0 right-1/2 translate-y-full md:right-16 2xl:right-44 w-72 bg-gray-100 z-40 shadow-md rounded-md p-4 flex justify-center transition-all duration-150 border border-gray-200 dark:bg-gray-800 dark:border-gray-700 translate-x-1/2 md:translate-x-0"
+      style={{
+        height: notificationsVisible ? "300px" : "0",
+        overflow: notificationsVisible ? "auto" : "hidden",
+        padding: notificationsVisible ? "" : "0",
+        alignItems: notifications.length > 0 ? "flex-start" : "center",
+        justifyContent: notifications.length > 0 ? "flex-start" : "center",
+        border: notificationsVisible ? "" : "none",
+      }}
+     >
+      <div className="flex flex-col items-start justify-center gap-1 w-full">
+          {notifications.length > 0 ? 
+          notifications.map((notification) => {
+           return <div key={notification._id} className="flex-col space-x-2 w-full justify-start hover:bg-gray-200 p-2 rounded-sm bg-white shadow-sm dark:bg-gray-800 dark:hover:bg-gray-700 cursor-pointer"
+              onClick={()=>{
+                setNotificationsVisible(false);
+                const link = notification.link;
+                deleteNotification(notification._id);
+                router.push(link);
+              }}
+            >
+              <p className="text-sm text-gray-900 dark:text-white text-left">{notification.content}</p>
+              <div className="flex items-center justify-between w-full  py-2 pr-4">
+              <span className="text-xs text-gray-500 dark:text-gray-400 text-left">{new Date(notification?.createdAt).toLocaleString()}</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400 text-left">{notification?.category}</span>
+              </div>
+            </div>
+})
+          :
+          <p className="text-gray-500 text-sm w-full text-center">No notifications</p>
+          } 
+      </div>
+     </div>
+
+      {/* when ever there is notification show a little popup at top of window with primary bg that notification recieved */}
+      {notification && <div className="fixed top-2 right-2 z-50 bg-primary-600 text-white p-2 rounded-tl-md rounded-bl-md shadow-md">
+        <p>
+          New notification recieved
+        </p>
+      </div>}
+
+      {/* auth dropdown with link to user dashboard,and admin dashboard also if iser is admin logout */}
+      <div className="absolute bottom-0 right-1/2 translate-y-full md:right-16 2xl:right-44 w-44 bg-gray-100 z-40 shadow-md rounded-md p-4 flex justify-center transition-all duration-150 border border-gray-200 dark:bg-gray-800 dark:border-gray-700 translate-x-1/2 md:translate-x-0"
+      style={{
+        height: authDropdownVisible ? "auto" : "0",
+        overflow: authDropdownVisible ? "auto" : "hidden",
+        padding: authDropdownVisible ? "" : "0",
+        alignItems: "center",
+        justifyContent: "center",
+        border: authDropdownVisible ? "" : "none",
+      }}
+      >
+        <div className="flex flex-col items-center justify-center gap-4 w-full">
+          {role=="admin" && <a href="/user/admin/profile" className="text-sm text-gray-900 dark:text-white
+            hover:bg-gray-200 p-2 rounded-sm bg-white shadow-sm dark:bg-gray-800 dark:hover:bg-gray-700 cursor-pointer">Admin Dashboard</a>}
+          <a href="/user/profile" className="text-sm text-gray-900 dark:text-white
+            hover:bg-gray-200 p-2 rounded-sm bg-white shadow-sm dark:bg-gray-800 dark:hover:bg-gray-700 cursor-pointer
+          ">User Dashboard</a>
+          <a href="#"
+            onClick={() => {
+              setAuthDropdownVisible(false);
+              handleLogout();
+            }}
+          className="text-sm  dark:text-white text-red-500">
+            Logout
+          </a>
+        </div>
+      </div>
+
+
     </nav>
   );
 }

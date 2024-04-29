@@ -8,32 +8,16 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { login } from "../store/auth/authThunk";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { LOGIN_TIME } from "../utils/constants";
 
 export default function LoginPage() {
   const [colorMode, _] = useColorMode();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useAppDispatch();
+  const { token} = useAppSelector((state) => state.auth);
+  const user = useAppSelector((state) => state.user);
   const router = useRouter();
-
-  const isLoggedIn = useAppSelector((state) => state.auth.token) !== "";
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    if (!email || !password) {
-      toast.error("Email and password are required");
-      return;
-    }
-
-    const res = dispatch(login({ email, password }));
-    console.log(res);
-    if (res.error) {
-      toast.error(res.error.message);
-    } else {
-      toast.success("Login successful");
-      router.push("/");
-    }
-  };
 
   const handleLogout = (e) => {
     Swal.fire({
@@ -46,47 +30,35 @@ export default function LoginPage() {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log("hehe");
-        localStorage.clear();
-        router.push("/login");
+        window.localStorage.clear();
+        window.location.href = "/login";
       }
     });
+  };  
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      toast.error("Email and password are required");
+      return;
+    }
+
+    const res = dispatch(login({ email, password }));
+    if (res.error) {
+      toast.error(res.error.message);
+    } else {
+      localStorage.setItem(LOGIN_TIME, new Date().getTime());
+      toast.success("Login successful");
+      router.push("/");
+    }
   };
 
-  console.log(isLoggedIn);
+  useEffect(() => {
+    if(user._id){
+      handleLogout();
+    }
+  },[])
 
-  if (isLoggedIn) {
-    return (
-      <section className="bg-gray-50 dark:bg-gray-900 min-h-screen">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <div className="w-full flex justify-between items-center mb-6 sm:max-w-md">
-            <Link
-              href="/"
-              className="flex items-center text-2xl font-semibold text-gray-900 dark:text-white"
-            >
-              CropConnect
-            </Link>
-            <DarkModeSwitcher />
-          </div>
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-2xl leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white">
-                You are already signed in, want to sign out?
-              </h1>
-              <button
-                type="submit"
-                className="w-full text-white bg-meta-1 hover:bg-meta-7 focus:ring-4 focus:outline-none focus:ring-meta-6 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:focus:ring-meta-6"
-                onClick={handleLogout}
-              >
-                Sign out?
-              </button>
-            </div>
-          </div>
-        </div>
-        <ToastContainer theme={colorMode} />
-      </section>
-    );
-  }
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900 min-h-screen">
@@ -173,3 +145,4 @@ export default function LoginPage() {
     </section>
   );
 }
+

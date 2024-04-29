@@ -1,6 +1,7 @@
 import Story from '../model/stories.js';
 import ApiFeatures from '../utils/ApiFeature.js';
 import catchAsync from '../utils/catchAsync.js';
+import Email from '../utils/email.js';
 
 export const getStories = catchAsync(async (req, res) => {
     const feature = new ApiFeatures(Story.find({
@@ -66,6 +67,8 @@ export const approveStory = catchAsync(async (req, res) => {
     const story = await Story.findByIdAndUpdate(req.params.id, {
         status: "approved"
     }, { new: true});
+    const email = new Email(story.author);
+    await email.sendBlogVerified(story.title);
     res.status(200).json(story);
 })
 
@@ -73,5 +76,7 @@ export const rejectStory = catchAsync(async (req, res) => {
     const story = await Story.findByIdAndUpdate(req.params.id, {
         status: "rejected"
     }, { new: true});
+    const email = new Email(story.author);
+    await email.sendBlogRejected(story.title);
     res.status(200).json(story);
 })

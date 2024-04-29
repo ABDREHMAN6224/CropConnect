@@ -9,7 +9,6 @@ import { getUsers } from "../users/users";
 export const login = createAsyncThunk(
   "auth/login",
   async (payload, { rejectWithValue, dispatch }) => {
-    console.log(payload);
     const response = await fetch(`${BACKEND_URL}/auth/login`, {
       method: "POST",
       headers: {
@@ -18,7 +17,6 @@ export const login = createAsyncThunk(
       body: JSON.stringify(payload),
     });
     const data = await response.json();
-    console.log(data);
     if (response.ok) {
       dispatch(setToken(data.token));
       dispatch(setUser(data.user));

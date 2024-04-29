@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useAppDispatch } from "../../store/hooks";
 import { createMarketplace } from "../../store/marketPlace/marketPlaceThunk";
 import ProductImage from "/components/ProductImage";
+import AuthWrapper from "../../AuthWrapper";
 
 export default function CreateMarketPlacePage() {
   const [colorMode, _] = useColorMode();
@@ -41,6 +42,7 @@ export default function CreateMarketPlacePage() {
   };
 
   return (
+    <AuthWrapper>
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="w-full flex justify-between items-center mb-6 sm:max-w-md">
@@ -195,5 +197,6 @@ export default function CreateMarketPlacePage() {
       </div>
       <ToastContainer theme={colorMode} />
     </section>
+    </AuthWrapper>
   );
 }

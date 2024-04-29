@@ -7,6 +7,7 @@ import Rating from "../../../../components/Rating";
 import { useRouter } from "next/navigation";
 import Spinner from "../../../../components/Spinner";
 import { useCart } from "../../../context/cartContext";
+import AuthWrapper from "../../../AuthWrapper";
 
 export default function SingleProduct({params}){
     const [product,setProduct] = useState({});
@@ -17,30 +18,6 @@ export default function SingleProduct({params}){
     const [activeImage, setActiveImage] = useState(0);
     const [reviews, setReviews] = useState([])
     const router = useRouter();
-    const dummyReviews = [
-        {
-            _id: "1",
-            comment: "This is a dummy review",
-            author: {
-                name: "Dummy User",
-                pic: "https://randomuser.me/api/portraits",
-            },
-            rating: 4,
-            sales: 10,
-            numReviews: 5,
-        },
-        {
-            _id: "2",
-            comment: "This is a dummy review",
-            author:{
-                name: "Dummy User",
-                pic: "https://randomuser.me/api/portraits",
-            },
-            rating: 3.4,
-            sales: 10,
-            numReviews: 5,
-        }
-    ]
 
     useEffect(() => {
         const getProduct = async () => {
@@ -55,7 +32,6 @@ export default function SingleProduct({params}){
             const data = await response.json();
             if(response.ok){
                 setProduct(data);
-                console.log(data.reviews);
                 setReviews(data.reviews);
             }else{
                 console.log(data);
@@ -66,7 +42,7 @@ export default function SingleProduct({params}){
     }, []);
     
     return (
-        <>
+        <AuthWrapper>
         
             <NavBar />
             {loading?
@@ -212,7 +188,7 @@ export default function SingleProduct({params}){
             </div>
             </div>
         }
-        </>
+        </AuthWrapper>
     )
 }
 

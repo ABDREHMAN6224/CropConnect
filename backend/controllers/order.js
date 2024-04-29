@@ -1,6 +1,7 @@
 import Marketplace from "../model/marketplace.js";
 import Order from "../model/order.js";
 import catchAsync from "../utils/catchAsync.js";
+import Email from "../utils/email.js";
 
 export const createOrder = catchAsync(async (req, res, next) => {
     const newOrder = new Order({
@@ -11,6 +12,8 @@ export const createOrder = catchAsync(async (req, res, next) => {
         totalPrice: req.body.totalPrice,
     });
     const createdOrder = await newOrder.save();
+    const email = new Email(req.user);
+    await email.sendOrderConfirmation();
     // for each product in order update buyers
     for (let i = 0; i < req.body.orderItems.length; i++) {
         await Marketplace.findByIdAndUpdate(req.body.orderItems[i], {
@@ -108,7 +111,12 @@ export const updateOrder = catchAsync(async (req, res, next) => {
     const order = await Order.findByIdAndUpdate(req.params.id, {
         status: req.body.status
     }, { new: true });
+
     if (order) {
+        if(req.body.status === "delivered"){
+            const email = new Email(order.user);
+            await email.sendOrderDelivered();
+        }
         res.status(200).json(order);
     } else {
         next(new AppError("Order not found", 404));

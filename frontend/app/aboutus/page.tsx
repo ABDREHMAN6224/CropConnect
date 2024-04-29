@@ -41,9 +41,9 @@ const page = () => {
                 Our Mission
             </h2>
         </div>
-        <div className="flex items-center gap-3 justify-between mb-12 lg:mb-20">
-            <div className="mb-8 lg:mb-16 w-1/4">
-                <img className="object-cover sm:w-96 rounded-full shadow-lg sm:h-96" src="./mission.jpeg" alt="Our mission" />
+        <div className="flex items-center gap-3 justify-between mb-12 lg:mb-20 flex-col-reverse lg:flex-row">
+            <div className="mb-8 lg:mb-16 lg:w-1/4">
+                <img className="object-cover w-60 md:w-80 lg:w-96 rounded-full shadow-lg h-60 md:h-80 lg:h-96" src="./mission.jpeg" alt="Our mission" />
             </div>
             <p className="w-3/4 mb-8 text-lg font-normal text-gray-700 lg:text-xl sm:px-16  dark:text-gray-400 text-left">
             Our mission at Crop Connect is to empower farmers and agricultural stakeholders worldwide by providing a comprehensive platform for commerce, education, and community building. We are dedicated to fostering innovation, sustainability, and inclusivity in agriculture, connecting individuals and businesses to resources, markets, and opportunities. Through collaboration, knowledge-sharing, and technological advancements, we aim to drive positive change and enhance the resilience and productivity of the global farming community.
@@ -61,14 +61,14 @@ const page = () => {
                 Our Vision
             </h2>
         </div>
-        <div className="flex items-center gap-3 justify-between mb-12 lg:mb-20 ">
+        <div className="flex items-center gap-3 justify-between mb-12 lg:mb-20 flex-col lg:flex-row">
             <p className="w-3/4 mb-8 text-lg font-normal text-gray-700 lg:text-xl sm:px-16  dark:text-gray-400 text-left">
             Our vision at Crop Connect is to revolutionize the agricultural industry by fostering innovation, collaboration, and sustainability. We envision a future where every farmer has access to cutting-edge technologies, comprehensive resources, and a supportive community, ensuring a prosperous and sustainable global food system. Through our platform, we strive to empower farmers to achieve economic success, environmental stewardship, and social equity, creating a more resilient and interconnected agricultural ecosystem for generations to come.
 
 By leveraging the power of technology and collective knowledge, we are committed to driving positive change in agriculture, bridging gaps, and unlocking new opportunities that benefit both farmers and consumers alike.
             </p>
-            <div className="mb-8 lg:mb-16 w-1/4">
-                <img className="object-cover sm:w-96 rounded-full shadow-lg sm:h-96" src="./vision.jpeg" alt="Our vision" />
+            <div className="mb-8 lg:mb-16 lg:w-1/4">
+                <img className="object-cover w-60 md:w-80 lg:w-96 rounded-full shadow-lg h-60 md:h-80 lg:h-96" src="./vision.jpeg" alt="Our vision" />
             </div>
         </div>
     </div>

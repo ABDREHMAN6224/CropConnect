@@ -91,7 +91,6 @@ const Analytics = ({ orders }) => {
     fetchEvents();
     fetchUsers();
   }, []);
-  console.log(events, "users");
   const pieData = {};
   for (const order of orders)
     for (const orderItem of order.orderItems) {

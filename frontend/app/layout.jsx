@@ -8,6 +8,7 @@ import { CartProvider } from "./context/cartContext";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "/app/store/store";
+import { NotificationProvider } from "./context/notificationContext";
 const inter = Inter({ subsets: ["latin"] });
 
 // export const metadata = {
@@ -20,15 +21,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className} dark:bg-gray-900 dark:text-white`}>
+        <Provider store={store}>
+          <NotificationProvider>
+
         <CartProvider>
         <SocketProvider>
-          <Provider store={store}>
-            {/* <PersistGate loading={null} persistor={persistor}> */}
-              <main className="">{children}</main>
-            {/* </PersistGate> */}
-          </Provider>
+            {children}
         </SocketProvider>
         </CartProvider>
+          </NotificationProvider>
+          </Provider>
       </body>
     </html>
   );

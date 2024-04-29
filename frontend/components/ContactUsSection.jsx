@@ -29,7 +29,6 @@ const ContactUsSection = () => {
                 body: JSON.stringify(obj)
             })
             const data_ = await response.json()
-            console.log(data_);
             if(response.ok){
                 toast.success('Message Sent Successfully')
             }else{

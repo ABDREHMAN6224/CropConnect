@@ -49,7 +49,6 @@ export const usersSlice = createSlice({
     );
 
     builder.addCase(getUsers.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.users = action.payload.users;
       state.filteredUsers = action.payload.users;
     });

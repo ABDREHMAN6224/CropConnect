@@ -1,5 +1,6 @@
 import Feedback from "../model/feedback.js";
 import catchAsync from "../utils/catchAsync.js";
+import Email from "../utils/email.js";
 
 export const createFeedback = catchAsync(async (req, res, next) => {
     const existingFeedback = await Feedback.findOne({ user: req.user._id });
@@ -15,6 +16,8 @@ export const createFeedback = catchAsync(async (req, res, next) => {
     });
     const createdFeedback = await newFeedback.save();
     const feedback = await createdFeedback.populate("user", "name email avatar");
+    const email = new Email(req.user);
+    await email.sendFeedback();
     res.status(201).json(feedback);
 })
 

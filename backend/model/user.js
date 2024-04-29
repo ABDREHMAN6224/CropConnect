@@ -43,6 +43,7 @@ userSchema.methods.generateResetPasswordToken = async function () {
     const resetToken = crypto.randomBytes(20).toString("hex");
     this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
     this.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
+    // this token will expire after 10 minutes
     await this.save();
 }
 
@@ -52,7 +53,7 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 }
 
 userSchema.methods.generateToken = async function () {
-    return await jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRE,
     });
 }

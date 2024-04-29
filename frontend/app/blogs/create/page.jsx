@@ -7,6 +7,7 @@ import { BACKEND_URL } from "../../utils/constants";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import useColorMode from "../../../hooks/useColorMode";
+import AuthWrapper from "../../AuthWrapper";
 
 export default function BlogsCreate() {
   const [colorMode, _] = useColorMode();
@@ -60,7 +61,7 @@ export default function BlogsCreate() {
     setSubmitting(false);
   };
   return (
-    <>
+    <AuthWrapper>
           <ToastContainer theme={colorMode} />
 
       <NavBar />
@@ -223,6 +224,6 @@ export default function BlogsCreate() {
           </div>
         </div>
       </main>
-    </>
+    </AuthWrapper>
   );
 }

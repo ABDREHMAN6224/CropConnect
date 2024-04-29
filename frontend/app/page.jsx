@@ -16,6 +16,7 @@ import {
   SuccessStories,
   OurMarketplaceSection,
 } from "../components";
+import AuthWrapper from "./AuthWrapper";
 export default function Home() {
   const user = useAppSelector((state) => state.user);
   const isAdmin = user.role?.toLowerCase() === "admin";

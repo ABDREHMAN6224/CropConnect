@@ -15,9 +15,6 @@ export default function SignUpPage() {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [error,setError]=useState(false);
-  const dispatch = useAppDispatch();
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
 
@@ -43,9 +40,10 @@ export default function SignUpPage() {
     });
     const data = await response.json();
     if(response.ok){
+        localStorage.clear()
         setSubmitting(false);
-        router.push("/login");
         toast.success("Account created successfully");
+        window.location.href="/login"
         
       }
       else{
@@ -140,7 +138,6 @@ export default function SignUpPage() {
                   id="file_input"
                   type="file"
                   accept="image/*"
-                  onChange={(e) => setAvatar(e.target.files[0])}
                 />
               </div>
               <button

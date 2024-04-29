@@ -19,7 +19,7 @@ export default function SingleBlogPage ({params}) {
             const response = await fetch(`${BACKEND_URL}/stories/${params.id}`)
             const data = await response.json()
             if(response.ok){
-                setBlog(data)
+                setBlog(data[0])
             }else{
                 router.push("/blogs")
             }

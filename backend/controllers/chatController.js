@@ -44,7 +44,6 @@ export const accessChat = catchAsync(async (req, res, next) => {
     const chatMessages = await Message.find({ chat: isChat[0]._id }).populate("sender", "-password")
       res.status(200).send({ chat: isChat[0], messages: chatMessages })
   } else {
-    console.log("new chat");
       var chatData = {
           name: "sender",
           members: [id, ...users],

@@ -45,7 +45,24 @@ class Email{
     async sendContactUs(){
         await this.send('Contact Us', 'Thank you for contacting us. We will get back to you soon.');
     }
-
+    async sendOrderConfirmation(){
+        await this.send('Order Confirmation', 'Thank you for ordering from Crop Connect. Your order has been confirmed.');
+    }
+    async sendOrderShipped(){
+        await this.send('Order Shipped', 'Your order has been shipped. Keep an eye out for it.\n You can track your order at any time by visiting the website and logging into your account.');
+    }
+    async sendOrderDelivered(){
+        await this.send('Order Delivered', 'Your order has been delivered. We hope you enjoy your purchase.');
+    }
+    async sendBlogVerified(title){
+        await this.send('Blog Verified', `Your blog titled ${title} has been verified. It is now live on the website.`);
+    }
+    async sendBlogRejected(title){
+        await this.send('Blog Rejected', `Your blog titled ${title} has been rejected. Please write a better blog next time.`);
+    }
+    async sendFeedback(){
+        await this.send('Feedback', 'Thank you for your feedback. We appreciate your time and effort.');
+    }
 }
 
 export default Email;

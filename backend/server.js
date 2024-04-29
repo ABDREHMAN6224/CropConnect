@@ -18,6 +18,7 @@ import resourcesRoutes from "./routes/resources.js";
 import reviewRoutes from "./routes/review.js";
 import orderRoutes from "./routes/order.js";
 import feedbackRoutes from "./routes/feedback.js";
+import notificationRoutes from "./routes/notification.js";
 
 
 
@@ -46,6 +47,7 @@ app.use("/resources", resourcesRoutes);
 app.use("/reviews", reviewRoutes);
 app.use("/orders", orderRoutes);
 app.use("/feedback", feedbackRoutes);
+app.use("/notification", notificationRoutes);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
@@ -78,37 +80,46 @@ const io = new Server(server, {
     origin: "*",
   },
 });
-
+const usersToChatRooms = new Map();
 const onlineUsers = new Map();
+
 io.on("connection", (socket) => {
   socket.on("setup", (user) => {
     socket.emit("connected");
     socket.join(user._id);
     socket.id = user._id;
     onlineUsers.set(user._id, user);
+    console.log("user connected", user._id);
     socket.emit("onlineUsers", Array.from(onlineUsers.values()));
   });
 
   socket.on("disconnect", () => {
     socket.emit("disconnected", socket.id);
     onlineUsers.delete(socket.id);
+    usersToChatRooms.delete(socket.id);
     socket.emit("onlineUsers", Array.from(onlineUsers.values()));
   });
 
  socket.on("join:room",({room,user})=>{
     socket.join(room);
+    usersToChatRooms.set(user,room);
     console.log(`${user} joined ${room}`);
  })
 
  socket.on("send:message",(data)=>{
   const {chat,sender}=data;
-  console.log(data);
   chat.members.forEach(member=>{
     if(member!==sender){
       if(typeof member==="object"){
         member=member._id;
       }
       socket.to(member).emit("receive:message",data);
+      if(usersToChatRooms.get(member)===chat._id){
+      }else{
+        console.log("sending notification to ",member)
+        socket.to(member).emit("notification:chat",data);
+      }
+      
     }
   })
  })
@@ -123,7 +134,9 @@ io.on("connection", (socket) => {
       }
     })
  })
-
+socket.on("notification:order",(data)=>{
+  socket.to(data.user).emit("notification:order",data);
+})
  socket.on("chat:removed",({chat,user})=>{
   socket.to(user).emit("chat:removed",{chat});
  })

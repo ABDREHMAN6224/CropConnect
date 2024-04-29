@@ -120,89 +120,53 @@ const Analytics = ({ orders }) => {
     if (!(date in eventsData)) eventsData[date] = 0;
     eventsData[date] += 1;
   }
+
+  const statsData = {
+    "Total Users": [
+      users.length,
+      <img src="/abc.jpg" alt="" />,
+    ],
+    "Total Events": [
+      events.length,
+      <img src="/a290e801-15d8-4100-82a5-d1e622bbba8b.jpg" alt="" />,
+    ],
+    "Total Orders": [
+      orders.length,
+      <img src="/9212305.jpg" alt="" />
+    ],
+    "Total Products": [
+      Object.keys(pieData).length,
+      <img src="/hand_giving_growing_plant_flat_style.jpg" alt="" />
+    ],
+  };
   return (
     <div>
       <h1 className="text-2xl font-semibold my-4">Analytics</h1>
       <div className="flex justify-evenly w-100">
         <div>
           <div className="flex w-full justify-evenly">
-            <ChartBox
-              {...{
-                ...chartBoxProduct,
-                title: "Total Users",
-                percentage: Math.round(Math.random() * 50),
-                number: users.length,
-              }}
-            />
-            <ChartBox
-              {...{
-                ...chartBoxProduct,
-                percentage: Math.round(Math.random() * 50),
-                title: "Total Events",
-                number: events.length,
-              }}
-            />
-            <ChartBox
-              {...{
-                ...chartBoxProduct,
-                title: "Total Orders",
-                percentage: Math.round(Math.random() * 50),
-                number: orders.length,
-              }}
-            />
-            <ChartBox
-              {...{
-                ...chartBoxProduct,
-                title: "Total Products",
-                percentage: Math.round(Math.random() * 50),
-                number: Object.keys(pieData).length,
-              }}
-            />
+            <section class="text-gray-600 body-font">
+              <div class="container mx-auto">
+                <div class="flex flex-wrap text-center">
+                  {Object.entries(statsData).map((stat) => (
+                    <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+                      <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
+                        {stat[1][1]}
+                        <h2 class="title-font font-medium text-3xl text-gray-900">
+                          {stat[1][0]}
+                        </h2>
+                        <p class="leading-relaxed">{stat[0]}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>{" "}
           </div>
 
           <Approvals />
         </div>
         <AddAdminModal />
-        {/* <div className="">
-          <div className="h-60 w-60 m-8">
-            <legend>Total Transactions / Day </legend>
-            <ReactChart
-              type="bar"
-              data={{
-                labels: Object.keys(barData),
-                datasets: [
-                  {
-                    label: "Total Price",
-                    data: Object.values(barData).map((d) => d.totalPrice),
-                    borderColor: "rgb(75, 192, 192)",
-                    backgroundColor: "rgba(75, 192, 192, 0.2)",
-                  },
-                  {
-                    label: "Count",
-                    data: Object.values(barData).map((d) => d.count),
-                    borderColor: "rgb(192, 75, 75)",
-                    backgroundColor: "rgba(192, 75, 75, 0.2)",
-                  },
-                ],
-              }}
-              options={{
-                scales: {
-                  x: {
-                    type: "time",
-                    time: {
-                      unit: "day",
-                      displayFormats: {
-                        day: "MMM d",
-                      },
-                    },
-                  },
-                },
-              }}
-              height={50}
-              width={50}
-            />
-          </div>
-        </div> */}
       </div>
     </div>
   );

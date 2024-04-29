@@ -63,7 +63,7 @@ export default function ResourcesPage() {
 
         {/* resources section, every resource will have view option wihch will open modal */}
         <section className="text-gray-600 body-font px-8 lg:px-16 w-full flex justify-center">
-          <div className="w-full mx-auto flex md:flex-row flex-col items-center flex-wrap">
+          <div className="w-full mx-auto flex gap-4 md:flex-row flex-col items-center flex-wrap">
             {/* display all resources */}
             {myResources.map((resource) => (
               <div key={resource.id} className="lg:flex-grow w-auto lg:w-1/3 py-4 px-8 gap-4  flex flex-col md:items-start md:text-left md:mb-0 items-center text-center shadow-lg rounded-lg bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700">

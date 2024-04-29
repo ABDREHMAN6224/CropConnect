@@ -16,6 +16,7 @@ import ShowEventTicketModal from "../../../../components/modals/EventTicketModal
 import Link from "next/link";
 import Analytics from "./analytics";
 import { FaPlus } from "react-icons/fa";
+import Footer from "../../../../components/FooterSection";
 export default function Profile() {
   const router = useRouter();
   const userState = useAppSelector((state) => state.user);
@@ -109,33 +110,9 @@ export default function Profile() {
           <section className="flex flex-col flex-1">
             <h1 className=" text-2xl font-extrabold">Admin Dashboard</h1>
             <div className="mx-auto bg-white dark:bg-gray-900 rounded-lg  shadow-sm flex items-center  justify-between flex-col lg:flex-row gap-4 flex-wrap">
-              <div className="flex flex-col flex-1 overflow-hidden">
-                {/* card to show user avaraty email and role with iption t sign out*/}
-                <div className="flex items-center gap-4">
-                  <div className="rounded-full overflow-hidden w-[64px] h-[64px]">
-                    <Image
-                      src={userState.avatar}
-                      alt=""
-                      width={64}
-                      height={64}
-                      className="rounded-full"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <h2 className="text-2xl font-semibold">{userState.name}</h2>
-                    <p className="text-gray-500">{userState.email}</p>
-                  </div>
+            
 
-                  <button
-                    className="bg-red-400 text-white px-4 py-2 rounded-lg"
-                    onClick={handleLogout}
-                  >
-                    Sign Out
-                  </button>
-                </div>
-              </div>
-
-              {/* <div class="bg-gradient-to-br from-green-400 to-cyan-500 rounded-lg flex-1 section-bg-2">
+              <div class="bg-gradient-to-br from-green-400 to-cyan-500 rounded-lg flex-1 section-bg-2">
                 <div class=" mx-auto px-6 py-8 ">
                     <div class="items-center flex">
                         <div class="w-full">
@@ -147,7 +124,7 @@ export default function Profile() {
                         </div>
                     </div>
                   </div>      
-             </div> */}
+             </div>
 
               <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <div className="p-5">
@@ -224,6 +201,7 @@ export default function Profile() {
             )}
           </section>
         </div>
+        <Footer />
       </main>
     </div>
   );

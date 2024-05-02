@@ -3,6 +3,10 @@ import Email from "../utils/email.js";
 import ApiFeatures from "../utils/ApiFeature.js";
 import AppError from "../utils/AppError.js";
 import catchAsync from "../utils/catchAsync.js";
+import Order from "../model/order.js";
+import Event from "../model/event.js";
+import Story from "../model/stories.js";
+import Marketplace from "../model/marketplace.js";
 
 export const register = catchAsync(async (req, res, next) => {
   if(req.file){
@@ -130,4 +134,20 @@ export const contactUs = catchAsync(async (req, res, next) => {
   const sendEmail = new Email({ name, email, message });
   await sendEmail.sendContactUs();
   res.status(200).json("Email sent successfully");
+});
+
+export const getAnaytics = catchAsync(async (req, res, next) => {
+  const obj = {
+    totalOrders: 0,
+    totalUsers: 0,
+    totalEvents: 0,
+    totalBlogs: 0,
+    totalProducts: 0,
+  }
+  obj.totalOrders = await Order.countDocuments();
+  obj.totalUsers = await User.countDocuments();
+  obj.totalEvents = await Event.countDocuments();
+  obj.totalBlogs = await Story.countDocuments();
+  obj.totalProducts = await Marketplace.countDocuments();
+  res.status(200).json(obj);
 });

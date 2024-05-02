@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "react-toastify/dist/ReactToastify.css";
 import "/app/globals.css";
 import { SocketProvider } from "./context/socketContext";
+import { PeerProvider } from "./context/PeerContext";
 import { CartProvider } from "./context/cartContext";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -26,7 +27,10 @@ export default function RootLayout({ children }) {
 
         <CartProvider>
         <SocketProvider>
+          <PeerProvider>
+
             {children}
+          </PeerProvider>
         </SocketProvider>
         </CartProvider>
           </NotificationProvider>

@@ -43,14 +43,17 @@ export default function LoginPage() {
       return;
     }
 
-    const res = dispatch(login({ email, password }));
-    if (res.error) {
-      toast.error(res.error.message);
-    } else {
-      localStorage.setItem(LOGIN_TIME, new Date().getTime());
-      toast.success("Login successful");
-      router.push("/");
+    dispatch(login({ email, password })).then((r) => {
+      if(r.error){
+        toast.error(r.payload.message);
+      }
+      else{
+          localStorage.setItem(LOGIN_TIME, new Date().getTime());
+          toast.success("Login successful");
+          router.push("/");
+      }
     }
+    );
   };
 
   useEffect(() => {

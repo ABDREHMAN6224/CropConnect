@@ -12,10 +12,10 @@ import { useAppSelector } from "../app/store/hooks";
 import Swal from "sweetalert2";
 
 const navLinks = [
-  { title: "Home", link: "/" },
-  { title: "Marketplace", link: "/marketplace" },
-  { title: "Community", link: "/community" },
-  { title: "Resources", link: "/resources" },
+  { title: "Home", link: "/",dataTest:"home" },
+  { title: "Marketplace", link: "/marketplace",dataTest:"marketplace" },
+  { title: "Community", link: "/community",dataTest:"community" },
+  { title: "Resources", link: "/resources",dataTest:"resources" },
 ];
 
 export default function NavBar() {
@@ -106,20 +106,11 @@ export default function NavBar() {
           className={`${!showNavBar && "hidden"} w-full md:block md:w-auto`}
           id="navbar-dropdown"
         >
-          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            {/* <li>
-              <Link
-                href="/"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-500 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                aria-current="page"
-              >
-                Home
-              </Link>
-            </li> */}
-            {/* if active then color is primary */}
+          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">            
             {navLinks.map((link) => (
               <li key={link.title}>
                 <a
+                  data-test={link.dataTest}
                   href={link.link}
                   className={`block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-500 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent ${window.location.pathname === link.link ? "text-primary-700" : ""}`}
                 >
@@ -142,7 +133,9 @@ export default function NavBar() {
             <Link 
               href=""
               className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-600 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent relative"
-              onClick={() => setNotificationsVisible(!notificationsVisible)}
+              onClick={() => {
+                setAuthDropdownVisible(false);
+                setNotificationsVisible(!notificationsVisible)}}
               >
 
               <FaBell className="text-2xl text-primary-900" />
@@ -154,7 +147,9 @@ export default function NavBar() {
               <Link
                 href=""
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-600 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                onClick={() => setAuthDropdownVisible(!authDropdownVisible)}
+                onClick={() => {
+                  setNotificationsVisible(false);
+                  setAuthDropdownVisible(!authDropdownVisible)}}
               >
                 <FaUser className="text-2xl" />
               </Link>

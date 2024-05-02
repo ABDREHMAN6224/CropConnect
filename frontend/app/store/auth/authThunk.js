@@ -17,6 +17,7 @@ export const login = createAsyncThunk(
       body: JSON.stringify(payload),
     });
     const data = await response.json();
+    
     if (response.ok) {
       dispatch(setToken(data.token));
       dispatch(setUser(data.user));

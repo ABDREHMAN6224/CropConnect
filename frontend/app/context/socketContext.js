@@ -20,11 +20,11 @@ export const SocketProvider = ({ children }) => {
         }
     },[user,socket])
     useEffect(()=>{
-        const handleNewOrder = (data) => {
+        const handleNewNotification = (data) => {
             const content = data.content;
             const category = data.category;
             const link = data.link;
-            createNotification(content,link,category);
+            createNotification(content,link,category,data?.scope);
             showNotification({
                 message:content,
                 type:"success"
@@ -46,11 +46,11 @@ export const SocketProvider = ({ children }) => {
 
         }
         socket.on("notification:chat", handleNewMessage);
-        socket.on("notification:order", handleNewOrder);
-
+        socket.on("notification:general", handleNewNotification);
+        
         return () => {
             socket.off("notification:chat", handleNewMessage);
-            socket.off("notification:order", handleNewOrder);
+            socket.off("notification:general", handleNewNotification);
         }
     },[socket])
     

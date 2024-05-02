@@ -103,8 +103,27 @@ export default function Profile() {
         <div className="container mx-auto p-4 flex flex-col  h-full lg:overflow-hidden">
           <section className="flex flex-col flex-1 overflow-hidden">
             <div className="mx-auto bg-white dark:bg-gray-900 rounded-lg  shadow-sm flex items-center  justify-between flex-col lg:flex-row gap-4 flex-wrap">
+              {/* user.avatar and name */}
+              <div className="flex gap-4 items-center p-4">
+                <Image
+                  className="h-16 w-16 rounded-full"
+                  src={userState.avatar}
+                  alt=""
+                  width={64}
+                  height={64}
+                />
+                <div>
+                  <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">
+                    {userState.name}
+                  </h1>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    {userState.email}
+                  </p>
+                </div>
+                </div>
+
               <div class="bg-gradient-to-br from-green-400 to-cyan-500 rounded-lg flex-1 section-bg-2">
-                <div class=" mx-auto px-6 py-8 ">
+                <div class=" px-6 py-8 ">
                   <div class="items-center flex">
                     <div class="w-full">
                       <h2 class="text-3xl font-semibold text-white">

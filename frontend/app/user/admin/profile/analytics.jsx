@@ -22,6 +22,7 @@ import { ReactChart } from "chartjs-react";
 import ChartBox from "../../../../components/chartBox/ChartBox";
 import Approvals from "./Approvals";
 import AddAdminModal from "./AddAdminModal";
+import { FaBook } from "react-icons/fa";
 export const chartBoxProduct = {
   color: "skyblue",
   icon: "./productIcon.svg",
@@ -55,99 +56,55 @@ ReactChart.register(
   Tooltip
 );
 
-const Analytics = ({ orders }) => {
-  const [users, setusers] = useState([]);
-  const [events, setEvents] = useState([]);
+const Analytics = () => {
+  const [analytics, setAnalytics] = useState({});
   const { token } = useAppSelector((state) => state.auth);
-  const fetchUsers = async () => {
-    const response = await fetch(`${BACKEND_URL}/chats/chats`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await response.json();
-    if (response.ok) {
-      const newUsers = new Set();
-      data.forEach((chat) => {
-        chat.members.forEach((mem) => newUsers.add(mem.name));
-      });
-      setusers([...newUsers]);
-    }
-  };
-  const fetchEvents = async () => {
-    const response = await fetch(`${BACKEND_URL}/events/upcoming`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await response.json();
-    if (response.ok) {
-      setEvents(data);
-    }
-  };
+  
   useEffect(() => {
-    fetchEvents();
-    fetchUsers();
+    const fetchAnalytics = async () => {
+      const response = await fetch(`${BACKEND_URL}/auth/analytics`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      setAnalytics(data);
+    };
+    fetchAnalytics();
   }, []);
-  const pieData = {};
-  for (const order of orders)
-    for (const orderItem of order.orderItems) {
-      if (!(orderItem.name in pieData)) pieData[orderItem.name] = 0;
-      pieData[orderItem.name] += 1;
-    }
-  const barData = {}; // {date: {totalPrice: 0, count: 0}}
-  for (const order of orders) {
-    const date = order.createdAt.split("T")[0];
-    if (!(date in barData)) barData[date] = { totalPrice: 0, count: 0 };
-    barData[date].totalPrice += order.totalPrice;
-    barData[date].count += 1;
-  }
-
-  const lineData = {}; //  community-activity random line graphs for each user
-  for (const user of users) {
-    lineData[user] = [];
-    for (let i = 0; i < 10; i++) {
-      lineData[user].push(Math.floor(Math.random() * 100));
-    }
-  }
-
-  const eventsData = {}; // events per week
-  for (const event of events) {
-    const date = event.createdAt.split("T")[0];
-    if (!(date in eventsData)) eventsData[date] = 0;
-    eventsData[date] += 1;
-  }
 
   const statsData = {
     "Total Users": [
-      users.length,
+      analytics.totalUsers,
       <img src="/abc.jpg"  className="h-auto w-32 mb-2 mx-auto" alt="" />,
     ],
     "Total Events": [
-      events.length,
+      analytics.totalEvents,
       <img src="/a290e801-15d8-4100-82a5-d1e622bbba8b.jpg" className="h-auto w-32 mb-2 mx-auto"  alt="" />,
     ],
     "Total Orders": [
-      orders.length,
+      analytics.totalOrders,
       <img src="/9212305.jpg" className="h-auto w-32 mb-2 mx-auto" alt="" />
     ],
     "Total Products": [
-      Object.keys(pieData).length,
+      analytics.totalProducts,
       <img src="/hand_giving_growing_plant_flat_style.jpg"  className="h-auto w-32 mb-2 mx-auto" alt="" />
+    ],
+    "Total Blogs": [
+      analytics.totalBlogs,
+      <img src="/blogs.jpeg"  className="h-auto w-32 mb-2 mx-auto" alt="" />
     ],
   };
   return (
-    <div>
-      <div className="flex justify-evenly w-100">
+    <div className="w-full">
+      <div className="flex justify-evenly w-full">
         <div>
           <div className="flex w-full justify-evenly">
             <section class="text-gray-600 body-font">
               <div class="container mx-auto">
-                <div class="flex flex-wrap text-center">
+                <div class="flex flex-wrap text-center items-center mt-4">
                   {Object.entries(statsData).map((stat) => (
-                    <div class="p-2 md:w-1/5 sm:w-1/2 w-full">
+                    <div class="p-2 md:w-1/5 sm:w-1/2 w-full h-full">
                       <div class="border-2 border-gray-200 px-4 shadow-md rounded-lg">
                         {stat[1][1]}
                         <h2 class="title-font font-medium text-3xl text-gray-900">

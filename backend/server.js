@@ -19,6 +19,7 @@ import reviewRoutes from "./routes/review.js";
 import orderRoutes from "./routes/order.js";
 import feedbackRoutes from "./routes/feedback.js";
 import notificationRoutes from "./routes/notification.js";
+import annoucementRoutes from "./routes/announcement.js";
 
 
 
@@ -48,6 +49,7 @@ app.use("/reviews", reviewRoutes);
 app.use("/orders", orderRoutes);
 app.use("/feedback", feedbackRoutes);
 app.use("/notification", notificationRoutes);
+app.use("/announcement", annoucementRoutes);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
@@ -134,8 +136,8 @@ io.on("connection", (socket) => {
       }
     })
  })
-socket.on("notification:order",(data)=>{
-  socket.to(data.user).emit("notification:order",data);
+socket.on("notification:general",(data)=>{
+  socket.broadcast.emit("notification:general",data);
 })
  socket.on("chat:removed",({chat,user})=>{
   socket.to(user).emit("chat:removed",{chat});
@@ -143,5 +145,17 @@ socket.on("notification:order",(data)=>{
  socket.on("chat:added",({user})=>{
   socket.to(user).emit("chat:added");
  })
+
+ socket.on("stream:join",({room,user})=>{
+   socket.join(room);
+   socket.to(room).emit("stream:joined",user);
+ })
+
+ socket.on("stream:send",({room,...data})=>{
+   socket.to(room).emit("stream:received",{...data});
+  })
+  socket.on("stream:answer",({user,room,...data})=>{
+    socket.to(room).emit("stream:answered",{...data});
+  })
 
 });

@@ -1,5 +1,11 @@
 describe('Fundamentals Test', () => {
+  beforeEach(() => {
+    cy.visit({
+      url: '/',
+      failOnStatusCode: false
+
+    })
+  })
   it('passes', () => {
-    cy.visit('https://example.cypress.io')
   })
 })

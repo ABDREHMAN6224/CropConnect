@@ -368,7 +368,7 @@ const UpdateOrder = ({ order, setOrders }) => {
     });
 
     if (response.ok) {
-      socket.emit("notification:order", { 
+      socket.emit("notification:general", { 
         user: order.user._id,
         content: `Your order with id ${order._id} has been ${filter=="processing"?"processed":filter}`,
         link: "#",

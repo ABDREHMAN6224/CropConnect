@@ -4,13 +4,16 @@ import { useState } from "react";
 import ViewBlogModal from "./blogModal";
 import { toast } from "react-toastify";
 import { useAppSelector } from "../../../store/hooks";
+import { useSocket } from "../../../context/socketContext";
 
 const Approvals = () => {
   const [blogs, setBlogs] = useState([]);
   const [curBlog, setCurBlog] = useState('');
-
+  const socket=useSocket();
   const token = useAppSelector((state) => state.auth.token);
+  const [loading, setLoading] = useState(false);
   const approveBlog = async (id) => {
+    setLoading(true);
     const response = await fetch(`http://localhost:5000/stories/status/approve/${id}`, {
       method: "PUT",
       headers: {
@@ -20,11 +23,21 @@ const Approvals = () => {
     });
     const data = await response.json();
     if (response.ok) {
-      fetchPendingBlogs();
+      let blg = blogs.find(blog=>blog._id==id);
       toast.success("Blog approved successfully");
+      socket.emit("notification:general", {
+        content: `Your blog ${blg.title} has been approved and is now live`,
+        category: "blog",
+        link: `/blogs/${id}`,
+        user: data.author._id,
+        scope: "blog"+new Date().getTime(),
+      });
+      setBlogs(blogs.filter(blg=>blg._id!=id));
     }
+    setLoading(false);
   };
   const rejectBlog = async (id) => {
+    setLoading(true);
     const response = await fetch(`http://localhost:5000/stories/status/reject/${id}`, {
       method: "PUT",
       headers: {
@@ -34,9 +47,18 @@ const Approvals = () => {
     });
     const data = await response.json();
     if (response.ok) {
-      fetchPendingBlogs();
       toast.success("Blog rejected successfully");
+      let blog = blogs.find(blog=>blog._id==id);
+      socket.emit("notification:general", {
+        content: `Your blog ${blog.title} has been rejected`,
+        category: "blog",
+        link: `/blogs/`,
+        user: data.author._id,
+        scope: "blog"+new Date().getTime(),
+      });
+      setBlogs(blogs.filter(blog=>blog._id!=id));
     }
+    setLoading(false);
   };
 
   
@@ -53,7 +75,6 @@ const Approvals = () => {
       setBlogs(data);
     }
   };
-  console.log(blogs)
   useEffect(() => {
     fetchPendingBlogs();
   }, []);
@@ -99,19 +120,21 @@ const Approvals = () => {
               <button
                 onClick={() => approveBlog(blog._id)} 
                 className="bg-green-500 hover:bg-green-700 text-white mx-2 font-bold py-2 px-4 rounded"
-              >
-                Approve
+              >    console.log(data)
+
+                {loading ? "Loading..." : "Approve"}
               </button>
               <button
                 onClick={() => rejectBlog(blog._id)}
                 className="bg-red-500 hover:bg-red-700 text-white mx-2 font-bold py-2 px-4 rounded"
               >
-                Reject
+                {loading ? "Loading..." : "Reject"}
               </button>
             </td>
           </tr>
         ))}
       </table>
+      {blogs.length==0 && <div className="text-center text-xl font-medium my-8 text-primary-600">No pending approvals</div>}
       {curBlog && <ViewBlogModal blog={blogs.find(blog=>blog._id==curBlog)} onClose={()=>setCurBlog('')}/>}
     </div> 
   );

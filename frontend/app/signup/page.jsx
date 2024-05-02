@@ -60,7 +60,7 @@ export default function SignUpPage() {
             href="/"
             className="flex items-center text-2xl font-semibold text-gray-900 dark:text-white"
           >
-            HarvestHub
+            Crop Connect
           </Link>
           <DarkModeSwitcher />
         </div>

@@ -24,6 +24,6 @@
     "**/*.ts",
     "**/*.tsx",
     "app/marketplace/page.jsx"
-, "cypress/e2e/fundamentals.cy.js"  ],
+, "cypress/e2e/fundamentals.cy.js", "cypress/support/commands.js"  ],
   "exclude": ["node_modules"]
 }

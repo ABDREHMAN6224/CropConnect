@@ -58,12 +58,12 @@ const footerItems = [
         path: "/aboutus",
       },
       {
-        name: "Our Mission",
+        name: "Our Mission & Vision",
         path: "/aboutus/#our-mission",
       },
       {
-        name: "Our Vision",
-        path: "/aboutus/#our-vision",
+        name: "General Announcements",
+        path: "/announcements",
       },
       {
         name: "Our Team",

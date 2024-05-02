@@ -1,4 +1,5 @@
 import Story from '../model/stories.js';
+import User from '../model/user.js';
 import ApiFeatures from '../utils/ApiFeature.js';
 import catchAsync from '../utils/catchAsync.js';
 import Email from '../utils/email.js';
@@ -66,7 +67,7 @@ export const getPendeingStories = catchAsync(async (req, res) => {
 export const approveStory = catchAsync(async (req, res) => {
     const story = await Story.findByIdAndUpdate(req.params.id, {
         status: "approved"
-    }, { new: true});
+    }, { new: true}).populate("author","name email avatar");
     const email = new Email(story.author);
     await email.sendBlogVerified(story.title);
     res.status(200).json(story);
@@ -75,7 +76,7 @@ export const approveStory = catchAsync(async (req, res) => {
 export const rejectStory = catchAsync(async (req, res) => {
     const story = await Story.findByIdAndUpdate(req.params.id, {
         status: "rejected"
-    }, { new: true});
+    }, { new: true}).populate("author","name email avatar");
     const email = new Email(story.author);
     await email.sendBlogRejected(story.title);
     res.status(200).json(story);

@@ -35,6 +35,7 @@ export const NotificationProvider = ({ children }) => {
             body:JSON.stringify({content,category,link,scope})
         });
         const data_ = await res.json();
+        console.log(data_)
         if(res.ok){
             setNotifications((prev) => [data_.notification, ...prev]);
             showNotification({

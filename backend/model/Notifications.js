@@ -7,7 +7,6 @@ const NotificationSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ["chat","announcement","order","review","feedback","verified","live"],
         required: true
     },
     content: {

@@ -217,7 +217,7 @@ export default function BlogsCreate() {
                   disabled={!validated || submitting}
                 >
                   {submitting && <FaSpinner className="animate-spin" />} &nbsp;
-                  Create resource
+                  Create blog
                 </button>
               </form>
             </div>

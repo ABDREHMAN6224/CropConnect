@@ -1,4 +1,4 @@
-import { contactUs, deleteUser, getUser, getUsers, login, register, resetPassword, updateUser } from '../controllers/auth.js';
+import { contactUs, deleteUser, getAnaytics, getUser, getUsers, login, register, resetPassword, updateUser } from '../controllers/auth.js';
 import express from 'express';
 import { protect } from '../middlewares/auth.js';
 import { upload, uploadImageOnly } from '../utils/upload.js';
@@ -12,6 +12,7 @@ router.post('/register',upload.single("file"),register);
 router.post('/login', login);
 router.post('/contact', contactUs);
 router.get('/users',protect, getUsers);
+router.get('/analytics',protect, getAnaytics);
 router.get('/user/:id',protect, getUser);
 router.put('/user/:id',protect, updateUser);
 router.delete('/user/:id',protect, deleteUser);

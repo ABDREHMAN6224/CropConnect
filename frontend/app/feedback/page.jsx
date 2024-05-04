@@ -58,7 +58,7 @@ function FeedbackPage() {
           <h2 className="title-font mb-1 text-lg font-medium text-green-500">
             Feedback
           </h2>
-          <p className="mb-5 leading-relaxed text-gray-600">
+          <p className="mb-5 leading-relaxed text-gray-600 dark:text-gray-400">
             If you had any issues or you liked our product, please share with
             us!
           </p>
@@ -70,7 +70,7 @@ function FeedbackPage() {
               type="email"
               id="email"
               name="email"
-              className="w-full rounded border border-gray-300 bg-white dark:bg-gray-800 dark:text-blue-100 py-1 px-3 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+              className="w-full rounded border border-gray-300 bg-white dark:bg-gray-800 dark:text-gray-400 py-1 px-3 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
                 value={user.email}
                 disabled
             />
@@ -82,7 +82,7 @@ function FeedbackPage() {
             <textarea
               id="message"
               name="message"
-              className="h-44 w-full  rounded border border-gray-300 dark:bg-gray-800 dark:text-blue-100 py-1 px-3 text-base leading-6 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+              className="h-44 w-full  rounded border border-gray-300 dark:bg-gray-800 dark:text-gray-400 py-1 px-3 text-base leading-6 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
                 value={feedback}
                 onChange={(e) => setFeedback(e.target.value)}
             ></textarea>

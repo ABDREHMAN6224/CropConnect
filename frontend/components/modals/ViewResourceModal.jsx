@@ -28,7 +28,7 @@ const ViewResourceModal = ({
           &#8203;
         </span>
         <div
-          className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full"
+          className="inline-block align-bottom bg-white dark:bg-gray-800 dark:text-gray-400 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-headline"
@@ -92,7 +92,7 @@ const ViewResourceModal = ({
                         <h3 className="text-lg mb-4 underline underline-offset-8 leading-6  text-primary-900 text-left font-semibold hover:text-primary-700">
                             Description
                         </h3>
-                        <p className="text-gray-600 text-md">
+                        <p className="text-gray-600 dark:text-gray-500 text-md">
                             {resource.description}
                         </p>
                     </div>

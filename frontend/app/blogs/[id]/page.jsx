@@ -41,10 +41,10 @@ export default function SingleBlogPage ({params}) {
             {blogData && 
             <>
             
-            <section className="relative h-72 px-8 lg:px-32 text-white overflow-hidden section-bg dark:bg-gray-900">
+            <section className="relative h-72 text-white section-bg dark:bg-gray-900">
                 <div className="relative z-10 flex flex-col justify-end items-start h-full text-left">
-                    <div className="flex items-center w-full justify-between gap-3 max-w-screen-2xl px-8 lg:px-16">
-                        <h1 className="text-5xl font-bold leading-tight mb-4">
+                    <div className="md:flex block items-center w-full justify-between px-4 gap-3 mb-10"> 
+                        <h1 className="md:text-5xl text-3xl font-bold leading-tight md:mb-4">
                             {blogData.title}
                             {/* author name like in subscript */}
                             <span className="text-lg font-semibold text-gray-300 ml-4">by {blogData.author?.name}</span>
@@ -60,7 +60,7 @@ export default function SingleBlogPage ({params}) {
             <section className="text-gray-600 body-font px-8 lg:px-16 w-full flex justify-center max-w-screen-2xl mx-auto">
                 <div className="w-full mx-auto flex  py-24 pt-12 md:flex-row flex-col items-start">
                     <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-                        <p className="mb-8 leading-relaxed text-md">
+                        <p className="mb-8 leading-relaxed text-md dark:text-gray-300">
                             {blogData.content}
                         </p>
                         <span className="text-gray-500 text-sm">Created At: {new Date(blogData.createdAt).toDateString()}</span>

@@ -13,7 +13,7 @@ export default function MessageOther({ letter, message,type,avatar }) {
         :
         <img src={avatar} alt="avatar" className="h-10 w-10 rounded-full"/>
 }
-        <div className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
+        <div className="relative ml-3 text-sm bg-white dark:bg-gray-500 py-2 px-4 shadow rounded-xl">
         {type=="text"?<div>{message}</div>:
             // message is an image, or a file or a video...display it accordingly adn add download button
             <div className="flex items-center justify-between gap-8">

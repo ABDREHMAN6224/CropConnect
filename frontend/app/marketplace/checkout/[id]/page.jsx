@@ -122,9 +122,9 @@ export default function Checkout({params}) {
   <div className="px-4 pt-8">
     <p className="text-xl font-medium">Order Summary</p>
     <p className="text-gray-400">Check your items. And select a suitable shipping method.</p>
-    <div className="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6 overflow-auto max-h-96">
+    <div className="mt-8 space-y-3 rounded-lg border dark:bg-gray-800 dark:border-gray-950 bg-white dark:bg-gray-600 px-2 py-4 sm:px-6 overflow-auto max-h-96">
       {cart && cart.map((product) => (
-        <div className={`flex flex-col rounded-lg bg-white sm:flex-row ${
+        <div className={`flex flex-col rounded-lg sm:flex-row ${
           selectedProducts && selectedProducts.find((item) => item._id === product._id)
             ? "border-2 border-primary-400"
             : ""
@@ -139,7 +139,7 @@ export default function Checkout({params}) {
           return [product];
         })}
         >
-          <img className="m-2 h-24 w-28 rounded-md border object-cover object-center" src={product.images[0]} alt="" />
+          <img className="m-2 h-24 w-28 rounded-md border p-4 dark:border-gray-600 object-cover object-center" src={product.images[0]} alt="" />
           <div className="flex w-full flex-col px-4 py-4">
             <span className="font-semibold">{product.name}</span>
             <span className="float-right text-gray-400">{product.size}</span>
@@ -160,8 +160,8 @@ export default function Checkout({params}) {
     <form className="mt-5 grid gap-6">
       <div className="relative">
         <input className="peer hidden" id="radio_1" type="radio" name="radio" checked readOnly />
-        <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
-        <label className="peer-checked:border-2 peer-checked:border-primary-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" for="radio_1">
+        <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white "></span>
+        <label className="peer-checked:border-2 dark:peer-checked:bg-gray-600 peer-checked:border-primary-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" for="radio_1">
           <img className="w-14 object-contain" src="/images/naorrAeygcJzX0SyNI4Y0.png" alt="" />
           <div className="ml-5">
             <span className="mt-2 font-semibold">Cash on Delivery</span>
@@ -171,7 +171,7 @@ export default function Checkout({params}) {
       </div>
     </form>
   </div>
-  <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
+  <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0 dark:bg-gray-800">
     <p className="text-xl font-medium">Payment Details</p>
     <p className="text-gray-400">Complete your order by providing your payment details.</p>
     <div className="">
@@ -196,7 +196,7 @@ export default function Checkout({params}) {
       <label for="billing-address" className="mt-4 mb-2 block text-sm font-medium">Billing Address</label>
       <div className="flex flex-col sm:flex-row">
         <div className="relative flex-shrink-0 sm:w-7/12">
-          <input type="text" id="billing-address" name="billing-address" className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Street Address" 
+          <input type="text" id="billing-address" name="billing-address" className="w-full rounded-md border border-gray-200 dark:bg-gray-700 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Street Address" 
             value={billingAddress.address}
             onChange={(e) => {
               setBillingAddress((prev) => ({
@@ -206,7 +206,7 @@ export default function Checkout({params}) {
             }}
           />
         </div>
-        <select type="text" name="billing-state" className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+        <select type="text" name="billing-state" className="w-full rounded-md border border-gray-200 dark:bg-gray-700 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
           value={billingAddress.state}
           onChange={(e) => {
             setBillingAddress((prev) => ({
@@ -221,7 +221,7 @@ export default function Checkout({params}) {
           ))}
         </select> 
         {/* city input */}
-        <select type="text" name="billing-city" className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+        <select type="text" name="billing-city" className="w-full rounded-md border border-gray-200 dark:bg-gray-700 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
           value={billingAddress.city}
           onChange={(e) => {
             setBillingAddress((prev) => ({
@@ -255,17 +255,17 @@ export default function Checkout({params}) {
         />
       </div>
 
-      <div className="mt-6 border-t border-b py-2">
+      <div className="mt-6 border-t border-b py-2  dark:border-gray-900">
         <div className="flex items-center justify-between">
-          <p className="text-sm font-medium text-gray-900">Subtotal</p>
-          <p className="font-semibold text-gray-900">{
+          <p className="text-sm font-medium text-gray-900 dark:text-gray-200">Subtotal</p>
+          <p className="font-semibold text-gray-900 dark:text-green-700">{
             formatAmount(getBill(shippingAmount,selectedProducts||[])-shippingAmount)
             } Rs
              </p>
         </div>
         <div className="flex items-center justify-between">
-          <p className="text-sm font-medium text-gray-900">Shipping</p>
-          <p className="font-semibold text-gray-900">
+          <p className="text-sm font-medium text-gray-900 dark:text-gray-200">Shipping</p>
+          <p className="font-semibold text-gray-900 dark:text-green-700"> 
             {/* bill in rs */}
               {formatAmount(shippingAmount)} Rs
 
@@ -274,8 +274,8 @@ export default function Checkout({params}) {
         </div>
       </div>
       <div className="mt-6 flex items-center justify-between">
-        <p className="text-sm font-medium text-gray-900">Total</p>
-        <p className="text-2xl font-semibold text-gray-900">
+        <p className="text-lg font-medium text-gray-900 dark:text-gray-400">Total</p>
+        <p className="text-2xl font-semibold text-gray-900 dark:text-green-800">
           {formatAmount(getBill(shippingAmount,selectedProducts||[]))} Rs
         </p>
       </div>

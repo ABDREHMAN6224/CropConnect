@@ -73,19 +73,19 @@ export default function SingleProduct({params}){
                             </div>
                             <p className="leading-relaxed mb-4 dark:text-gray-300"
                             >{product.description }</p>
-                            <div className="flex border-t border-gray-200 py-2">
+                            <div className="flex border-t border-gray-200 dark:border-gray-600 py-2">
                                 <span className="text-gray-500 dark:text-gray-400">
                                     Category</span>
                                 <span className="ml-auto text-gray-900 dark:text-gray-300">
                                     {product.category}</span>
                             </div>
-                            <div className="flex border-t border-gray-200 py-2">
+                            <div className="flex border-t border-gray-200 dark:border-gray-600 py-2">
                                 <span className="text-gray-500 dark:text-gray-400">
                                     Average Rating</span>
                                 <span className="ml-auto text-gray-900 dark:text-gray-300">
                                     {product.averageRating}/5</span>
                             </div>
-                            <div className="flex border-t border-b mb-6 border-gray-200 py-2">
+                            <div className="flex border-t border-b mb-6 border-gray-200 dark:border-gray-600 py-2">
                                 <span className="text-gray-500 dark:text-gray-400">
                                     Price</span>
                                 <span className="ml-auto text-gray-900 dark:text-gray-300">
@@ -124,7 +124,7 @@ export default function SingleProduct({params}){
 
                             </div>
                         </div>
-                        <div className="flex flex-col lg:w-1/2 w-full lg:pl-10 lg:py-6 lg:border-l lg:border-gray-200 lg:border-t-0 lg:border-b-0 lg:mb-0 mb-6">
+                        <div className="flex flex-col lg:w-1/2 w-full lg:pl-10 lg:py-6 lg:border-l lg:border-gray-200 dark:border-gray-600 lg:border-t-0 lg:border-b-0 lg:mb-0 mb-6">
                             <h2 className="text-sm title-font text-gray-800 tracking-widest mb-3 underline text-center dark:text-gray-200">PHOTOS</h2>
                             <div className="flex justify-center overflow-hidden h-96">
                                 <img alt="ecommerce" className="object-cover object-center rounded w-full h-full" src={product.images && product.images[activeImage]} />
@@ -142,7 +142,7 @@ export default function SingleProduct({params}){
             </section>
 
             {/* reviews section */}
-                    <div className="h-1 bg-gray-200 rounded overflow-hidden my-8">
+                    <div className="h-1 bg-gray-200 rounded overflow-hidden my-8 dark:bg-gray-800">
                     </div>
             <section className="text-gray-600 body-font">
             <h1 class="sm:text-5xl text-3xl mb-4 font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary-200 to-primary-900 text-center ">
@@ -160,7 +160,7 @@ export default function SingleProduct({params}){
                         <h2 className="sm:w-2/5 text-gray-900 font-medium title-font text-2xl mb-2 sm:mb-0">Customer Reviews</h2>
                         <div className="sm:w-3/4 sm:pl-6 mt-4">
                             {reviews.map((review) => (
-                                <div key={review._id} className="p-4 border-2 border-gray-200 mb-4 rounded-lg">
+                                <div key={review._id} className="p-4 border-2 border-gray-200 dark:border-gray-600 mb-4 rounded-lg">
                                     <div className="flex items-center">
                                         <img alt="testimonial" src={review.author?.avatar} className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center" />
                                         <span className="flex-grow pl-6">
@@ -168,7 +168,7 @@ export default function SingleProduct({params}){
                                             <p className="text-gray-500 flex"><Rating rating={review?.rating}/></p>
                                         </span>
                                     </div>
-                                    <p className="leading-relaxed mt-4">{review.comment}</p>
+                                    <p className="leading-relaxed mt-4 dark:text-gray-400">{review.comment}</p>
                                 </div>
                             ))}
                         </div>
@@ -179,12 +179,12 @@ export default function SingleProduct({params}){
             }
             </section>
 
-            <div className="h-1 bg-gray-200 rounded overflow-hidden my-8">
+            <div className="h-1 bg-gray-200 rounded overflow-hidden my-8 dark:bg-gray-800">
             </div>
             
             {/* navigate back to marketplace */}
             <div className="container mx-auto p-4">
-                <button className="bg-gray-200 text-primary-600 py-2 px-4 rounded-lg w-full mt-4 hover:bg-gray-300" onClick={() => router.push("/marketplace")}>Back to Marketplace</button>
+                <button className="bg-gray-200 font-semibold text-primary-600 py-2 px-4 rounded-lg w-full mt-4 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-800" onClick={() => router.push("/marketplace")}>Back to Marketplace</button>
             </div>
             </div>
         }

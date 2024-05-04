@@ -64,7 +64,7 @@ const EventsPage = () => {
                 <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-primary-900">
                   Cultivating Knowledge, Harvesting Connections
                 </h1>
-                <p className="mb-8 leading-relaxed text-md">
+                <p className="mb-8 leading-relaxed text-md dark:text-gray-400">
                   From workshops to webinars, our events offer insights, skills,
                   and networking opportunities for enthusiasts and professionals
                   alike. Register now for upcoming events and join a community
@@ -93,7 +93,7 @@ const EventsPage = () => {
           </section>
           {/* upcoming events */}
 
-          <section className="text-gray-600 body-font">
+          <section className="body-font text-gray-500">
             <div className="flex flex-col text-center w-full">
               <h1 className="sm:text-3xl text-2xl font-medium title-font text-primary-900 mb-4">
                 Upcoming Events
@@ -196,11 +196,11 @@ const SingleEvent = ({ event, registered, past, setEvents = () => {} }) => {
       <div className="flex flex-col sm:flex-row mt-2">
         <div className="sm:w-1/3 text-center sm:pr-8 sm:py-8">
           <div className="flex flex-col items-center text-center justify-center">
-            <h2 className="title-font font-medium text-lg text-gray-900">
+            <h2 className="title-font font-medium text-lg text-gray-900 dark:text-gray-500">
               {formatDate(event.date)}
             </h2>
             <div className="w-12 h-1 bg-primary-500 rounded mt-2 mb-4"></div>
-            <p className="leading-relaxed text-gray-800">{event.time}</p>
+            <p className="leading-relaxed text-gray-800 dark:text-gray-600">{event.time}</p>
             {/* location */}
             <p className="leading-relaxed text-base">{event.location}</p>
             {(!registered && !past) && (
@@ -223,7 +223,7 @@ const SingleEvent = ({ event, registered, past, setEvents = () => {} }) => {
           </div>
         </div>
         <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left pr-8">
-          <h2 className="title-font font-medium text-2xl text-gray-900">
+          <h2 className="title-font font-medium text-2xl text-gray-900 dark:text-gray-300">
             {event.title}
           </h2>
           <p className="leading-relaxed text-lg mb-4">{event.description}</p>
@@ -235,7 +235,7 @@ const SingleEvent = ({ event, registered, past, setEvents = () => {} }) => {
               {
               typeof(event.guests==="string")?
               <span
-                  className="inline-flex text-primary-500 bg-gray-200 border-0 py-1 px-2 focus:outline-none hover:bg-gray-300 rounded text-xs mb-2 mr-2"
+                  className="inline-flex text-primary-500 bg-gray-200 dark:bg-gray-700 border-0 py-1 px-2 focus:outline-none hover:bg-gray-300 rounded text-xs mb-2 mr-2"
                 >
                   {event.guests}
                 </span>

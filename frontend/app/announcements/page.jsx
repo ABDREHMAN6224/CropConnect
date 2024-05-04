@@ -20,12 +20,12 @@ const page = () => {
     <div>
       <NavBar />
       <section className="container min-h-svh max-w-screen-2xl mx-auto p-4">
-        <h1 className="text-2xl font-semibold underline underline-offset-auto">Announcements</h1>
+        <h1 className="text-2xl font-semibold underline-offset-auto">Announcements</h1>
         <div className="grid grid-cols-1 mt-12 gap-4">
           {announcements.map((announcement) => (
             <div
               key={announcement._id}
-              className="bg-white dark:bg-gray-900 rounded-lg shadow-sm p-4"
+              className="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-4"
             >
               <h2 className="text-xl text-primary-800 font-semibold">{announcement.title}</h2>
               <p className="text-primary-600 px-4">{announcement.description}</p>

@@ -78,7 +78,7 @@ const BlogsPage = () => {
                   Dive into the World of Agriculture with Our Blogs
                   <br className="hidden lg:inline-block" />
                 </h1>
-                <p className="mb-8 leading-relaxed text-md">
+                <p className="mb-8 leading-relaxed text-md dark:text-gray-400">
                   Welcome to our blog section! Here, you can find a collection
                   of articles, stories, and insights from the field to help you
                   grow and succeed in agriculture. Our blogs cover a wide range
@@ -144,10 +144,10 @@ const BlogsPage = () => {
                return <div className="py-8 px-4 lg:w-1/3">
                   <div className="h-full flex items-start">
                     <div className="w-12 flex-shrink-0 flex flex-col text-center leading-none">
-                      <span className="text-gray-500 pb-2 mb-2 border-b-2 border-gray-200">
+                      <span className="text-gray-500 pb-2 mb-2 border-b-2 border-gray-200 dark:text-gray-500">
                         {new Date(blog.createdAt).toLocaleDateString('default',{month:"short"})}
                       </span>
-                      <span className="font-medium text-lg text-gray-800 title-font leading-none">
+                      <span className="font-medium text-lg text-gray-800 dark:text-gray-500 title-font leading-none">
                         {new Date(blog.createdAt).toLocaleDateString('default',{day:"2-digit"})}
                       </span>
                     </div>
@@ -155,7 +155,7 @@ const BlogsPage = () => {
                       <h2 className="tracking-widest text-xs title-font font-medium text-primary-500 mb-1 uppercase">
                         {blog.category}
                       </h2>
-                      <h1 className="title-font text-xl font-medium text-gray-900 mb-3">
+                      <h1 className="title-font text-xl font-medium text-gray-900 dark:text-gray-400 mb-3">
                         {blog.title}
                       </h1>
                       <p className="leading-relaxed mb-5">

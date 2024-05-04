@@ -95,22 +95,22 @@ const Approvals = () => {
             ))}
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-300 "></tbody>
+        <tbody className="bg-white divide-y dark:bg-slate-800 dark:text-white divide-gray-300 "></tbody>
         {blogs.map((blog) => (
           <tr key={blog._id}>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <td className="px-6 py-4 whitespace-nowrap dark:bg-slate-800 dark:text-white text-sm text-gray-500">
               {blog.id}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <td className="px-6 py-4 whitespace-nowrap dark:bg-slate-800 dark:text-white text-sm text-gray-500">
               {blog.author.name}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <td className="px-6 py-4 whitespace-nowrap dark:bg-slate-800 dark:text-white text-sm text-gray-500">
               {blog.createdAt}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <td className="px-6 py-4 whitespace-nowrap dark:bg-slate-800 dark:text-white text-sm text-gray-500">
               {blog.status}
             </td>
-            <td className=" flex px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <td className=" flex px-6 py-4 whitespace-nowrap dark:bg-slate-800 dark:text-white text-sm text-gray-500">
               <button
               onClick={() => setCurBlog(blog._id)}
                 className="bg-blue-500 hover:bg-blue-700 text-white mx-2 font-bold py-2 px-4 rounded"

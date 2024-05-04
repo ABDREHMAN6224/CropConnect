@@ -130,9 +130,9 @@ export default function Store() {
             )}
 
             <Link href="/marketplace/create">
-              <span className="bg-primary-600 text-white px-4 py-2 rounded-lg">
+              <div className="bg-primary-600 text-white px-4 py-2 rounded-lg">
                 Add Product
-              </span>
+              </div>
             </Link>
           </div>
           <hr className="my-4" />

@@ -7,7 +7,7 @@ export default function MessageMine({ letter, message ,type}) {
   return (
     <div className="col-start-6 col-end-13 p-3 rounded-lg">
       <div className="flex items-center justify-start flex-row-reverse">
-        <div className="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
+        <div className="relative mr-3 text-sm bg-indigo-100 dark:bg-gray-700 py-2 px-4 shadow rounded-xl">
           {type=="text"?<div>{message}</div>:
             // message is an image, or a file or a video...display it accordingly adn add download button
             <div className="flex items-center justify-between gap-8">

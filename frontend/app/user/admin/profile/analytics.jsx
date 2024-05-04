@@ -92,7 +92,7 @@ const Analytics = () => {
     ],
     "Total Blogs": [
       analytics.totalBlogs,
-      <img src="/blogs.jpeg"  className="h-auto w-32 mb-2 mx-auto" alt="" />
+      <img src="/A.jpg"  className="h-auto w-32 mb-2 mx-auto" alt="" />
     ],
   };
   return (
@@ -102,15 +102,15 @@ const Analytics = () => {
           <div className="flex w-full justify-evenly">
             <section class="text-gray-600 body-font">
               <div class="container mx-auto">
-                <div class="flex flex-wrap text-center items-center mt-4">
+                <div class="flex flex-wrap text-center items-center mt-4 w-full">
                   {Object.entries(statsData).map((stat) => (
-                    <div class="p-2 md:w-1/5 sm:w-1/2 w-full h-full">
-                      <div class="border-2 border-gray-200 px-4 shadow-md rounded-lg">
+                    <div class="p-2 md:w-1/5">
+                      <div class="border-2 border-gray-200 dark:border-gray-500 px-4 shadow-md rounded-lg">
                         {stat[1][1]}
-                        <h2 class="title-font font-medium text-3xl text-gray-900">
+                        <h2 class="title-font font-medium text-3xl text-gray-900 dark:text-gray-200">
                           {stat[1][0]}
                         </h2>
-                        <p class="leading-relaxed">{stat[0]}</p>
+                        <p class="leading-relaxed dark:text-gray-300">{stat[0]}</p>
                       </div>
                     </div>
                   ))}
@@ -119,9 +119,7 @@ const Analytics = () => {
             </section>{" "}
           </div>
 
-          <Approvals />
         </div>
-        <AddAdminModal />
       </div>
     </div>
   );

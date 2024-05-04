@@ -171,6 +171,6 @@ export default function ResourcesCreate() {
           </div>
         </div>
       </main>
-    </AuthW>
+    </AuthWrapper>
   );
 }

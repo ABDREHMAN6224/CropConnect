@@ -52,12 +52,6 @@ export default function Profile() {
         setDescription("");
       }
     };
-    createNotification(
-      "Announcement created",
-      "/announcements",
-      "announcement",
-      "general" + new Date().getTime()
-    );
     makeAnnouncement();
   };
   return (

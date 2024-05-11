@@ -22,7 +22,7 @@ export default function Home() {
   const isAdmin = user.role?.toLowerCase() === "admin";
 
   return (
-    <>
+    <AuthWrapper>
       <NavBar />
       <main className="dark:bg-gray-900 w-full relative">
         <HomePageHeroSection isAdmin={isAdmin} />
@@ -86,6 +86,6 @@ export default function Home() {
           <FooterSection />
         </div>
       </main>
-    </>
+    </AuthWrapper>
   );
 }

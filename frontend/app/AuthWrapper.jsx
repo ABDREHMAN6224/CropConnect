@@ -14,7 +14,7 @@ const AuthWrapper = ({children,admin=false}) => {
         window.location.href = '/login'
         return;
       }
-      if(admin && !user?.isAdmin){
+      if(admin && !user?.role==='admin'){
         router.push('/')
         return;
       }

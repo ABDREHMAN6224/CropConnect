@@ -8,6 +8,7 @@ import ViewResourceModal from "../../components/modals/ViewResourceModal";
 import { FaChevronCircleRight } from "react-icons/fa";
 import { FooterSection } from "../../components";
 import AuthWrapper from "../AuthWrapper";
+import GenralHero from "../../components/GenralHero";
 
 export default function ResourcesPage() {
   const [currentResource, setCurrentResource] = useState(null);
@@ -45,21 +46,13 @@ export default function ResourcesPage() {
       <NavBar />
       <main className="dark:bg-gray-900 w-full">
         <div className="p-4 mx-auto w-full max-w-screen-2xl">
-        <section className="text-gray-600 dark:text-gray-400 body-font px-8 lg:px-16 w-full flex justify-center">
-          <div className="w-full mx-auto flex  py-24 md:flex-row flex-col items-center">
-            <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-              <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-primary-900">
-               Explore Our Resources
-              </h1>
-              <p className="mb-8 leading-relaxed text-md">
-                Welcome to our resources, where we provide a wealth of information tailored for farmers and agricultural enthusiasts. Our dedicated team regularly updates this section with valuable resources, including guides, articles, tools, and insights to help you optimize your farming practices, enhance productivity, and stay updated with the latest trends in the agricultural industry. Whether you're a seasoned farmer or just starting out, our resources are designed to support you in achieving success and sustainability in your farming endeavors. Explore our collection and empower your farming journey today!
-              </p>
-            </div>
-            <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-              <img className="object-cover object-center rounded shadow-sm" alt="crop-img" src={"/crop_6.jpeg"}/>
-            </div>
-          </div>
-        </section>
+        <GenralHero
+          title={"Explore Our Resources"}
+          description={"Welcome to our resources, where we provide a wealth of information tailored for farmers and agricultural enthusiasts. Our dedicated team regularly updates this section with valuable resources, including guides, articles, tools, and insights to help you optimize your farming practices, enhance productivity, and stay updated with the latest trends in the agricultural industry. Whether you're a seasoned farmer or just starting out, our resources are designed to support you in achieving success and sustainability in your farming endeavors. Explore our collection and empower your farming journey today!"}
+          image={"/crop_6.jpeg"}
+          btnText={"Read More"}
+          link={"/resources"}
+        />
 
         {/* resources section, every resource will have view option wihch will open modal */}
         <section className="text-gray-600 dark:text-gray-500 body-font px-8 lg:px-16 w-full flex justify-center">

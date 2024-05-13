@@ -10,6 +10,7 @@ import { FaCheckCircle, FaSpinner } from "react-icons/fa";
 import useColorMode from "../../hooks/useColorMode";
 import { toast, ToastContainer } from "react-toastify";
 import AuthWrapper from "../AuthWrapper";
+import GenralHero from "../../components/GenralHero";
 
 const EventsPage = () => {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
@@ -58,39 +59,13 @@ const EventsPage = () => {
       <NavBar />
       <main className="dark:bg-gray-900 w-full">
         <div className="p-4 mx-auto w-full max-w-screen-2xl">
-          <section className="text-gray-600 body-font px-8 lg:px-16 w-full flex justify-center">
-            <div className="w-full mx-auto flex  py-24 md:flex-row flex-col items-center">
-              <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-                <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-primary-900">
-                  Cultivating Knowledge, Harvesting Connections
-                </h1>
-                <p className="mb-8 leading-relaxed text-md dark:text-gray-400">
-                  From workshops to webinars, our events offer insights, skills,
-                  and networking opportunities for enthusiasts and professionals
-                  alike. Register now for upcoming events and join a community
-                  passionate about sustainable farming practices and
-                  agricultural innovation.
-                </p>
-                {pastEvents.length > 0 && (
-                  <div className="flex justify-center">
-                    <a
-                      className="inline-flex text-white bg-primary-500 border-0 py-2 px-6 focus:outline-none hover:bg-primary-600 rounded text-lg"
-                      href="#past-events"
-                    >
-                      Past Events
-                    </a>
-                  </div>
-                )}
-              </div>
-              <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-                <img
-                  className="object-cover object-center rounded shadow-sm"
-                  alt="crop-img"
-                  src={"/events_3.jpeg"}
-                />
-              </div>
-            </div>
-          </section>
+          <GenralHero
+            title={"Cultivating Knowledge, Harvesting Connections"}
+            description={"From workshops to webinars, our events offer insights, skills, and networking opportunities for enthusiasts and professionals alike. Register now for upcoming events and join a community passionate about sustainable farming practices and agricultural innovation."}
+            image={"/events_3.jpeg"}
+            btnText={"Read More"}
+            link={"#past-events"}
+          />
           {/* upcoming events */}
 
           <section className="body-font text-gray-500">

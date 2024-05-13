@@ -79,3 +79,71 @@ html{
   background: rgb(71, 216, 131);
   border-radius: 6px;
 }
+
+.animate-fadeIn{
+  animation: fadeIn 1s ease-in-out;
+}
+.animate-fadeOut{
+  animation: fadeOut 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.animate-fromLeft{
+  animation: fromLeft 1s ease-in-out;
+}
+.animate-fromRight{
+  animation: fromRight 1s ease-in-out;
+}
+.animate-fromBottom{
+  animation: fromBottom 1s ease-in-out;
+}
+
+@keyframes fromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-8%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fromRight {
+  from {
+    opacity: 0;
+    transform: translateX(8%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(8%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

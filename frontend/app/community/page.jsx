@@ -10,6 +10,7 @@ import useColorMode from "../../hooks/useColorMode";
 import { FaSpinner } from "react-icons/fa";
 import { SingleChat } from "./SingleChat";
 import AuthWrapper from "../AuthWrapper";
+import GenralHero from "../../components/GenralHero";
 
 const CommunityPage = () => {
   const router = useRouter();
@@ -51,41 +52,13 @@ const CommunityPage = () => {
 
       <main className="dark:bg-gray-900 w-full">
         <div className="p-4 mx-auto w-full max-w-screen-2xl">
-          <section className="text-gray-600 body-font px-8 lg:px-16 w-full flex justify-center">
-            <div className="w-full mx-auto flex  py-24 md:flex-row flex-col items-center">
-              <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-                <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-primary-900">
-                  Dive into Our Thriving Farming
-                  Community!
-                </h1>
-                <p className="mb-8 leading-relaxed text-md">
-                  Welcome to our vibrant farming community! Here, we cultivate
-                  connections, share insights, and nurture growth together.
-                  Whether you're a seasoned farmer, an aspiring enthusiast, or
-                  simply curious about the world of agriculture, this space is
-                  yours to explore, learn, and thrive. Join us as we celebrate
-                  the rich tapestry of farming life and delve into discussions,
-                  tips, and stories that cultivate a brighter, greener future.
-                </p>
-
-                <div className="flex justify-center">
-                  <button
-                    className="inline-flex text-white bg-primary-500 border-0 py-2 px-6 focus:outline-none hover:bg-primary-600 rounded text-lg"
-                    onClick={()=>router.push('/community/chats')}
-                  >
-                   Community Chats
-                  </button>
-                </div>
-              </div>
-              <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 ">
-                <img
-                  className="object-cover object-center rounded shadow-sm "
-                  alt="crop-img"
-                  src={"/community.jpeg"}
-                />
-              </div>
-            </div>
-          </section>
+          <GenralHero
+            title={"Join Our Public Chats"}
+            description={"Connect with fellow farmers, agronomists, and industry experts in our public chats. Share insights, ask questions, and stay updated on the latest trends in agriculture. Whether you're a novice or a seasoned professional, our community is a welcoming space for all who are passionate about farming and food production."}
+            image={"/community.jpeg"}
+            btnText={"Visit Chats"}
+            link={"/community/chats"}
+          />
 
               {loading && (
                 <div className="flex justify-center items-center h-44">
@@ -94,7 +67,7 @@ const CommunityPage = () => {
               )}
           <section className="text-gray-600 body-font px-8 lg:px-16 w-full flex flex-col justify-center">
 
-            <h1 className="title-font sm:text-2xl mx-auto text-2xl text-center mb-4 font-medium text-primary-900 underline underline-offset-auto">
+            <h1 className="title-font sm:text-2xl mx-auto text-2xl text-center mb-4 font-medium text-primary-900 underline underline-offset-auto dark:text-primary-500">
               Join Our Public Chats
             </h1>
               

@@ -5,11 +5,30 @@ import { toast, ToastContainer } from "react-toastify";
 import  useColorMode  from "../hooks/useColorMode";
 import { useState } from "react";
 import { FaSpinner } from "react-icons/fa";
+import { useInView } from "react-intersection-observer";
 
 const ContactUsSection = () => {
     const [colorMode,_]=useColorMode();
     const user= useAppSelector((state) => state.user);
     const [loading,setLoading]=useState(false);
+
+    const {ref:heading,inView}=useInView({
+        threshold:0.5,
+        triggerOnce:true
+    })
+
+    const {ref:formRef,inView:inView2}=useInView({
+        threshold:0.5,
+        triggerOnce:true
+    })
+
+    const {ref:imgRef,inView:inView3}=useInView({
+        threshold:0.5,
+        triggerOnce:true
+    })
+
+
+
     const handleSubmit = (e) => {
 
         e.preventDefault()
@@ -47,17 +66,28 @@ const ContactUsSection = () => {
      <div className="px-5 grid gap-8 grid-cols-1 md:grid-cols-2 py-24 items-center mx-auto text-primary-900 rounded-lg">
          <div className="flex flex-col justify-center">
              <div>
-                 <h2 className="text-3xl sm:text-4xl font-medium leading-tight">
+                 <h2 className={`text-3xl sm:text-4xl font-medium leading-tight dark:text-primary-500
+                    ${inView ? "animate-fromBottom" : "opacity-0"}
+                 `}
+                    ref={heading}
+                 >
                      Lets talk about everything!
                  </h2>
              </div>
-             <div className="mt-12 text-center rounded-lg  opacity-75 shadow-lg">
+             <div className={`mt-12 text-center rounded-lg  opacity-75 shadow-lg
+                ${inView3 ? "animate-fromBottom" : "opacity-0"}`}
+                    ref={imgRef}
+             >
                  <img src="/crop_2.jpeg" alt="Contact" className="rounded-lg"/>
              </div>
          </div>
-         <form onSubmit={handleSubmit}> 
+         <form onSubmit={handleSubmit}
+                className={`flex flex-col w-full justify-center rounded-lg p-8 shadow-lg bg-gray-100 dark:bg-gray-800
+                ${inView2 ? "animate-fromBottom" : "opacity-0"}`}
+                ref={formRef}
+         > 
              <div>
-                 <span className="uppercase text-sm text-gray-600 font-bold">
+                 <span className="uppercase text-sm text-gray-600 font-bold dark:text-gray-300">
                      Full Name
                  </span>
                  <input
@@ -70,7 +100,7 @@ const ContactUsSection = () => {
                  />
              </div>
              <div className="mt-8">
-                 <span className="uppercase text-sm text-gray-600 font-bold">
+                 <span className="uppercase text-sm text-gray-600 font-bold dark:text-gray-300">
                      Email
                  </span>
                  <input
@@ -83,7 +113,7 @@ const ContactUsSection = () => {
                  />
              </div>
              <div className="mt-8">
-                 <span className="uppercase text-sm text-gray-600 font-bold">
+                 <span className="uppercase text-sm text-gray-600 font-bold dark:text-gray-300">
                      Message
                  </span>
                  <textarea
@@ -95,7 +125,7 @@ const ContactUsSection = () => {
              </div>
              <div className="mt-8">
              <button 
-             className="tracking-wide text-white bg-primary-500 border-0 py-2 px-6 focus:outline-none hover:bg-primary-600 rounded text-lg w-full"
+             className="tracking-wide text-white bg-primary-500 border-0 py-2 px-6 focus:outline-none hover:bg-primary-600 rounded text-lg w-full dark:bg-primary-700"
                      type="submit"
                      disabled={loading}
                  >

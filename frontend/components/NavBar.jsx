@@ -138,7 +138,7 @@ export default function NavBar() {
                 setNotificationsVisible(!notificationsVisible)}}
               >
 
-              <FaBell className="text-2xl text-primary-900" />
+              <FaBell className="text-2xl text-primary-900 dark:text-primary-500" />
               {notifications.length > 0 && <span className="absolute -top-2 -right-1 h-5 w-5 grid place-items-center bg-primary-600 text-white text-xs rounded-full">{notifications.length}</span>}
             </Link>
               </li>

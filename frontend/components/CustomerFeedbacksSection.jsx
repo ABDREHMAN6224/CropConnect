@@ -2,7 +2,19 @@
 import { useEffect, useState } from "react";
 import { BACKEND_URL } from "../app/utils/constants";
 import {FaChevronCircleLeft,FaChevronCircleRight} from "react-icons/fa";
+import { useInView } from "react-intersection-observer";
 const CustomerFeedbacksSection = () => {
+
+  const { ref, inView } = useInView({
+    threshold: 0.5,
+    triggerOnce: true,
+  });
+
+  const { ref: ref2, inView: inView2 } = useInView({
+    threshold: 0.5,
+    triggerOnce: true,
+  });
+
   const [feedbacks, setFeedbacks] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   useEffect(() => {
@@ -17,10 +29,16 @@ const CustomerFeedbacksSection = () => {
   return (
     <section className="text-gray-600 body-font px-2 sm:px-8 lg:px-16 w-full flex justify-center" id="feedback-section">
       <div className="w-full mx-auto flex  py-24 md:flex-row flex-col items-center flex-wrap">
-        <h1 className="text-3xl font-medium title-font text-primary-900 mb-12 text-center  mx-auto">
+        <h1 className={`text-3xl font-medium title-font text-primary-900 mb-12 text-center  mx-auto dark:text-primary-500
+        ${inView ? "animate-fromBottom" : "opacity-0"}`}
+          ref={ref}
+        >
           Customer Feedbacks
         </h1>
-        <div className="flex flex-wrap w-full  h-[46rem] sm:h-[35rem] md:h-96 items-center justify-center relative -m-4 overflow-hidden">
+        <div className={`flex flex-wrap w-full  h-[46rem] sm:h-[35rem] md:h-96 items-center justify-center relative -m-4 overflow-hidden
+        ${inView2 ? "animate-fromBottom" : "opacity-0"}`}
+          ref={ref2}
+        >
 
           <button
             className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-50 p-2 rounded-full z-10"

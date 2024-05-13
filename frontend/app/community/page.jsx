@@ -92,14 +92,22 @@ const CommunityPage = () => {
                   <FaSpinner className="animate-spin h-10 w-10 text-primary-500" />
                 </div>
               )}
-          <section className="text-gray-600 body-font px-8 lg:px-16 w-full flex justify-center">
-          {/* show all public communities with first letter of name as profile along with admin having name,email and avatar */}
-            <div className="w-full mx-auto flex md:flex-row flex-col items-center flex-wrap">
+          <section className="text-gray-600 body-font px-8 lg:px-16 w-full flex flex-col justify-center">
+
+            <h1 className="title-font sm:text-2xl mx-auto text-2xl text-center mb-4 font-medium text-primary-900 underline underline-offset-auto">
+              Join Our Public Chats
+            </h1>
               
+            <div className="w-full mx-auto flex md:flex-row flex-col items-center flex-wrap">
              {publicChats.map((chat) => (
                 <SingleChat key={chat.id} chat={chat} setChats={setPublicChats} joined={chat?.joined || chat.members.includes(user._id)} />
               ))
             }
+            {publicChats.length === 0 && !loading && (
+              <div className="text-center w-full">
+                <p className="text-lg">No public chats available</p>
+              </div>
+            )}
             </div>
             
 

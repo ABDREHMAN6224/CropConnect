@@ -1,8 +1,7 @@
+
 import React from "react";
 import NavBar from "../../components/NavBar";
-import Footer from "../../components/FooterSection";
-// import missionImg from "./mission.jpeg"
-// import visionImg from "./vision.jpeg"
+import { FooterSection } from "../../components";
 
 const page = () => {
   return (
@@ -45,7 +44,7 @@ const page = () => {
             <div className="mb-8 lg:mb-16 lg:w-1/4">
                 <img className="object-cover w-60 md:w-80 lg:w-96 rounded-full shadow-lg h-60 md:h-80 lg:h-96" src="./mission.jpeg" alt="Our mission" />
             </div>
-            <p className="w-3/4 mb-8 text-lg font-normal text-gray-700 lg:text-xl sm:px-16  dark:text-gray-400 text-left">
+            <p className="w-3/4 mb-8 text-lg font-normal text-gray-700 lg:text-xl sm:px-16  dark:text-gray-200 text-left">
             Our mission at Crop Connect is to empower farmers and agricultural stakeholders worldwide by providing a comprehensive platform for commerce, education, and community building. We are dedicated to fostering innovation, sustainability, and inclusivity in agriculture, connecting individuals and businesses to resources, markets, and opportunities. Through collaboration, knowledge-sharing, and technological advancements, we aim to drive positive change and enhance the resilience and productivity of the global farming community.
             </p>
 
@@ -73,8 +72,7 @@ By leveraging the power of technology and collective knowledge, we are committed
         </div>
     </div>
 </section>
-      <Footer />
-
+      <FooterSection />
     </div>
   );
 };

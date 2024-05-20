@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { useInView } from "react-intersection-observer";
 const footerItems = [
@@ -26,10 +27,6 @@ const footerItems = [
     title: "Community",
     links: [
       {
-        name: "Feedback",
-        path: "/#feedback-section",
-      },
-      {
         name: "Community",
         path: "/community",
       },
@@ -51,16 +48,12 @@ const footerItems = [
         path: "/aboutus",
       },
       {
-        name: "Our Mission & Vision",
-        path: "/aboutus/#our-mission",
-      },
-      {
         name: "General Announcements",
         path: "/announcements",
       },
       {
         name: "Our Team",
-        path: "/#our-team",
+        path: "/?our-team=true",
       },
     ]
   },
@@ -77,11 +70,11 @@ const footerItems = [
       },
       {
         name: "Customer Feedbacks",
-        path: "/#feedback-section",
+        path: "/?feedback-section=true",
       },
       {
         name: "Contact Us",
-        path: "/#contact-us",
+        path: "/?contact-us=true",
       },
     ]
   },

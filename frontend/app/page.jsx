@@ -1,8 +1,6 @@
 "use client";
-import Link from "next/link";
 import NavBar from "../components/NavBar";
 import { useAppSelector } from "./store/hooks";
-import { FaPlus } from "react-icons/fa";
 import {
   HomePageHeroSection,
   ResourcesSection,
@@ -13,13 +11,34 @@ import {
   OurBlogsSection,
   OurEventsSection,
   OurCommunitySection,
-  SuccessStories,
   OurMarketplaceSection,
 } from "../components";
 import AuthWrapper from "./AuthWrapper";
+import { useEffect } from "react";
 export default function Home() {
   const user = useAppSelector((state) => state.user);
   const isAdmin = user.role?.toLowerCase() === "admin";
+  
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const ourTeam = searchParams.get("our-team");
+    const contactUs = searchParams.get("contact-us");
+    const feedback = searchParams.get("feedback-section");
+    if (ourTeam) {
+      const teamSection = document.getElementById("our-team");
+      console.log(teamSection)
+      teamSection.scrollIntoView({ behavior: "smooth" });
+    }
+    else if (contactUs) {
+      const contactUsSection = document.getElementById("contact-us");
+      contactUsSection.scrollIntoView({ behavior: "smooth" });
+    }
+    else if (feedback) {
+      const feedbackSection = document.getElementById("feedback-section");
+      feedbackSection.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [window.location.search]);
 
   return (
     <AuthWrapper>
@@ -27,54 +46,6 @@ export default function Home() {
       <main className="dark:bg-gray-900 w-full relative">
         <HomePageHeroSection isAdmin={isAdmin} />
         <div className="max-w-screen-2xl mx-auto">
-          {/* {isAdmin && (
-            <div className=" w-80 block mb-8 absolute top-10 left-10">
-              <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <div className="p-5">
-                  <a href="#">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                      Resources
-                    </h5>
-                  </a>
-                  <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                    Handle resources from here.
-                  </p>
-                  <div className="flex gap-2">
-                    <Link
-                      href="/resources/create"
-                      className="w-fit flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                    >
-                      Add resource &nbsp; <FaPlus />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-          {isAdmin && (
-            <div className=" w-80 block mb-8 absolute md:top-10 top-52 left-10 md:left-auto md:right-10">
-              <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <div className="p-5">
-                  <a href="#">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                      Events
-                    </h5>
-                  </a>
-                  <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                    Handle events from here.
-                  </p>
-                  <div className="flex gap-2">
-                    <Link
-                      href="/events/create"
-                      className="w-fit flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                    >
-                      Add event &nbsp; <FaPlus />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )} */}
           <ResourcesSection />
           <OurCommunitySection />
           <OurBlogsSection />

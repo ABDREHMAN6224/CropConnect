@@ -59,14 +59,14 @@ export default function ResourcesPage() {
           <div className="w-full mx-auto flex gap-4 md:flex-row flex-col items-center flex-wrap">
             {/* display all resources */}
             {myResources.map((resource) => (
-              <div key={resource.id} className="lg:flex-grow w-auto lg:w-1/3 py-4 px-8 gap-4  flex flex-col md:items-start md:text-left md:mb-0 items-center text-center shadow-lg rounded-lg bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+              <div key={resource.id} className="lg:flex-grow w-auto lg:w-1/4 py-4 px-8 gap-4  flex flex-col md:items-start md:text-left md:mb-0 items-center text-center shadow-lg rounded-lg bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                 <div className="flex justify-between w-full h-48">
 
-                {resource.resources[0] && isImage(resource.resources[2]) && (
+                {resource.resources[0] && isImage(resource.resources[0]) && (
                   <img className="object-cover object-center rounded shadow-sm" alt="crop-img" src={resource.resources[2]}/>
                 )}
 
-                {resource.resources[2] && isVideo(resource.resources[2]) && (
+                {resource.resources[0] && isVideo(resource.resources[0]) && (
                   <video className="object-cover object-center rounded shadow-sm" autoPlay loop muted>
                     <source src={resource.resources[2]} type="video/mp4"/>
                     <source src={resource.resources[2]} type="video/ogg"/>

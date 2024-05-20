@@ -17,7 +17,7 @@ export default function ResourcesPage() {
   const {token} = useAppSelector((state) => state.auth);
 
   const isImage = (url) => {
-    return url.match(/\.(jpeg|jpg|gif|png|svg)$/) != null;
+    return url?.match(/\.(jpeg|jpg|gif|png|svg)$/) != null;
   }
 
   const isVideo = (url) => {

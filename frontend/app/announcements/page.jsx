@@ -25,7 +25,7 @@ const page = () => {
           {announcements.map((announcement) => (
             <div
               key={announcement._id}
-              className="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-4"
+              className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-4"
             >
               <h2 className="text-xl text-primary-800 font-semibold">{announcement.title}</h2>
               <p className="text-primary-600 px-4">{announcement.description}</p>

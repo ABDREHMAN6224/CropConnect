@@ -11,6 +11,7 @@ import { FaSpinner } from "react-icons/fa";
 import { SingleChat } from "./SingleChat";
 import AuthWrapper from "../AuthWrapper";
 import GenralHero from "../../components/GenralHero";
+import { useInView } from "react-intersection-observer";
 
 const CommunityPage = () => {
   const router = useRouter();
@@ -20,6 +21,11 @@ const CommunityPage = () => {
   const { token } = useAppSelector((state) => state.auth);
   const [colorMode, _] = useColorMode();
   const  user  = useAppSelector((state) => state.user);
+  const {ref:ref1, inView:inView1} = useInView({
+    triggerOnce: true,
+    threshold: 0.5,
+  });
+
 
   useEffect(() => {
     async function getPublicChats() {
@@ -50,7 +56,7 @@ const CommunityPage = () => {
     <AuthWrapper>
       <NavBar />
 
-      <main className="dark:bg-gray-900 w-full">
+      <main className="dark:bg-gray-900 w-full min-h-screen">
         <div className="p-4 mx-auto w-full max-w-screen-2xl">
           <GenralHero
             title={"Join Our Public Chats"}
@@ -67,8 +73,10 @@ const CommunityPage = () => {
               )}
           <section className="text-gray-600 body-font px-8 lg:px-16 w-full flex flex-col justify-center">
 
-            <h1 className="title-font sm:text-2xl mx-auto text-2xl text-center mb-4 font-medium text-primary-900 underline underline-offset-auto dark:text-primary-500">
-              Join Our Public Chats
+            <h1 className={`title-font sm:text-2xl mx-auto mb-8 text-2xl text-center font-medium text-primary-900 underline underline-offset-auto dark:text-primary-500 ${inView1?"animate-fromBottom":"opacity-0"}`}
+              ref={ref1}
+            >
+              Public Communities
             </h1>
               
             <div className="w-full mx-auto flex md:flex-row flex-col items-center flex-wrap">

@@ -9,15 +9,24 @@ import { FaChevronCircleRight } from "react-icons/fa";
 import { FooterSection } from "../../components";
 import AuthWrapper from "../AuthWrapper";
 import GenralHero from "../../components/GenralHero";
+import { useInView } from "react-intersection-observer";
 
 export default function ResourcesPage() {
   const [currentResource, setCurrentResource] = useState(null);
   const [openViewResourceModal, setOpenViewResourceModal] = useState(false);
   const [myResources, setResources] = useState([]);
   const {token} = useAppSelector((state) => state.auth);
+  const { ref, inView } = useInView({
+    threshold: 0.5,
+    triggerOnce: true,
+  });
+  const { ref: ref2, inView: inView2 } = useInView({
+    threshold: 0.5,
+    triggerOnce: true,
+  });
 
   const isImage = (url) => {
-    return url?.match(/\.(jpeg|jpg|gif|png|svg)$/) != null;
+    return url?.match(/\.(jpeg|jpg|gif|png|svg|webp)$/) != null;
   }
 
   const isVideo = (url) => {
@@ -44,7 +53,7 @@ export default function ResourcesPage() {
   return (
     <AuthWrapper>
       <NavBar />
-      <main className="dark:bg-gray-900 w-full">
+      <main className="dark:bg-gray-900 w-full min-h-screen">
         <div className="p-4 mx-auto w-full max-w-screen-2xl">
         <GenralHero
           title={"Explore Our Resources"}
@@ -55,22 +64,28 @@ export default function ResourcesPage() {
         />
 
         {/* resources section, every resource will have view option wihch will open modal */}
-        <section className="text-gray-600 dark:text-gray-500 body-font px-8 lg:px-16 w-full flex justify-center">
+        <section className="text-gray-600 dark:text-gray-500 body-font px-8 lg:px-16 w-full flex justify-center flex-col gap-4 mb-8">
+          <div className="w-full flex justify-center">
+            <h1 className={`text-3xl font-medium title-font mb-4 text-primary-800 underline underline-offset-auto dark:text-gray-100 ${inView2 ? "animate-fromBottom" : "opacity-0"}`}
+              ref={ref2}
+            >Our Resources</h1>
+          </div>
           <div className="w-full mx-auto flex gap-4 md:flex-row flex-col items-center flex-wrap">
             {/* display all resources */}
             {myResources.map((resource) => (
-              <div key={resource.id} className="lg:flex-grow w-auto lg:w-1/4 py-4 px-8 gap-4  flex flex-col md:items-start md:text-left md:mb-0 items-center text-center shadow-lg rounded-lg bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+              <div key={resource.id} className={`lg:flex-grow w-auto lg:w-1/4 py-4 px-8 gap-4  flex flex-col md:items-start md:text-left md:mb-0 items-center text-center shadow-lg rounded-lg bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 ${inView ? "animate-fromBottom" : "opacity-0"}`} ref={ref}
+              >
                 <div className="flex justify-between w-full h-48">
 
                 {resource.resources[0] && isImage(resource.resources[0]) && (
-                  <img className="object-cover object-center rounded shadow-sm" alt="crop-img" src={resource.resources[2]}/>
+                  <img className="object-cover object-center rounded shadow-sm" alt="crop-img" src={resource.resources[0]}/>
                 )}
 
                 {resource.resources[0] && isVideo(resource.resources[0]) && (
                   <video className="object-cover object-center rounded shadow-sm" autoPlay loop muted>
-                    <source src={resource.resources[2]} type="video/mp4"/>
-                    <source src={resource.resources[2]} type="video/ogg"/>
-                    <source src={resource.resources[2]} type="video/webm"/>
+                    <source src={resource.resources[0]} type="video/mp4"/>
+                    <source src={resource.resources[0]} type="video/ogg"/>
+                    <source src={resource.resources[0]} type="video/webm"/>
                     Your browser does not support the video tag.
                   </video>
                 )}

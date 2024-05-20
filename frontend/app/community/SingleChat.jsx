@@ -4,10 +4,16 @@ import { useState } from "react";
 import { useAppSelector } from "../store/hooks";
 import { toast } from "react-toastify";
 import { FaSpinner } from "react-icons/fa";
+import { useInView } from "react-intersection-observer";
 
 export const SingleChat = ({ chat, joined = false, setChats }) => {
   const [loading, setLoading] = useState(false);
   const { token } = useAppSelector((state) => state.auth);
+  const {ref:ref1, inView:inView1} = useInView({
+    triggerOnce: true,
+    threshold: 0.5,
+  });
+
   const joinPublicCommunity = async () => {
     setLoading(true);
     const response = await fetch(`${BACKEND_URL}/chats/community/join/${chat._id}`, {
@@ -28,8 +34,9 @@ export const SingleChat = ({ chat, joined = false, setChats }) => {
 
   return (
     <div
+      ref={ref1}
       key={chat.id}
-      className="lg:flex-grow w-auto lg:w-1/3 py-4 px-8 gap-4  flex flex-col md:text-left md:mb-0 items-center justify-center text-center shadow-lg rounded-lg bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+      className={`lg:flex-grow w-auto lg:w-1/3 py-4 px-8 gap-4  flex flex-col md:text-left md:mb-0 items-center justify-center text-center shadow-lg rounded-lg bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 ${inView1 ? "animate-fromBottom" : "opacity-0"}`}
     >
       <div className="flex items-center self-center justify-center w-16 h-16 rounded-full bg-primary-500 text-white text-xl uppercase">
         {chat.name[0]}

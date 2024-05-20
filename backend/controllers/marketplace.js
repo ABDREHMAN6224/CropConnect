@@ -12,6 +12,7 @@ export const createMarketplace = catchAsync(async (req, res, next) => {
         images: req.files.map((file) => `${serverUrl}/uploads/${file.filename}`),
         price: req.body.price,
         category: req.body.category,
+        stock: req.body.stock,
         seller: req.user._id
     });
     const createdMarketplace = await marketplace.save();
@@ -47,6 +48,7 @@ export const updateMarketplace = catchAsync(async (req, res, next) => {
         name: req.body.name,
         description: req.body.description,
         price: req.body.price,
+        stock: req.body.stock,
         $push: { images: req.files.map((file) => `${serverUrl}/uploads/${file.filename}`) }
     }, { new: true });
     if (marketplace) {
@@ -68,9 +70,12 @@ export const deleteMarketplace = catchAsync(async (req, res, next) => {
 
 export const buyMarketplace = catchAsync(async (req, res, next) => {
     const marketplace = await Marketplace.findById(req.params.id);
-    if (marketplace) {
+    if (marketplace && marketplace.stock > 0) {
         if (marketplace.status === "active") {
-            marketplace.status = "sold";
+            if(marketplace.stock === 0){
+                marketplace.status = "sold";
+            }
+            marketplace.stock -= 1;
             marketplace.buyers.push(req.user._id);
             const updatedMarketplace = await marketplace.save();
             const product = await updatedMarketplace.populate("seller", "name email avatar");
@@ -93,6 +98,7 @@ export const makeAvailable = catchAsync(async (req, res, next) => {
     const marketplace = await Marketplace.findById(req.params.id);
     if (marketplace) {
         marketplace.status = "active";
+        marketplace.stock = 5;
         const updatedMarketplace = await marketplace.save();
         res.status(200).json(updatedMarketplace);
     } else {

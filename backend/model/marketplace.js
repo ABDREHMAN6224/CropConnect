@@ -39,6 +39,10 @@ const marketplaceSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    stock: {
+        type: Number,
+        default: 5
+    },
     reviews: [
         {
             type: mongoose.Schema.Types.ObjectId,

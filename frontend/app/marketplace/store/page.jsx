@@ -39,6 +39,7 @@ export default function Store() {
     });
     const data = await response.json();
     if (response.ok) {
+      console.log(data)
       setMyProducts(data);
     } else {
       setError(true);
@@ -161,6 +162,7 @@ export default function Store() {
                     <Card
                       key={product._id}
                       imgSrc={product.images[0]}
+                      stock={product.stock}
                       productTitle={product.name}
                       productPrice={product.price}
                       productDesc={product.description}
@@ -176,6 +178,7 @@ export default function Store() {
                           myProducts.map((product) => {
                             if (product._id === id) {
                               product.status = "active";
+                              product.stock = 5;
                             }
                             return product;
                           })

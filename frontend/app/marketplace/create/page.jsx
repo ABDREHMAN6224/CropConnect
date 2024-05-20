@@ -17,6 +17,7 @@ export default function CreateMarketPlacePage() {
   const [price, setprice] = useState(0);
   const [images, setimages] = useState([]);
   const [loading, setloading] = useState(false);
+  const [stock, setstock] = useState(1);
   const categories = ["Seeds", "Fertilizers", "Tools", "Plants"];
   const dispacth = useAppDispatch();
 
@@ -28,6 +29,7 @@ export default function CreateMarketPlacePage() {
     formData.append("description", description);
     formData.append("category", category);
     formData.append("price", price);
+    formData.append("stock", stock);
     images.forEach((image) => formData.append("images", image));
     dispacth(createMarketplace(formData));
     setloading(false);
@@ -116,6 +118,26 @@ export default function CreateMarketPlacePage() {
                   value={price}
                   onChange={(e) => setprice(e.target.value)}
                   min={0}
+                />
+              </div>
+              {/* stock */}
+              <div>
+                <label
+                  htmlFor="stock"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Product Stock
+                </label>
+                <input
+                  type="number"
+                  name="stock"
+                  id="stock"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="0"
+                  required
+                  value={stock}
+                  onChange={(e) => setstock(e.target.value)}
+                  min={1}
                 />
               </div>
 

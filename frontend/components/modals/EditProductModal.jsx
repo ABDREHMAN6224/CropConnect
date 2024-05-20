@@ -20,6 +20,7 @@ export default function EditProductModal(
     const [dataChanged, setDataChanged] = useState(false);
     const [files, setFiles] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [stock, setStock] = useState(product?.stock);
 
     const {token}=useAppSelector((state)=>state.auth);
 
@@ -43,6 +44,7 @@ export default function EditProductModal(
         formData.append("name", title);
         formData.append("description", description);
         formData.append("price", price);
+        formData.append("stock", stock);
         for(let i=0;i<files.length;i++){
             formData.append("images",files[i]);
         }
@@ -134,6 +136,16 @@ export default function EditProductModal(
                                                     error={price<0 ? "Price cannot be negative" : ""}
                                                 />
                                             </div>
+                                            <div>
+                                                <TextInput
+                                                    label="Stock"
+                                                    type="number"
+                                                    name="stock"
+                                                    value={stock}
+                                                    onChange={(event) => setStock(event.target.value)}
+                                                    error={stock<0 ? "Stock cannot be negative" : ""}
+                                                />
+                                                </div>
                                             <div>
                                                 <label htmlFor="image" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                                     Images

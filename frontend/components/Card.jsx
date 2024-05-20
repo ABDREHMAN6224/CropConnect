@@ -21,6 +21,7 @@ export default function Card({
   onSave,
   handleAvailable,
   onOpen,
+  stock=0
 }) {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -136,10 +137,16 @@ export default function Card({
 
     {/* if sold show bage above card showing its sold status */}
     {sold && (
-      <span className="absolute top-0 right-0 bg-red-600 text-white px-2 py-1 rounded-bl-lg rounded-tr-lg">
+      <span className="absolute top-0 right-0 bg-red-600 text-white px-2 py-1 rounded-bl-lg w-1/4 rounded-tr-lg">
         Sold
       </span>
     )}
+    {/* show stock on top */}
+    {stock>0 &&
+    <span className="absolute top-0 left-0 bg-primary-600 text-white px-2 py-1 rounded-bl-lg rounded-tr-lg">
+      Stock: {stock}
+    </span>
+    }
 
     </div>
   );

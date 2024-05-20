@@ -72,7 +72,7 @@ export const buyMarketplace = catchAsync(async (req, res, next) => {
     const marketplace = await Marketplace.findById(req.params.id);
     if (marketplace && marketplace.stock > 0) {
         if (marketplace.status === "active") {
-            if(marketplace.stock === 0){
+            if(marketplace.stock === 1){
                 marketplace.status = "sold";
             }
             marketplace.stock -= 1;

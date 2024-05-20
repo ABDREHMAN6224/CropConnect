@@ -120,7 +120,7 @@ const Approvals = () => {
               <button
                 onClick={() => approveBlog(blog._id)} 
                 className="bg-green-500 hover:bg-green-700 text-white mx-2 font-bold py-2 px-4 rounded"
-              >    console.log(data)
+              >   
 
                 {loading ? "Loading..." : "Approve"}
               </button>

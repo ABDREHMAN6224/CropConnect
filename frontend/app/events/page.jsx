@@ -169,7 +169,7 @@ const SingleEvent = ({ event, registered, past, setEvents = () => {} }) => {
         />
       </div>
       <div className="flex flex-col sm:flex-row mt-2">
-        <div className="sm:w-1/3 text-center sm:pr-8 sm:py-8">
+        <div className="sm:w-1/3 text-center sm:pr-4 sm:py-8">
           <div className="flex flex-col items-center text-center justify-center">
             <h2 className="title-font font-medium text-lg text-gray-900 dark:text-gray-500">
               {formatDate(event.date)}
@@ -197,7 +197,7 @@ const SingleEvent = ({ event, registered, past, setEvents = () => {} }) => {
             )}
           </div>
         </div>
-        <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left pr-8">
+        <div className="sm:w-2/3 sm:pl-4 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left pr-8">
           <h2 className="title-font font-medium text-2xl text-gray-900 dark:text-gray-300">
             {event.title}
           </h2>
@@ -208,7 +208,7 @@ const SingleEvent = ({ event, registered, past, setEvents = () => {} }) => {
             <h3 className="text-lg font-semibold">Guests</h3>
             <div className="flex justify-start self-start flex-wrap">
               {
-              typeof(event.guests==="string")?
+              typeof(event.guests) === "string"?
               <span
                   className="inline-flex text-primary-500 bg-gray-200 dark:bg-gray-700 border-0 py-1 px-2 focus:outline-none hover:bg-gray-300 rounded text-xs mb-2 mr-2"
                 >

@@ -117,7 +117,7 @@ export default function CreateMarketPlacePage() {
                   required
                   value={price}
                   onChange={(e) => setprice(e.target.value)}
-                  min={0}
+                  min={1}
                 />
               </div>
               {/* stock */}

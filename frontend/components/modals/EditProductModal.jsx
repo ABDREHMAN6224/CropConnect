@@ -82,11 +82,15 @@ export default function EditProductModal(
                 }
             }
         }
-        if(price<0 || title.length<=3 || description.length<5){
+        if(stock!==product.stock){
+            changed=true;
+        }
+        if(price<0 || stock<1 || title.length<=3 || description.length<5){
             changed = false;
         }
+
         setDataChanged(changed);
-    }, [images, title, description, price]);
+    }, [images, title, description, price,stock]);
 
     return (
         <div className="fixed z-10 inset-0 overflow-y-auto">

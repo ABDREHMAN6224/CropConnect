@@ -18,7 +18,14 @@ export const createOrder = catchAsync(async (req, res, next) => {
     for (let i = 0; i < req.body.orderItems.length; i++) {
         await Marketplace.findByIdAndUpdate(req.body.orderItems[i], {
             $push: { buyers: req.user._id },
-            status: "sold"
+            status: {
+                $cond: {
+                    if: { $eq: ["$stock", 1] },
+                    then: "sold",
+                    else: "$status"
+                }
+            },
+            stock: { $subtract: ["$stock", 1] }
         });
     }
     const order = await Order.findById(createdOrder._id).populate("user", "name email avatar").populate("orderItems", "name price images");

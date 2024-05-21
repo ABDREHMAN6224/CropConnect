@@ -202,7 +202,7 @@ export default function Chats() {
       }
     };
     
-  }, [window.location.search]);
+  }, []);
 
   const handleGroupModalSubmit = (e) => {
     e.preventDefault();

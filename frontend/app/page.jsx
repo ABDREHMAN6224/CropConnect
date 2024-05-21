@@ -21,22 +21,24 @@ export default function Home() {
   
 
   useEffect(() => {
+    const scrollToSection = (section) => {
+      let tid=setTimeout(() => {
+        const sectionElement = document.getElementById(section);
+        sectionElement.scrollIntoView({ behavior: "smooth" });
+      },100)
+    };
     const searchParams = new URLSearchParams(window.location.search);
     const ourTeam = searchParams.get("our-team");
     const contactUs = searchParams.get("contact-us");
     const feedback = searchParams.get("feedback-section");
     if (ourTeam) {
-      const teamSection = document.getElementById("our-team");
-      console.log(teamSection)
-      teamSection.scrollIntoView({ behavior: "smooth" });
+      scrollToSection("our-team");
     }
     else if (contactUs) {
-      const contactUsSection = document.getElementById("contact-us");
-      contactUsSection.scrollIntoView({ behavior: "smooth" });
+      scrollToSection("contact-us");
     }
     else if (feedback) {
-      const feedbackSection = document.getElementById("feedback-section");
-      feedbackSection.scrollIntoView({ behavior: "smooth" });
+      scrollToSection("feedback-section");
     }
   }, [window.location.search]);
 

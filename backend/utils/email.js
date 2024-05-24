@@ -13,7 +13,7 @@ class Email{
             service: 'Gmail',
             auth: {
                 user: "memonabdulrehman250@gmail.com",
-                pass: "nnqy cbkv sdhb apat"
+                pass: process.env.PASSWORD
             }
 
         });

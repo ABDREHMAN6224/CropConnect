@@ -40,7 +40,7 @@ export default function Home() {
     else if (feedback) {
       scrollToSection("feedback-section");
     }
-  }, [window.location.search]);
+  }, []);
 
   return (
     <AuthWrapper>

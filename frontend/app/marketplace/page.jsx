@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import TextInput from "../../components/inputs/TextInput";
 import { formatAmount } from "../utils/general_utils";
 import AuthWrapper from "../AuthWrapper";
+import { FooterSection } from "../../components";
 export default function MarketplacePage() {
   //   const [loading, setLoading] = useState(true);
   const products = useAppSelector((store) => store.marketPlace);

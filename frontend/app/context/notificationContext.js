@@ -9,10 +9,12 @@ export const NotificationProvider = ({ children }) => {
     const {token} = useAppSelector(state => state.auth);
     const user = useAppSelector(state => state.user);
     const [audio, setAudio] = useState(new Audio("/notification.wav"));
-    
+
+
+
     const showNotification = (message, type = "success") => {
         setNotification({ message, type });
-
+        console.log(audio)
         if (audio) {
         audio.play();
         }

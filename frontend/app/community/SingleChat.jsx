@@ -3,7 +3,7 @@ import { BACKEND_URL } from "../utils/constants";
 import { useState } from "react";
 import { useAppSelector } from "../store/hooks";
 import { toast } from "react-toastify";
-import { FaSpinner } from "react-icons/fa";
+import { FaCheckCircle, FaSpinner } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
 
 export const SingleChat = ({ chat, joined = false, setChats }) => {
@@ -24,7 +24,11 @@ export const SingleChat = ({ chat, joined = false, setChats }) => {
     });
     const data = await response.json();
     if (response.ok) {
-      setChats((prev) => prev.map((c) => (c.id === chat.id ? { ...c, joined: true } : c)));
+      setChats((prev) => {
+        
+        return prev.map((c) => {
+          console.log(c._id)
+          return (c._id === chat._id ? { ...c, joined: true } : c)})});
       toast.success("Joined Community");
     } else {
       toast.error(data.message);
@@ -58,14 +62,19 @@ export const SingleChat = ({ chat, joined = false, setChats }) => {
         </div>
       </div>
       <div className="flex justify-center">
+        {!joined ?
         <button
-          disabled={joined}
-          onClick={joinPublicCommunity}
-          className="inline-flex items-center text-white bg-primary-500 border-0 py-2 px-6 focus:outline-none hover:bg-primary-600 rounded text-lg dark:bg-gray-800 dark:border-gray-700 disabled:opacity-60"
+        disabled={joined}
+        onClick={joinPublicCommunity}
+        className="inline-flex items-center text-white bg-primary-500 border-0 py-2 px-6 focus:outline-none hover:bg-primary-600 rounded text-lg dark:bg-gray-800 dark:border-gray-700 disabled:opacity-60"
         >
           {loading && <FaSpinner className="animate-spin h-5 w-5 mr-3" />}
-          {joined ? "Joined" : "Join Community"}
-        </button>
+          {"Joined"}
+        </button>:
+          <p className="leading-relaxed text-base text-primary-500 mt-4">
+          Joined <FaCheckCircle className="inline-block" />
+         </p>
+        }
       </div>
     </div>
   );

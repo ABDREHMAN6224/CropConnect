@@ -11,6 +11,7 @@ import { formatAmount, generateStatusBadge } from "../../utils/general_utils";
 import ReviewModal from "../../../components/modals/ReviewModal";
 import ShowEventTicketModal from "../../../components/modals/EventTicketModal";
 import Footer from "../../../components/FooterSection";
+import { FaSpinner } from "react-icons/fa";
 
 export default function Profile() {
   const router = useRouter();
@@ -29,6 +30,7 @@ export default function Profile() {
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [filter, setFilter] = useState("all");
   const [events, setEvents] = useState([]);
+  const [loading,setLoading]=useState(false)
 
   const user = useAppSelector((state) => state.user);
   const isAdmin = user.role.toLowerCase() === "admin";
@@ -64,6 +66,7 @@ export default function Profile() {
   useEffect(() => {
     if (!isLoggedIn) return;
     const getMyOrders = async () => {
+      setLoading(true)
       const response = await fetch(`${BACKEND_URL}/orders/myorders`, {
         method: "GET",
         headers: {
@@ -75,6 +78,7 @@ export default function Profile() {
         setMyOrders(data);
         setFilteredOrders(data);
       }
+      setLoading(false)
     };
     const getEvents = async () => {
       const response = await fetch(`${BACKEND_URL}/events/registered`, {
@@ -342,6 +346,10 @@ export default function Profile() {
                       </div>
                     ) : (
                       <div className="w-full flex flex-col justify-center items-center h-96">
+                        {loading ?
+                                    <FaSpinner className="animate-spin h-12 w-12 text-primary-600"/>
+                                    :
+                        <>
                         <div className="text-gray-800 dark:text-white text-2xl">
                           No Orders Yet
                         </div>
@@ -352,10 +360,12 @@ export default function Profile() {
                           <a
                             href="/marketplace"
                             className="text-primary-500 hover:underline"
-                          >
+                            >
                             Marketplace
                           </a>
                         </p>
+                        </>
+                          }
                       </div>
                     )}
                   </div>
@@ -472,7 +482,7 @@ export default function Profile() {
                 products={currentOrder?.orderItems}
                 setMyOrders={setMyOrders}
                 onClose={() => {
-                  window.location.reload();
+                  window.location.reload()
                   setOpenReviewModal(false);
                   setCurrentOrder(null);
                 }}

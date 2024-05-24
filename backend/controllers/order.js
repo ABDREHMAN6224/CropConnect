@@ -16,18 +16,25 @@ export const createOrder = catchAsync(async (req, res, next) => {
     await email.sendOrderConfirmation();
     // for each product in order update buyers
     for (let i = 0; i < req.body.orderItems.length; i++) {
-        await Marketplace.findByIdAndUpdate(req.body.orderItems[i], {
-            $push: { buyers: req.user._id },
-            status: {
-                $cond: {
-                    if: { $eq: ["$stock", 1] },
-                    then: "sold",
-                    else: "$status"
+        await Marketplace.updateOne(
+            { _id: req.body.orderItems[i] },
+            [
+              {
+                $set: {
+                  buyers: { $concatArrays: ["$buyers", [req.user._id]] },
+                  status: {
+                    $cond: {
+                      if: { $eq: ["$stock", 1] },
+                      then: "sold",
+                      else: "$status"
+                    }
+                  },
+                  stock: { $subtract: ["$stock", 1] }
                 }
-            },
-            stock: { $subtract: ["$stock", 1] }
-        });
-    }
+              }
+            ]
+          );
+              }
     const order = await Order.findById(createdOrder._id).populate("user", "name email avatar").populate("orderItems", "name price images");
     res.status(201).json(order);
 })

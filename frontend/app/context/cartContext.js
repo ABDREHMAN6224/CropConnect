@@ -29,7 +29,7 @@ export const CartProvider = ({ children }) => {
   }
   const getBill = (shippingFee,selectedProducts) => {
     return selectedProducts.reduce((acc, item) => {
-      return acc + item.price;
+      return acc + item?.price;
     }, 0) + shippingFee;
   }
 

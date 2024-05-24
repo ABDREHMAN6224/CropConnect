@@ -88,7 +88,7 @@ function FeedbackPage() {
             ></textarea>
           </div>
           <button className="rounded border-0 bg-primary-500 py-2 px-6 text-lg text-white hover:bg-primary-600 focus:outline-none disabled:opacity-50"
-            disabled={feedback.length <= 4 || loading}
+            disabled={feedback?.length <= 4 || loading}
             onClick={handleFeedback}
           >
             {loading ? "Loading..." : "Submit"}

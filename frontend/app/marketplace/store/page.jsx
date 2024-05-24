@@ -153,7 +153,7 @@ export default function Store() {
             !error &&
             myProducts.length > 0 &&
             activeTab === tabs[0] && (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                 {myProducts
                   .filter((product) =>
                     product.name.toLowerCase().includes(search.toLowerCase())
@@ -369,7 +369,8 @@ const UpdateOrder = ({ order, setOrders }) => {
       },
       body: JSON.stringify({ status: filter }),
     });
-
+    const data = await response.json();
+    console.log(data)
     if (response.ok) {
       socket.emit("notification:general", { 
         user: order.user._id,

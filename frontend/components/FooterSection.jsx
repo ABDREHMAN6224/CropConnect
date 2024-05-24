@@ -6,6 +6,10 @@ const footerItems = [
     title: "Resources",
     links: [
       {
+        name : "Resources",
+        path : "/resources"
+      },
+      {
         name: "Blogs",
         path: "/blogs",
       },
@@ -17,10 +21,6 @@ const footerItems = [
         name: "Marketplace",
         path: "/marketplace",
       },
-      {
-        name : "Resources",
-        path : "/resources"
-      }
     ]
   },
   {

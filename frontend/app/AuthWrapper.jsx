@@ -10,6 +10,7 @@ const AuthWrapper = ({children,admin=false}) => {
   const router= useRouter();
 
     useEffect(() => {
+      if(typeof window === 'undefined') return;
       if(!user?._id){
         window.location.href = '/login'
         return;

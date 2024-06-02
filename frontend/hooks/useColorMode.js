@@ -6,6 +6,7 @@ const useColorMode = () => {
   const [colorMode, setColorMode] = useLocalStorage("color-theme", "light");
 
   useEffect(() => {
+    if(typeof window === "undefined") return;
     const className = "dark";
     const bodyClass = window.document.body.classList;
 
